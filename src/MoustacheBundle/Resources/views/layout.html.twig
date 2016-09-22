@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    {% include 'MoustacheBundle::header.html.twig' %}
+    <body>
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% block bodyhead %}
+        {% endblock bodyhead %}
+
+        <div id="content">
+        {% block body %}
+        {% endblock body %}
+        </div>
+
+        {% block bodyfoot %}
+        {% endblock bodyfoot %}
+
+        {% block footerscripts %}
+        {% endblock footerscripts %}
+    </body>
+</html>

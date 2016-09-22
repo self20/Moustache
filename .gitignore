@@ -1,0 +1,62 @@
+# Cache and logs (Symfony3)
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+
+# Parameters
+/app/config/parameters.yml
+/app/config/parameters.ini
+/app/var/jwt/*.pem
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/bin/*
+!bin/console
+/vendor/
+/web/config.php
+
+# Assets and user uploads
+/web/bundles/
+/web/cache/
+/web/css/
+/web/fonts/
+/web/images/
+/web/js/
+/web/uploads/
+/web/app_dev.php
+
+# Assets managed by Bower
+/web/assets/vendor/
+
+# PHPUnit
+/app/phpunit.xml
+/phpunit.xml
+/phpunit.phar
+
+# Build data
+/build/
+
+# Composer PHAR
+/composer.phar
+
+# Node dependencies
+/node_modules
+
+# PHP CS cache
+/.php_cs.cache
+
+/doc/model.mwb.bak
+/emailspool
+/servers.yml
+/app/var/jwt
+
+/coverage.xml
+/coverage
