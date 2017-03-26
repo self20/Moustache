@@ -2,7 +2,7 @@
     "name": "guidon/moustache",
     "license": "GPL-3.0",
     "type": "project",
-    "description": "Another Transmission Web Client",
+    "description": "Multi Client Web Torrent Application",
     "autoload": {
         "psr-4": {
             "": "src/"
