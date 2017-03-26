@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-    {% include 'MoustacheBundle::header.html.twig' %}
-    <body>
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="flash-{{ type }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+    <head>
+        <title>{% block title %}That ain’t a title{% endblock %} | Moustache</title>
 
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#f5f5f5">
+        {% block meta %}{% endblock %}
+
+        {% block stylsheets %}
+            {% stylesheets filter='cssrewrite' filter='uglifycss' output='css/compiled/all.css'
+                '@MoustacheBundle/Resources/static/css/home.scss'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" media="screen">
+            {% endstylesheets %}
+        {% endblock stylsheets %}
+
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic%7CBad%20Script:400" rel="stylesheet">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg">
+        <link rel="icon" href="/favicon.ico">
+
+        {% block headerscripts %}
+        {% endblock headerscripts %}
+    </head>
+
+    <body>
         {% block bodyhead %}
+            {% include 'MoustacheBundle::nav.html.twig' %}
         {% endblock bodyhead %}
 
-        <div id="content">
-        {% block body %}
-        {% endblock body %}
+        <div id="content" class="container">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% include('MoustacheBundle::_alert.html.twig') %}
+            {% endfor %}
+
+            {% block body %}
+            {% endblock body %}
         </div>
 
         {% block bodyfoot %}

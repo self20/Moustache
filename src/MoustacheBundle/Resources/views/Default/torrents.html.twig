@@ -1,0 +1,20 @@
+{% extends 'MoustacheBundle::layout.html.twig' %}
+
+{% block title %}So fancy!{% endblock %}
+
+{% block body %}
+    <br />
+    <section class="torrent-section">
+        <div class="mb-2 row">
+            {% for torrent in torrents %}
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    {% embed 'MoustacheBundle:Default:_torrent-card.html.twig' %}
+                    {% endembed %}
+                </div>
+            {% else %}
+                {% include 'MoustacheBundle:Default:_torrents-empty.html.twig' %}
+            {% endfor %}
+        </div>
+
+    </section>
+{% endblock body %}

@@ -1,0 +1,11 @@
+{
+  "name": "Moustache",
+  "version": "1.0.0",
+  "description": "Another Transmission Web Client",
+  "license": "GNUv3",
+  "private": false,
+  "dependencies": {
+    "uglifycss": "*",
+    "uglifyjs": "^2.0.0"
+  }
+}

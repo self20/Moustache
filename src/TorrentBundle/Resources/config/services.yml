@@ -1,0 +1,250 @@
+services:
+    # --- Adapters
+    torrent.adapter.transmission:
+        class: "TorrentBundle\\Adapter\\TransmissionAdapter"
+        arguments:
+            - "@torrent.external.transmission"
+    torrent.adapter.fake:
+        class: "TorrentBundle\\Adapter\\FakeAdapter"
+        arguments:
+            - "@torrent.helper.authenticated_user"
+            - "@torrent.helper.torrent_storage"
+
+    # --- Cache
+    torrent.cache.cache:
+        class: "TorrentBundle\\Cache\\Cache"
+        arguments:
+            - "@cache.app"
+            - "%torrent_rpc_client%"
+
+    # --- Client
+    torrent.client.transmission_accessor:
+        class: "TorrentBundle\\Client\\AccessorClient"
+        arguments:
+            - "@torrent.adapter.transmission"
+            - "@torrent.mapper.transmission_torrent"
+            - "@torrent.helper.torrent_storage"
+            - "@torrent.filter.torrent"
+            - "@event_dispatcher"
+            - "@torrent.cache.cache"
+    torrent.client.transmission_life_cycle:
+        class: "TorrentBundle\\Client\\LifeCycleClient"
+        arguments:
+            - "@torrent.adapter.transmission"
+            - "@event_dispatcher"
+            - "@torrent.cache.cache"
+    torrent.client.transmission_misc:
+        class: "TorrentBundle\\Client\\MiscClient"
+        arguments:
+            - "@torrent.adapter.transmission"
+            - "@torrent.cache.cache"
+    torrent.client.transmission_remove:
+        class: "TorrentBundle\\Client\\RemoveClient"
+        arguments:
+            - "@torrent.adapter.transmission"
+            - "@event_dispatcher"
+            - "@torrent.cache.cache"
+    torrent.client.transmission_availability:
+        class: "TorrentBundle\\Client\\AvailabilityClient"
+        arguments:
+            - "@torrent.adapter.transmission"
+    torrent.client.transmission:
+        class: "TorrentBundle\\Client\\Client"
+        arguments:
+            - "@torrent.client.transmission_accessor"
+            - "@torrent.client.transmission_life_cycle"
+            - "@torrent.client.transmission_misc"
+            - "@torrent.client.transmission_remove"
+            - "@torrent.client.transmission_availability"
+            - "%torrent_rpc_client%"
+        tags:
+            - { name: torrent.client }
+
+    torrent.client.fake_accessor:
+        class: "TorrentBundle\\Client\\AccessorClient"
+        arguments:
+            - "@torrent.adapter.fake"
+            - "@torrent.mapper.fake_torrent"
+            - "@torrent.helper.torrent_storage"
+            - "@torrent.filter.torrent"
+            - "@event_dispatcher"
+            - "@torrent.cache.cache"
+    torrent.client.fake_life_cycle:
+        class: "TorrentBundle\\Client\\LifeCycleClient"
+        arguments:
+            - "@torrent.adapter.fake"
+            - "@event_dispatcher"
+            - "@torrent.cache.cache"
+    torrent.client.fake_misc:
+        class: "TorrentBundle\\Client\\MiscClient"
+        arguments:
+            - "@torrent.adapter.fake"
+            - "@torrent.cache.cache"
+    torrent.client.fake_remove:
+        class: "TorrentBundle\\Client\\RemoveClient"
+        arguments:
+            - "@torrent.adapter.fake"
+            - "@event_dispatcher"
+            - "@torrent.cache.cache"
+    torrent.client.fake_availability:
+        class: "TorrentBundle\\Client\\AvailabilityClient"
+        arguments:
+            - "@torrent.adapter.fake"
+    torrent.client.fake:
+        class: "TorrentBundle\\Client\\Client"
+        arguments:
+            - "@torrent.client.fake_accessor"
+            - "@torrent.client.fake_life_cycle"
+            - "@torrent.client.fake_misc"
+            - "@torrent.client.fake_remove"
+            - "@torrent.client.fake_availability"
+            - "%torrent_rpc_client%"
+        tags:
+            - { name: torrent.client }
+
+    torrent.client.current:
+        class: "TorrentBundle\\Client\\Client"
+        factory: "torrent.helper.torrent_client:get"
+
+    # --- Entity
+    torrent.entity.torrent:
+        class: "TorrentBundle\\Entity\\Torrent"
+
+    # --- Event Listeners
+    torrent.event.cache_updater_listener.after_torrent_added:
+        class: "TorrentBundle\\EventListener\\CacheUpdaterListener"
+        arguments:
+            - "@torrent.client.current"
+            - "@logger"
+        tags:
+            - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
+    torrent.event.cache_updater_listener.after_torrent_removed:
+        class: "TorrentBundle\\EventListener\\CacheUpdaterListener"
+        arguments:
+            - "@torrent.client.current"
+            - "@logger"
+        tags:
+            - { name: kernel.event_listener, event: event.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
+    torrent.event.cache_initializer_listener:
+        class: "TorrentBundle\\EventListener\\CacheInitializerListener"
+        arguments:
+            - "@torrent.cache.cache"
+            - "@logger"
+        tags:
+            - { name: kernel.event_listener, event: event.client.after.initialize, method: afterClientInitialized, priority: 0 }
+    torrent.event.doctrine_flusher_listener:
+        class: "TorrentBundle\\EventListener\\DoctrineFlusherListener"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 0 }
+    torrent.event.torrent_add_listener:
+        class: "TorrentBundle\\EventListener\\TorrentAddListener"
+        arguments:
+            - "@torrent.manager.torrent"
+        tags:
+            - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
+    torrent.event.torrent_remove_listener:
+        class: "TorrentBundle\\EventListener\\TorrentRemoveListener"
+        arguments:
+            - "@torrent.manager.torrent"
+        tags:
+            - { name: kernel.event_listener, event: event.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
+
+    # --- External
+    torrent.external.transmission:
+        class: "Transmission\\Transmission"
+        arguments:
+            - "%torrent_rpc_host%"
+            - "%torrent_rpc_port%"
+
+    # --- Filters
+    torrent.filter.torrent:
+        class: "TorrentBundle\\Filter\\TorrentFilter"
+        arguments:
+            - "@torrent.helper.authenticated_user"
+            - "@torrent.repository.torrent"
+
+    # --- Helpers
+    torrent.helper.authenticated_user:
+        class: "TorrentBundle\\Helper\\AuthenticatedUserHelper"
+        arguments:
+            - "@security.token_storage"
+    torrent.helper.torrent_client:
+        class: "TorrentBundle\\Helper\\TorrentClientHelper"
+        arguments:
+            - "@service_container"
+            - "@torrent.helper.torrent_client_name"
+            - "@event_dispatcher"
+            - "%torrent_rpc_host%"
+            - "%torrent_rpc_port%"
+    torrent.helper.torrent_client_name:
+        class: "TorrentBundle\\Helper\\TorrentClientNameHelper"
+        arguments:
+            - "%torrent_rpc_client%"
+    torrent.helper.torrent_storage:
+        class: "TorrentBundle\\Helper\\TorrentStorageHelper"
+        arguments:
+            - "@torrent.helper.authenticated_user"
+            - "@filesystem"
+            - "%torrent_storage%"
+
+    # --- Managers
+    torrent.manager.torrent:
+        class: "TorrentBundle\\Manager\\TorrentManager"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@torrent.helper.authenticated_user"
+    torrent.manager.user:
+        class: "TorrentBundle\\Manager\\UserManager"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    # --- Mappers
+    torrent.mapper.transmission_torrent:
+        class: "TorrentBundle\\Mapper\\TransmissionTorrentMapper"
+        arguments:
+            - "@torrent.utils.string"
+            - '@torrent.service.mime_guesser'
+            - '@torrent.mapper.transmission_file'
+            - '@torrent.repository.torrent'
+    torrent.mapper.transmission_file:
+        class: "TorrentBundle\\Mapper\\TransmissionFileMapper"
+        arguments:
+            - "@torrent.utils.string"
+            - "@torrent.utils.url"
+            - '@torrent.service.mime_guesser'
+    torrent.mapper.fake_torrent:
+        class: "TorrentBundle\\Mapper\\FakeTorrentMapper"
+
+    # --- Repositories
+    torrent.repository.user:
+        class: "TorrentBundle\\Repository\\UserRepository"
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - "TorrentBundle:User"
+    torrent.repository.torrent:
+        class: "TorrentBundle\\Repository\\TorrentRepository"
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - "TorrentBundle:Torrent"
+
+    # --- Services
+    torrent.service.mime_guesser:
+        class: "TorrentBundle\\Service\\MimeGuesser"
+        arguments:
+            - '@torrent.utils.file'
+
+    # --- Utils
+    torrent.utils.array:
+        class: "Rico\\Lib\\ArrayUtils"
+    torrent.utils.file:
+        class: "Rico\\Lib\\FileUtils"
+    torrent.utils.filesystem:
+        class: "Rico\\Lib\\FilesystemUtils"
+    torrent.utils.string:
+        class: "Rico\\Lib\\StringUtils"
+    torrent.utils.validation:
+        class: "Rico\\Lib\\ValidationUtils"
+    torrent.utils.url:
+        class: "Rico\\Lib\\UrlUtils"

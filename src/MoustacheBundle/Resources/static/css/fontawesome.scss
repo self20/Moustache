@@ -1,0 +1,47 @@
+$fa-font-path:        "/css/fonts" !default;
+
+@import "../../../../../vendor/components/font-awesome/scss/font-awesome.scss";
+
+.alert-danger li {
+    list-style-type: none;
+
+    &:before {
+        font-family: 'FontAwesome';
+        content: '\f00d';
+        margin: 0 0.5em 0 0;
+    }
+}
+
+.alert-success li {
+    list-style-type: none;
+
+    &:before {
+        font-family: 'FontAwesome';
+        content: '\f00c';
+        margin: 0 0.5em 0 0;
+    }
+}
+
+.alert-warning li {
+    list-style-type: none;
+
+    &:before {
+        font-family: 'FontAwesome';
+        content: '\f12a';
+        margin: 0 0.5em 0 0;
+    }
+}
+
+.alert-info li {
+    list-style-type: none;
+
+    &:before {
+        font-family: 'FontAwesome';
+        content: "\f129";
+        margin: 0 0.5em 0 0;
+    }
+}
+
+.alert ul {
+    margin-bottom: 0;
+}

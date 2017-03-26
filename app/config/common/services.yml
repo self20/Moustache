@@ -1,0 +1,3 @@
+imports:
+    - { resource: "@TorrentBundle/Resources/config/services.yml"}
+    - { resource: "@MoustacheBundle/Resources/config/services.yml"}

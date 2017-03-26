@@ -1,0 +1,28 @@
+imports:
+    - { resource: ../dev/config.yml }
+    - { resource: parameters.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: plaintext
+        TorrentBundle\Entity\User: plaintext
+
+parameters:
+    torrent_rpc_client: fake
+    torrent_storage: "%kernel.root_dir%"
+    database_path: '%kernel.root_dir%/moustache_test.db3'
+    database_name: moustache_test

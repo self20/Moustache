@@ -1,0 +1,74 @@
+services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    # --- Controllers
+    moustache.controller.default:
+        class: "MoustacheBundle\\Controller\\DefaultController"
+        arguments:
+            - "@torrent.client.current"
+            - "@templating"
+            - "@moustache.form.torrent_menu"
+    moustache.controller.add:
+        class: "MoustacheBundle\\Controller\\AddController"
+        arguments:
+            - "@moustache.form.torrent_menu"
+            - "@torrent.client.current"
+            - "@torrent.manager.torrent"
+            - "@moustache.service.redirector"
+            - "@moustache.shortcut.request"
+            - "@logger"
+            - "%torrent_rpc_client%"
+    moustache.controller.life_cycle:
+        class: "MoustacheBundle\\Controller\\LifeCycleController"
+        arguments:
+            - "@torrent.client.current"
+            - "@moustache.service.redirector"
+    moustache.controller.remove:
+        class: "MoustacheBundle\\Controller\\RemoveController"
+        arguments:
+            - "@torrent.client.current"
+            - "@moustache.service.redirector"
+
+    # --- Event Listeners
+    moustache.event.flash_bag_messenger:
+        class: "MoustacheBundle\\EventListener\\FlashBagMessengerListener"
+        arguments:
+            - "@moustache.helper.flash_bag"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 1 }
+
+    # --- Helper
+    moustache.helper.flash_bag:
+        class: "MoustacheBundle\\Helper\\FlashBagHelper"
+        arguments:
+            - "@moustache.service.flash_messager"
+            - "@torrent.helper.authenticated_user"
+            - "@torrent.manager.user"
+
+    # --- Forms
+    moustache.form.torrent_menu:
+        class: "MoustacheBundle\\Form\\TorrentMenu"
+        factory: 'form.factory:create'
+        arguments:
+            - "MoustacheBundle\\Form\\TorrentMenu"
+            - "@torrent.entity.torrent"
+
+    # --- Services
+    moustache.service.flash_messager:
+        class: "MoustacheBundle\\Service\\FlashMessenger"
+        arguments:
+            - "@session"
+            - "@translator"
+    moustache.service.redirector:
+        class: "MoustacheBundle\\Service\\Redirector"
+        arguments:
+            - "@router"
+            - "@moustache.service.flash_messager"
+
+    # --- Shortcut
+    moustache.shortcut.request:
+        class: "Symfony\\Component\\HttpFoundation\\Request"
+        factory: 'request_stack:getCurrentRequest'

@@ -1,0 +1,24 @@
+default:
+    # If you don't do that, "features" directory is created on "app/config"
+    autoload:
+        "": "%paths.base%/../../../test/Functional/"
+
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                env: test
+        Behat\MinkExtension:
+            show_cmd: "firefox %s"
+            base_url: "http://localhost:8123/"
+            files_path: "%paths.base%/../../../test/Functional/files/"
+            sessions:
+                moustache_suite:
+                    symfony2: ~
+
+    suites:
+        moustache_suite:
+            paths: [ "%paths.base%/../../../test/Functional/MoustacheBundle/" ]
+            type: symfony_bundle
+            bundle: "MoustacheBundle"
+            contexts:
+                - MoustacheContext

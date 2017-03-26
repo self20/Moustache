@@ -1,0 +1,13 @@
+{% extends 'TwigBundle:Exception:layout.html.twig' %}
+
+{% block content %}
+    <h1>{% trans %}Oops! 503 Server unavailable.{% endtrans %}</h1>
+    <h2>{% trans %}The server is down for maintenance!{% endtrans %}</h2>
+    <img class="img-responsive img-thumbnail" alt="503" src="{{ asset('img/errors/503.gif') }}" />
+    <p>
+        {% trans %}The servers are currently turning into better, faster, stronger servers. Sometimes, a Moustache needs some tender lovin’ care.{% endtrans %}
+    </p>
+    <p>
+        {% trans %}Moustache is sorry if you were in the middle of something. Take a break, smoke a pipe and reload the page in a few moments.{% endtrans %}
+    </p>
+{% endblock %}

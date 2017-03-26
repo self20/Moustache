@@ -1,0 +1,36 @@
+{% extends 'MoustacheBundle::layout.html.twig' %}
+
+{% block title %}So fancy!{% endblock %}
+
+{% block body %}
+    <br />
+    <section class="container torrent-section">
+        <div class="row">
+            {% for file in torrent.files %}
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    {% embed 'MoustacheBundle:Default:_torrent-card.html.twig' with {'torrent': file}%}
+                    {% endembed %}
+
+                   {# <div class="card text-xs-center {% if torrent.isStopped %}card-inverse{% endif %}">
+                        <div class="card-header text-muted">
+                            <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+                                {% if file.isDone %}
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Download group">
+                                      <button type="button" class="btn btn-success"><span class="fa fa-2x fa-download" aria-hidden="true"></span></button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <progress class="progress {% if file.isDone %}progress-success{% else %}progress-info progress-animated{% endif %} progress-striped" value="{{ file.percentDone }}" max="100"></progress>
+                        <div class="card-block">
+                            <p class="card-title">
+                                <span class="fa fa-5x {{ torrent.mime }}" aria-hidden="true"></span>
+                            </p>
+                            <p class="card-text"><small>{{ file.friendlyName | truncate(80, false, '…')  }}</small></p>
+                        </div>
+                    </div>#}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock body %}

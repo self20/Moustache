@@ -1,0 +1,27 @@
+{% extends 'MoustacheBundle::layout.html.twig' %}
+
+{% block stylsheets %}
+    {% stylesheets filter='cssrewrite' filter='uglifycss' output='css/compiled/error.css'
+        '@MoustacheBundle/Resources/static/css/error.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" media="screen">
+    {% endstylesheets %}
+{% endblock stylsheets %}
+
+{% block title %}Oopsie daisy{% endblock %}
+
+{% block bodyhead %}
+    {% include 'MoustacheBundle::nav-empty.html.twig' %}
+{% endblock bodyhead %}
+
+{% block body %}
+    <section class="container twig-exception-div">
+        <div class="row flex-items-xs-center">
+            <div class="col-lg-6 col-md-8">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

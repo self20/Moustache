@@ -1,0 +1,37 @@
+machine:
+    environment:
+        SYMFONY_ENV: test
+    hosts:
+        localhost: 127.0.0.1
+
+dependencies:
+    pre:
+        - sudo apt-get -y purge php.*
+        - cp app/config/test/parameters.yml app/config/parameters.yml
+        - ln -s $CIRCLE_ARTIFACTS artifacts
+        - sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+        - sudo apt-get update
+        - sudo apt-get install -y php7.0 php7.0-common php7.0-iconv php7.0-mbstring php7.0-dom
+        - sudo phpenmod mbstring iconv dom
+
+test:
+    override:
+        - composer validate
+        - php bin/console security:check
+        - php bin/console doctrine:database:create
+        - php bin/console doctrine:schema:create
+        - php bin/console doctrine:schema:validate
+        - php bin/console doctrine:database:drop --force
+        - php bin/console lint:twig src
+        - php bin/console lint:twig app
+        - php bin/console lint:yaml src
+        - php bin/console lint:yaml app
+        - php vendor/bin/php-cs-fixer fix --dry-run
+        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/Learning/*
+        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/MoustacheBundle/*
+        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/TorrentBundle/*
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Connection
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Login
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Content
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Message
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Scenario

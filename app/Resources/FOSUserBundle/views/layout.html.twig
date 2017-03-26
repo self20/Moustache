@@ -1,0 +1,9 @@
+{% extends 'MoustacheBundle::layout.html.twig' %}
+
+{% block bodyhead %}
+    {% include 'MoustacheBundle::nav-empty.html.twig' %}
+{% endblock bodyhead %}
+
+{% block body %}
+    {% block fos_user_content %}{% endblock %}
+{% endblock body %}

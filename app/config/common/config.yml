@@ -1,0 +1,101 @@
+imports:
+    - { resource: ../parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+parameters:
+    locale: en
+
+framework:
+    #esi:             ~
+    #translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/common/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+doctrine:
+    dbal:
+        driver:         pdo_sqlite
+        host:           127.0.0.1
+        port:           null
+        dbname:         "%database_name%"
+        user:           null
+        password:       null
+        path:           "%database_path%"
+        charset:        UTF8
+        logging:        false
+        profiling:      false
+        server_version: 3.14
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+assetic:
+    debug: "%kernel.debug%"
+    use_controller: false
+    bundles: [ MoustacheBundle, TwigBundle ]
+    filters:
+        sass:
+            bin: "%sass_path%"
+        compass:
+            bin: "%compass_path%"
+            apply_to: "scss$"
+        cssrewrite: ~
+        uglifyjs2:
+            bin: "%uglifyjs_path%"
+        uglifycss:
+            bin: "%uglifycss_path%"
+    assets:
+        font_otf_fontawesome:
+            inputs: "%kernel.root_dir%/../vendor/components/font-awesome/fonts/FontAwesome.otf"
+            output: "css/fonts/FontAwesome.otf"
+        font_ttf_fontawesome:
+            inputs: "%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.ttf"
+            output: "css/fonts/fontawesome-webfont.ttf"
+        font_eot_fontawesome:
+            inputs: "%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.eot"
+            output: "css/fonts/fontawesome-webfont.eot"
+        font_svg_fontawesome:
+            inputs: "%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.svg"
+            output: "css/fonts/fontawesome-webfont.svg"
+        foot_woff_fontawesome:
+            inputs: "%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.woff"
+            output: "css/fonts/fontawesome-webfont.woff"
+        foot_woff2_fontawesome:
+            inputs: "%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.woff2"
+            output: "css/fonts/fontawesome-webfont.woff2"
+        js_bootstrap:
+            inputs: "%kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.min.js"
+            filter: [uglifyjs2]
+            output: "js/lib/bootstrap.min.js"
+        js_lodash:
+            inputs: "%kernel.root_dir%/../vendor/bmatzner/lodash-bundle/Bmatzner/LoDashBundle/Resources/public/js/lodash.underscore.min.js"
+            filter: [uglifyjs2]
+            output: "js/lib/lodash.underscore.min.js"
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: "TorrentBundle\\Entity\\User"

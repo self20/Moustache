@@ -1,0 +1,21 @@
+{% extends 'TwigBundle:Exception:layout.html.twig' %}
+
+{% block content %}
+    <h1>{% trans %}Oops! 403 Forbidden.{% endtrans %}</h1>
+    <h2>{% trans %}This page is private!{% endtrans %}</h2>
+    <img class="img-responsive img-thumbnail" alt="403" src="{{ asset('css/img/errors/403.gif') }}" />
+    <div class="error-explanation">
+        <p>
+            {% trans %}These might be some reasons why you ended here:{% endtrans %}
+        </p>
+
+        <ul>
+            <li>{% trans %}You changed something on the URL or on the page.{% endtrans %}</li>
+            <li>{% trans %}You click on a link that doesn’t belong to you.{% endtrans %}</li>
+            <li>{% trans %}There is a bug. If you think this is the case, contact us.{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="error-actions">
+        <a href="{{ path('moustache_torrent') }}" class="btn btn-primary btn-lg"><span class="fa fa-2x fa-home"> {% trans %}Take me home{% endtrans %}</a>
+    </div>
+{% endblock %}
