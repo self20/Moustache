@@ -1,31 +1,37 @@
 moustache_torrent:
     path: /
     defaults: { _controller: moustache.controller.default:listAction }
+    methods:  [GET]
 
 moustache_torrent_content:
     path: /content/{id}
     defaults: { _controller: moustache.controller.default:torrentContentAction  }
     requirements:
         id: \d+
+    methods:  [GET]
 
 moustache_torrent_add:
     path: /add
     defaults: { _controller: moustache.controller.add:addAction  }
+    methods:  [POST]
 
 moustache_torrent_remove:
     path: /remove/{id}
     defaults: { _controller: moustache.controller.remove:removeAction  }
     requirements:
         id: \d+
+    methods:  [POST]
 
 moustache_torrent_stop:
     path: /stop/{id}
     defaults: { _controller: moustache.controller.life_cycle:stopAction  }
     requirements:
         id: \d+
+    methods:  [POST]
 
 moustache_torrent_start:
     path: /start/{id}
     defaults: { _controller: moustache.controller.life_cycle:startAction  }
     requirements:
         id: \d+
+    methods:  [POST]
