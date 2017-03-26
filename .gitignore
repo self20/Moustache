@@ -53,6 +53,8 @@
 # PHP CS cache
 /.php_cs.cache
 
+*.db3
+
 /doc/model.mwb.bak
 /emailspool
 /servers.yml

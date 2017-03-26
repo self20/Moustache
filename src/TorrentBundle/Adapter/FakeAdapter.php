@@ -119,4 +119,18 @@ class FakeAdapter implements AdapterInterface
     public function remove($torrent, $withLocalData)
     {
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function stop($torrent)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function startNow($torrent)
+    {
+    }
 }
