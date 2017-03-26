@@ -5,14 +5,6 @@ moustache:
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
-fos_user_change_password:
-    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /chpass
-
-fos_user_register:
-    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /signin
-
 fos_user_security_check:
     path: /chklogin
     defaults: { _controller: FOSUserBundle:Security:check }
