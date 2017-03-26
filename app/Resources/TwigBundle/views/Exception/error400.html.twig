@@ -1,0 +1,25 @@
+{% extends 'TwigBundle:Exception:layout.html.twig' %}
+
+{% block content %}
+    <h1>{% trans %}Oops! 400 Bad request.{% endtrans %}</h1>
+    <h2>{% trans %}Somehow, you made a request that was rejected by Moustache.{% endtrans %}</h2>
+    <img class="img-responsive img-thumbnail" alt="400" src="{{ asset('css/img/errors/400.gif') }}" />
+    <div class="error-explanation">
+        <p>
+            {% trans %}These might be some reasons why you ended here:{% endtrans %}
+        </p>
+
+        <ul>
+            <li>{% trans %}There is a bug somewhere and the action you did should have worked.{% endtrans %}</li>
+            <li>{% trans %}Your browser is too old or unsecure.{% endtrans %}</li>
+            <li>{% trans %}You tried to do nasty things. Boo! Stop being a bad guy, you suck.{% endtrans %}</li>
+        </ul>
+
+        <p>
+            {% trans %}Either way, administrator has been warned.{% endtrans %}
+        </p>
+    </div>
+    <div class="error-actions">
+        <a href="{{ path('moustache_torrent') }}" class="btn btn-primary btn-lg"><span class="fa fa-2x fa-home"> {% trans %}Take me home{% endtrans %}</a>
+    </div>
+{% endblock %}

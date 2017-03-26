@@ -26,7 +26,14 @@
 # Assets and user uploads
 /web/bundles/
 /web/cache/
-/web/css/
+/web/download/*
+!/web/download/.gitkeep
+/web/css/*
+!/web/css/img/*
+!/web/css/compiled/*
+/web/css/compiled/*_*.css
+/web/css/fonts/*
+!/web/css/fonts/.gitkeep
 /web/fonts/
 /web/images/
 /web/js/

@@ -22,6 +22,7 @@ use TorrentBundle\Entity\Torrent;
 // Les liens sont supprimés au login/logout -> minimum (mais avec fileatime() aussi). Au mieux, utiliser fileatime() dans une commande cron; Après 2 minutes depuis le dernier accès, supprimer le lien symbolique.
 // Expliquer dans la doc le besoin d’ajouter le cron.
 // @HEYLISTEN Sécurité => Faire très attention concernant le download de fichier torrent: faire une liste blanche de chose downloadable => dossier/zip, mkv, etc. pour ne pas que des fichiers PHP, py ou autre deviennent dispo et exécutables…
+// @HEYLISTEN Error images optimisations
 
 class DefaultController
 {

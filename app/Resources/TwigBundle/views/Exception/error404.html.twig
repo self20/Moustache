@@ -3,7 +3,7 @@
 {% block content %}
     <h1>{% trans %}Oops! 404 Not Found.{% endtrans %}</h1>
     <h2>{% trans %}Sorry, you request a page that doesn’t exist!{% endtrans %}</h2>
-    <img class="img-responsive img-thumbnail" alt="404" src="{{ asset('css/img/errors/404.gif') }}" />
+    <img class="img-responsive img-thumbnail" alt="404" src="{{ asset('css/img/errors/404-'~ random(1) ~'.gif') }}" />
     <div class="error-explanation">
         <p>
             {% trans %}These might be some reasons why you ended here:{% endtrans %}
@@ -16,6 +16,7 @@
             <li>{% trans %}You <b>wanted</b> to see this page.{% endtrans %}</li>
         </ul>
     </div>
+
     <div class="error-actions">
         <a href="{{ path('moustache_torrent') }}" class="btn btn-primary btn-lg"><span class="fa fa-2x fa-home"> {% trans %}Take me home{% endtrans %}</a>
     </div>

@@ -1,0 +1,25 @@
+{% extends 'TwigBundle:Exception:layout.html.twig' %}
+
+{% block content %}
+    <h1>{% trans %}Oops! 502 Bad gateway.{% endtrans %}</h1>
+    <h2>{% trans %}The server is unavailable.{% endtrans %}</h2>
+    <img class="img-responsive img-thumbnail" alt="502" src="{{ asset('css/img/errors/502.gif') }}" />
+    <div class="error-explanation">
+        <p>
+            {% trans %}These might be some reasons why you ended here:{% endtrans %}
+        </p>
+
+        <ul>
+            <li>{% trans %}The server is overloaded and could not send you what you were expecting.{% endtrans %}</li>
+            <li>{% trans %}An hardware (or software) failure occured and the communication with Moustache was cut.{% endtrans %}</li>
+        </ul>
+
+        <p>
+            {% trans %}If you stumble upon this page every time, you might have a problem with your browser settings (TLS?). You might want to try another browser and check your network equipment.{% endtrans %}
+        </p>
+    </div>
+
+    <div class="error-actions">
+        <a href="{{ path('moustache_torrent') }}" class="btn btn-primary btn-lg"><span class="fa fa-2x fa-home"> {% trans %}Take me home{% endtrans %}</a>
+    </div>
+{% endblock %}
