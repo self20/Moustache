@@ -4,6 +4,17 @@ services:
         tags:
             - { name: twig.extension }
 
+    # --- Command
+    moustache.command.generate_signup_command:
+        class: "MoustacheBundle\\Command\\GenerateSignupCommand"
+        arguments:
+            - "@torrent.repository.user"
+            - "@torrent.manager.user"
+            - "@router"
+        tags:
+            - { name: console.command }
+
+
     # --- Controllers
     moustache.controller.default:
         class: "MoustacheBundle\\Controller\\DefaultController"

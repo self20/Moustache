@@ -199,6 +199,7 @@ services:
         class: "TorrentBundle\\Manager\\UserManager"
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@fos_user.user_manager"
 
     # --- Mappers
     torrent.mapper.transmission_torrent:
