@@ -99,3 +99,6 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: "TorrentBundle\\Entity\\User"
+    from_email:
+        address: you@example.com
+        sender_name: You
