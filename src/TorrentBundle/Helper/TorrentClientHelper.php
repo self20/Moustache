@@ -70,6 +70,7 @@ class TorrentClientHelper implements HelperGetterInterface
      */
     public function getWhenAvailable()
     {
+        // @HEYLISTEN use a compiler pass
         $clientName = $this->torrentClientNameHelper->get();
         $clientServiceName = 'torrent.client.'.$clientName;
 

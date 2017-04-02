@@ -7,19 +7,19 @@ namespace TorrentBundle\Entity;
 interface CanBeUploaded
 {
     /**
-     * @return string
+     * @return \SplFileInfo|null
      */
-    public function getUrl(): string;
+    public function getUploadedFileByUrl();
+
+    /**
+     * @param \SplFileInfo $uploadedFileByUrl
+     */
+    public function setUploadedFileByUrl(\SplFileInfo $uploadedFileByUrl = null);
 
     /**
      * @return \SplFileInfo|null
      */
     public function getUploadedFile();
-
-    /**
-     * @param string $url
-     */
-    public function setUrl(string $url = null);
 
     /**
      * @param \SplFileInfo $uploadedFile

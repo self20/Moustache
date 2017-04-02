@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use TorrentBundle\Client\ClientInterface;
+use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Manager\TorrentManager;
 
 class AddController
@@ -74,32 +75,23 @@ class AddController
      */
     public function addAction()
     {
+        // @HEYLISTEN Handle magnet links
         $this->torrentMenuForm->handleRequest($this->request);
         if ($this->torrentMenuForm->isSubmitted() && $this->torrentMenuForm->isValid()) {
-            // Traiter l’URL
-            // Télécharger le fichier de l’URL.
-            // Sécuriser tout ça! Pas plus de 100Ko & .torrent
-            // Mettre le fichier dans la variable file de l’entité torrent
-
-            // Traiter le fichier torrent
-
-            // S’il n’est pas valide, error dans le flash messager
-
-            // @HEYLISTEN Form error handling here
-
-            $uploadedTorrent = $this->torrentMenuForm->getData();
-            $torrent = $this->addTorrent($uploadedTorrent->getUploadedFile());
-//            dump($torrent);
+            $this->addTorrent($this->torrentMenuForm->getData());
         }
-        // Some stuff
+
+        if (!$this->torrentMenuForm->isValid()) {
+            $this->redirector->addErrorMessage('%s', $this->torrentMenuForm->getErrors(true));
+        }
 
         return $this->redirector->redirect('moustache_torrent');
     }
 
-    private function addTorrent(\SplFileInfo $torrentFile)
+    private function addTorrent(TorrentInterface $torrent)
     {
         try {
-            return $this->torrentClient->add($torrentFile);
+            return $this->torrentClient->add($torrent);
         } catch (\Exception $ex) {
             $this->logger->error('A user failed to add a new torrent.', ['exception' => $ex]);
             $this->redirector->addErrorMessage('Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.');

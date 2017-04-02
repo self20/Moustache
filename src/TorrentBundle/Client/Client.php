@@ -59,9 +59,9 @@ class Client implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function add(\SplFileInfo $torrentFile): TorrentInterface
+    public function add(TorrentInterface $torrent): TorrentInterface
     {
-        return $this->accessorClient->add($torrentFile);
+        return $this->accessorClient->add($torrent);
     }
 
     /**

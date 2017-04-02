@@ -9,6 +9,7 @@ services:
         arguments:
             - "@torrent.helper.authenticated_user"
             - "@torrent.helper.torrent_storage"
+            - "@session"
 
     # --- Cache
     torrent.cache.cache:
@@ -146,6 +147,12 @@ services:
             - "@torrent.manager.torrent"
         tags:
             - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
+    torrent.event.uploaded_file_remover_listener:
+        class: "TorrentBundle\\EventListener\\UploadedFileRemoverListener"
+        arguments:
+            - "@filesystem"
+        tags:
+            - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
     torrent.event.torrent_remove_listener:
         class: "TorrentBundle\\EventListener\\TorrentRemoveListener"
         arguments:
@@ -189,6 +196,7 @@ services:
         arguments:
             - "@torrent.helper.authenticated_user"
             - "@filesystem"
+            - "@logger"
             - "%torrent_storage%"
 
     # --- Managers

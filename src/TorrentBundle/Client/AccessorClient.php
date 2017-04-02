@@ -77,13 +77,11 @@ class AccessorClient implements AccessorClientInterface
      * @throws TorrentAdapterException
      * @throws CannotFillTorrentException
      */
-    public function add(\SplFileInfo $torrentFile): TorrentInterface
+    public function add(TorrentInterface $torrent): TorrentInterface
     {
-        $savePath = $this->torrentStorageHelper->get();
+        $externalTorrent = $this->doAddTorrent($torrent, $this->torrentStorageHelper->get());
 
-        $externalTorrent = $this->doAddTorrent($torrentFile, $savePath);
-
-        $torrent = $this->doMapTorrent(new Torrent(), $externalTorrent);
+        $torrent = $this->doMapTorrent($torrent, $externalTorrent);
 
         $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_ADDED, new TorrentAfterEvent($torrent));
 
@@ -134,16 +132,17 @@ class AccessorClient implements AccessorClientInterface
         $notMappedTorrent = $this->torrentFilter->getAuthenticatedUserTorrent($id);
 
         if (null === $notMappedTorrent) {
+            // @HEYLISTEN All the not found exception should update the cache (remove the incriminated entry).
             throw new TorrentNotFoundException(sprintf('A torrent with id “%s” was requested but it does not exist.', $id));
         }
 
         return $notMappedTorrent;
     }
 
-    private function doAddTorrent(\SplFileInfo $torrentFile, string $savePath = null)
+    private function doAddTorrent(TorrentInterface $torrent, string $savePath = null)
     {
         try {
-            return $this->externalClient->add($torrentFile->getRealPath(), $savePath);
+            return $this->externalClient->add($torrent, $savePath);
         } catch (\Exception $ex) {
             throw new TorrentAdapterException($ex->getMessage());
         }

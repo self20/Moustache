@@ -1,10 +1,12 @@
 <div class="card text-xs-center {% if torrent.isStopped %}card-inverse{% endif %}">
     <div class="card-header text-muted">
         <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group btn-group-sm" role="group" aria-label="Play">
-              <a href="{{ path('moustache_torrent_start', { id: torrent.id }) }}" type="button" class="btn btn-secondary{% if not torrent.isStopped %} disabled{% endif %}"><span class="fa fa-share-alt" aria-hidden="true"></span></a>
-              <a href="{{ path('moustache_torrent_stop', { id: torrent.id }) }}" type="button" class="btn btn-secondary{% if torrent.isStopped %} disabled{% endif %}"><span class="fa fa-pause" aria-hidden="true"></span></a>
-            </div>
+            {% if not torrent.isFile %} {# HEYLISTEN This should have an equivalent for files #}
+                <div class="btn-group btn-group-sm" role="group" aria-label="Play">
+                  <a href="{{ path('moustache_torrent_start', { id: torrent.id }) }}" type="button" class="btn btn-secondary{% if not torrent.isStopped %} disabled{% endif %}"><span class="fa fa-share-alt" aria-hidden="true"></span></a>
+                  <a href="{{ path('moustache_torrent_stop', { id: torrent.id }) }}" type="button" class="btn btn-secondary{% if torrent.isStopped %} disabled{% endif %}"><span class="fa fa-pause" aria-hidden="true"></span></a>
+                </div>
+            {% endif %}
 
             {% if not torrent.isFile and torrent.isDone %}
                 <div class="btn-group btn-group-sm" role="group" aria-label="More">

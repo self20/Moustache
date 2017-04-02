@@ -4,24 +4,55 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 trait CanBeUploadedTrait
 {
+    // @HEYLISTEN De duplicates the assertions
     /**
-     * @var string
+     * @var \SplFileInfo
+     *
+     * @Assert\File(
+     *     maxSize = "100k",
+     *     maxSizeMessage = "Your torrent file is too large to be valid.",
+     *     mimeTypes = {"application/x-bittorrent"},
+     *     mimeTypesMessage = "Your file was not recognize as a .torrent file.",
+     *     disallowEmptyMessage = "The uploaded torrent file seems completely empty.",
+     *     uploadIniSizeErrorMessage = "Your torrent file was rejected because it is too big (limited by server). {{ limit }}{{ suffix }} max allowed.",
+     *     groups={"default", "torrent_menu"}
+     * )
      */
-    protected $url = '';
+    protected $uploadedFileByUrl = null;
 
     /**
      * @var \SplFileInfo
+     *
+     * @Assert\File(
+     *     maxSize = "100k",
+     *     maxSizeMessage = "Your torrent file is too large to be valid.",
+     *     mimeTypes = {"application/x-bittorrent"},
+     *     mimeTypesMessage = "Your file was not recognize as a .torrent file.",
+     *     disallowEmptyMessage = "The uploaded torrent file seems completely empty.",
+     *     uploadIniSizeErrorMessage = "Your torrent file was rejected because it is too big (limited by server). {{ limit }}{{ suffix }} max allowed.",
+     *     groups={"default", "torrent_menu"}
+     * )
      */
     protected $uploadedFile = null;
 
     /**
      * {@inheritdoc}
      */
-    public function getUrl(): string
+    public function getUploadedFileByUrl()
     {
-        return $this->url;
+        return $this->uploadedFileByUrl;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUploadedFileByUrl(\SplFileInfo $uploadedFileByUrl = null)
+    {
+        $this->uploadedFileByUrl = $uploadedFileByUrl;
     }
 
     /**
@@ -29,15 +60,7 @@ trait CanBeUploadedTrait
      */
     public function getUploadedFile()
     {
-        return $this->uploadedFile;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUrl(string $url = null)
-    {
-        $this->url = $url ?? '';
+        return $this->uploadedFile ?? $this->uploadedFileByUrl;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Helper;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use TorrentBundle\Exception\BadTorrentStorageException;
 
@@ -20,6 +21,11 @@ class TorrentStorageHelper implements HelperGetterInterface
     private $filesystem;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @var string
      */
     private $torrentStorage;
@@ -31,13 +37,15 @@ class TorrentStorageHelper implements HelperGetterInterface
 
     /**
      * @param AuthenticatedUserHelper $authenticatedUserHelper
-     * @param Filesystem              $filesystem
-     * @param string                  $torrentStorage
+     * @param Filesystem $filesystem
+     * @param LoggerInterface $logger
+     * @param string $torrentStorage
      */
-    public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, Filesystem $filesystem, string $torrentStorage)
+    public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, Filesystem $filesystem, LoggerInterface $logger, string $torrentStorage)
     {
         $this->authenticatedUserHelper = $authenticatedUserHelper;
         $this->filesystem = $filesystem;
+        $this->logger = $logger;
         $this->torrentStorage = $torrentStorage;
     }
 
@@ -65,6 +73,10 @@ class TorrentStorageHelper implements HelperGetterInterface
     {
         $this->generatedPath = $this->generatePath();
 
+        if (!$this->exist()) {
+            $this->createPath();
+        }
+
         if (!$this->isValid()) {
             $processUser = posix_getpwuid(posix_geteuid());
             throw new BadTorrentStorageException(sprintf(
@@ -75,11 +87,21 @@ class TorrentStorageHelper implements HelperGetterInterface
         return $this->generatedPath;
     }
 
+    private function createPath()
+    {
+        $this->filesystem->mkdir($this->generatedPath, 0770);
+        $this->logger->info('Creates %s missing directory.');
+    }
+
+    private function exist(): bool
+    {
+        return $this->filesystem->exists($this->generatedPath);
+    }
+
     private function isValid(): bool
     {
         return
             $this->filesystem->isAbsolutePath($this->generatedPath) &&
-            $this->filesystem->exists($this->generatedPath) &&
             is_readable($this->generatedPath) &&
             is_writable($this->generatedPath)
         ;

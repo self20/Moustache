@@ -15,8 +15,6 @@ use TorrentBundle\Entity\Torrent;
 // @HEYLISTEN Ajouter la fonction de remove de torrent dans l’UI (dans un second temps OK).
 // @HEYLISTEN Chercher fichier localement ?
 // @HEYLISTEN Classer les exceptions en configuration ou BugError
-// @HEYLISTEN Include dans les tests => check de la qualité HTML
-// @HEYLISTEN Créer le path pour torrent storage si ce dernier n’existe pas. Faire un chmod 770. sur ce dernier.
 
 // @HEYLISTEN Solution: pour le download, faire un lien symbolique dans web (ex: /download/{token}/filename.mp3), avec un token unique, généré par fichier;
 // Les liens sont supprimés au login/logout -> minimum (mais avec fileatime() aussi). Au mieux, utiliser fileatime() dans une commande cron; Après 2 minutes depuis le dernier accès, supprimer le lien symbolique.
@@ -63,7 +61,6 @@ class DefaultController
     public function listAction()
     {
         $torrents = $this->getAllTorrents();
-//        dump($torrents);
 
         return $this->render('MoustacheBundle:Default:torrents.html.twig', ['torrents' => $torrents]);
     }
@@ -81,8 +78,6 @@ class DefaultController
     {
         $torrent = $this->getSingleTorrent($id);
 
-//        dump($torrent);
-
         return $this->render('MoustacheBundle:Default:files.html.twig', ['torrent' => $torrent]);
     }
 
@@ -94,13 +89,9 @@ class DefaultController
      */
     private function render(string $template, array $values): Response
     {
-        // @HEYLISTEN WOW this is ugly, change it.
-
         $values['formTorrentMenuBig'] = $this->torrentMenuForm->setData(new Torrent())->createView();
         $values['formTorrentMenu'] = $this->torrentMenuForm->setData(new Torrent())->createView();
         $values['formTorrent'] = $this->torrentMenuForm->setData(new Torrent())->createView();
-
-//        dump($values['formTorrentMenu']);
 
         return $this->templateEngine->renderResponse($template, $values);
     }

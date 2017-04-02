@@ -133,15 +133,6 @@ class Torrent implements TorrentInterface
     protected $downloadedByteSize = 0;
 
     /**
-     * @var string
-     * @Assert\Url(
-     *     message="Please, give a torrent url (http(s)://…).",
-     *     groups={"default", "torrent_menu"}
-     * )
-     */
-    protected $url = '';
-
-    /**
      * @return string
      */
     public function __toString(): string

@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Adapter;
 
+use TorrentBundle\Entity\TorrentInterface;
+
 interface AdapterInterface
 {
     /**
-     * @param string $torrentFilePath
+     * @param string $torrent
      * @param string $savePath
      *
      * @return mixed
      */
-    public function add(string $torrentFilePath, string $savePath = null);
+    public function add(TorrentInterface $torrent, string $savePath = null);
 
     /**
      * @return bool

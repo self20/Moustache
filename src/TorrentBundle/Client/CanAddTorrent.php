@@ -9,10 +9,9 @@ use TorrentBundle\Entity\TorrentInterface;
 interface CanAddTorrent
 {
     /**
-     * @param string $torrentFile
-     * @param string $savepath
+     * @param TorrentInterface $torrent
      *
      * @return TorrentInterface
      */
-    public function add(\SplFileInfo $torrentFile): TorrentInterface;
+    public function add(TorrentInterface $torrent): TorrentInterface;
 }

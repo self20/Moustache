@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Form;
 
+use MoustacheBundle\Form\DataTransformer\UrlToUploadedFileTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,9 +25,11 @@ class TorrentMenu extends AbstractType
                 'data_class' => null,
                 'required' => false,
             ])
-            ->add('url', TextType::class, [
+            ->add('uploadedFileByUrl', TextType::class, [
+                'data_class' => null,
                 'required' => false,
             ])
+            ->get('uploadedFileByUrl')->addModelTransformer(new UrlToUploadedFileTransformer())
         ;
     }
 

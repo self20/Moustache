@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Adapter;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 use TorrentBundle\DataFixtures\Data\TorrentData;
 use TorrentBundle\Entity\CanDownload;
-use TorrentBundle\Entity\Torrent;
+use TorrentBundle\Entity\TorrentInterface;
+use TorrentBundle\Exception\NoUploadedFileException;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Helper\TorrentStorageHelper;
 
 class FakeAdapter implements AdapterInterface
 {
+    const SESSION_KEY = 'fake_torrents';
+
     /**
      * @var AuthenticatedUserHelper
      */
@@ -23,25 +27,35 @@ class FakeAdapter implements AdapterInterface
     private $torrentStorageHelper;
 
     /**
-     * @param AuthenticatedUserHelper $authenticatedUserHelper
-     * @param TorrentStorageHelper    $torrentStorageHelper
+     * @var Session
      */
-    public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, TorrentStorageHelper $torrentStorageHelper)
+    private $session;
+
+    /**
+     * @param AuthenticatedUserHelper $authenticatedUserHelper
+     * @param TorrentStorageHelper $torrentStorageHelper
+     * @param Session $session
+     */
+    public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, TorrentStorageHelper $torrentStorageHelper, Session $session)
     {
         $this->authenticatedUserHelper = $authenticatedUserHelper;
         $this->torrentStorageHelper = $torrentStorageHelper;
+        $this->session = $session;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function add(string $torrentFilePath, string $savePath = null)
+    public function add(TorrentInterface $torrent, string $savePath = null)
     {
-        TorrentData::createAll();
+        if (null === $torrent->getUploadedFile()) {
+            throw new NoUploadedFileException('Tried to add a torrent with fake but no .torrent file was provided.');
+        }
+
+        $this->retreiveTorrentsFromSession();
 
         $count = count(TorrentData::$torrents) + 1;
 
-        $torrent = new Torrent();
         $torrent->setId($count);
         $torrent->setHash(sha1((string) $count));
         $torrent->setUser($this->authenticatedUserHelper->get());
@@ -57,6 +71,8 @@ class FakeAdapter implements AdapterInterface
         $torrent->setStatus(CanDownload::STATUS_DONE);
         $torrent->setMime('directory');
         TorrentData::$torrents[$count] = $torrent;
+
+        $this->session->set(self::SESSION_KEY, TorrentData::$torrents);
 
         return $torrent;
     }
@@ -74,9 +90,9 @@ class FakeAdapter implements AdapterInterface
      */
     public function get($id)
     {
-        TorrentData::createAll();
+        $this->retreiveTorrentsFromSession();
 
-        return TorrentData::$torrents[$id];
+        return TorrentData::$torrents[$id] ?? null;
     }
 
     /**
@@ -108,7 +124,7 @@ class FakeAdapter implements AdapterInterface
      */
     public function getAll(): array
     {
-        TorrentData::createAll();
+        $this->retreiveTorrentsFromSession();
 
         return TorrentData::$torrents;
     }
@@ -132,5 +148,15 @@ class FakeAdapter implements AdapterInterface
      */
     public function startNow($torrent)
     {
+    }
+
+    private function retreiveTorrentsFromSession()
+    {
+        if ($this->session->has(self::SESSION_KEY)) {
+            TorrentData::$torrents = $this->session->get(self::SESSION_KEY);
+        } else {
+            TorrentData::createAll();
+            $this->session->set(self::SESSION_KEY, TorrentData::$torrents);
+        }
     }
 }
