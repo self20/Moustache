@@ -1,10 +1,11 @@
 parameters:
-    database_name: moustache
+    database_name: moustache_test
     database_path: '%kernel.root_dir%/moustache_test.db3'
     secret: very_secret
     torrent_rpc_client: fake
     torrent_rpc_host: 127.0.0.1
     torrent_rpc_port: 9091
+    torrent_storage: "%kernel.root_dir%"
     compass_path: /usr/bin/compass
     sass_path: /usr/bin/sassc
     uglifycss_path: '%kernel.root_dir%/../node_modules/.bin/uglifycss'

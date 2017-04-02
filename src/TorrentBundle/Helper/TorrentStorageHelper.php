@@ -39,6 +39,7 @@ class TorrentStorageHelper implements HelperGetterInterface
         $this->authenticatedUserHelper = $authenticatedUserHelper;
         $this->filesystem = $filesystem;
         $this->torrentStorage = $torrentStorage;
+        // @HEYLISTEN Cannot do that now because it needs an authenticated user… when container is building itself.
         $this->generatedPath = $this->generatePath();
     }
 

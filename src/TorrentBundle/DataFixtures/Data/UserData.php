@@ -38,6 +38,14 @@ class UserData
         $userAdmin->setEnabled(true);
         self::$users['admin'] = $userAdmin;
 
+        $guest = new User();
+        $guest->setUsername('guest');
+        $guest->setEmail('guest');
+        $guest->setPlainPassword('test');
+        $guest->setEnabled(false);
+        $guest->setConfirmationToken('01234567abcdef');
+        self::$users['guest'] = $guest;
+
         return true;
     }
 

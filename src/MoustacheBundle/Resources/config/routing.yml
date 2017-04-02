@@ -40,12 +40,12 @@ moustache_signup_form:
     path: /signup/form/{confirmationToken}
     defaults: { _controller: moustache.controller.signup:formAction }
     requirements:
-        id: "[a-f0-9]"
+        confirmationToken: "[a-f0-9]+"
     methods:  [GET]
 
 moustache_signup_signup:
     path: /signup/{confirmationToken}
     defaults: { _controller: moustache.controller.signup:signupAction }
     requirements:
-        id: "[a-f0-9]"
+        confirmationToken: "[a-f0-9]+"
     methods:  [POST]

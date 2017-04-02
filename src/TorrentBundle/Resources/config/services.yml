@@ -109,6 +109,8 @@ services:
     # --- Entity
     torrent.entity.torrent:
         class: "TorrentBundle\\Entity\\Torrent"
+    torrent.entity.user:
+        class: "TorrentBundle\\Entity\\User"
 
     # --- Event Listeners
     torrent.event.cache_updater_listener.after_torrent_added:

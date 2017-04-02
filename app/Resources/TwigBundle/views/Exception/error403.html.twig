@@ -2,8 +2,14 @@
 
 {% block content %}
     <h1>{% trans %}Oops! 403 Forbidden.{% endtrans %}</h1>
-    <h2>{% trans %}This page is private!{% endtrans %}</h2>
+    <h2>{% trans %}This page/link is private!{% endtrans %}</h2>
     <img class="img-responsive img-thumbnail" alt="403" src="{{ asset('css/img/errors/403.gif') }}" />
+    {% if exception.message is defined %}
+        <p>
+            {% trans %}This message bubbled up:{% endtrans %}<br>
+            “{{ exception.message }}”
+        </p>
+    {% endif %}
     <div class="error-explanation">
         <p>
             {% trans %}These might be some reasons why you ended here:{% endtrans %}

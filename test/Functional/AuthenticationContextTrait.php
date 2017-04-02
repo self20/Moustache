@@ -1,10 +1,15 @@
 <?php
 
+use Behat\Behat\Hook\Scope\AfterFeatureScope;
+use Behat\Behat\Hook\Scope\AfterScenarioScope;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Component\BrowserKit\Cookie;
 
 trait AuthenticationContextTrait
 {
-    private $authCookies;
+    static public $authCookies;
+
+    static public $mustLogout = false;
 
     /**
      * @Given /^I(?:’m|'m| am) authenticated as "(?P<username>[^"]+)" with password "(?P<password>[^"]+)"$/
@@ -16,27 +21,91 @@ trait AuthenticationContextTrait
     {
         $client = $this->getSession()->getDriver()->getClient();
 
-        $cookieName = $this->getAuthCookieName($username, $password);
-        $authCookie = $this->getAuthCookie($cookieName);
+        $cookieString = $this->login($username, $password);
+        self::$authCookies['auth'] = Cookie::fromString($cookieString);
 
-        if (empty($authCookie)) {
-            $cookieString = $this->login($username, $password);
-            $this->authCookies[$cookieName] = Cookie::fromString($cookieString);
-        }
-
-        $client->getCookieJar()->set($this->authCookies[$cookieName]);
+        $client->getCookieJar()->set(self::$authCookies['auth']);
     }
 
-    private function getAuthCookieName(string $username, string $password): string
+    /**
+     * @Then /^I save the response cookies$/
+     *
+     * @param string $username
+     * @param string $password
+     */
+    public function iSaveTheReturnedCookie()
     {
-        return sprintf('%s|%s', $username, $password);
+        $client = $this->getSession()->getDriver()->getClient();
+
+        self::$authCookies['auth'] = $client->getCookieJar()->get('PHPSESSID');
     }
 
-    private function getAuthCookie(string $cookieName)
+    /**
+     * @Then /^I show the cookies$/
+     *
+     * @param string $username
+     * @param string $password
+     */
+    public function iShowTheCookies()
     {
-        if (isset($this->authCookies[$cookieName])) {
-            return $this->authCookies[$cookieName];
+        $client = $this->getSession()->getDriver()->getClient();
+
+        dump($client->getCookieJar());
+        dump(self::$authCookies);
+    }
+
+    /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
+    public function autoKeepCookies(BeforeScenarioScope $scope)
+    {
+        if (!empty(self::$authCookies['auth'])) {
+            $client = $this->getSession()->getDriver()->getClient();
+            $client->getCookieJar()->set(self::$authCookies['auth']);
         }
+    }
+
+    /**
+     * @AfterScenario
+     *
+     * @param AfterScenarioScope $scope
+     */
+    public function autoSaveResponseCookies(AfterScenarioScope $scope)
+    {
+        if ($scope->getScenario()->hasTag('saveCookies')) {
+            $this->iSaveTheReturnedCookie();
+        }
+    }
+
+    /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
+    public function autoCleanClientCookies(BeforeScenarioScope $scope)
+    {
+        if (self::$mustLogout) {
+            $client = $this->getSession()->getDriver()->getClient();
+
+            $this->visit('/logout');
+            $client->restart();
+            self::$authCookies = null;
+
+            self::$mustLogout = false;
+        }
+    }
+
+    /**
+     * @AfterFeature
+     *
+     * @param AfterFeatureScope $scope
+     */
+    public static function teardownCookies(AfterFeatureScope $scope)
+    {
+        self::$authCookies = null;
+        self::$mustLogout = true;
     }
 
     protected function login(string $username, string $password)

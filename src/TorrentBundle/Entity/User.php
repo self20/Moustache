@@ -82,6 +82,12 @@ class User extends FOSUser implements UserInterface
      * Plain password. Used for model validation. Must not be persisted.
      *
      * @var string
+     *
+     * @Assert\Length(
+     *      min = 10,
+     *      minMessage = "Please pick a password of at least {{ limit }} characters. That might seems a lot, but Moustache values security.",
+     *      groups={"default", "signup"}
+     * )
      */
     protected $plainPassword;
 

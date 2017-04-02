@@ -30,7 +30,11 @@
 
     <body>
         {% block bodyhead %}
-            {% include 'MoustacheBundle::nav.html.twig' %}
+            {% if  is_granted('ROLE_USER') %}
+                {% include 'MoustacheBundle::nav.html.twig' %}
+            {% else %}
+                {% include 'MoustacheBundle::nav-empty.html.twig' %}
+            {% endif %}
         {% endblock bodyhead %}
 
         <div id="content" class="container">

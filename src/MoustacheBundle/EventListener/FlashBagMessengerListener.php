@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MoustacheBundle\EventListener;
 
 use MoustacheBundle\Helper\FlashBagHelper;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 // @HEYLISTEN Rename this to something like “GlobalMessengerListener” and class comment
 class FlashBagMessengerListener
@@ -24,13 +24,15 @@ class FlashBagMessengerListener
     }
 
     /**
-     * @param FilterResponseEvent $event
+     * @param GetResponseEvent $event
      *
-     * @return FilterResponseEvent
+     * @return GetResponseEvent
      */
-    public function onKernelResponse(FilterResponseEvent $event): FilterResponseEvent
+    public function onKernelRequest(GetResponseEvent $event): GetResponseEvent
     {
-        $this->flashBagHelper->greetUser();
+        if ('moustache_torrent' === $event->getRequest()->attributes->get('_route')) {
+            $this->flashBagHelper->greetUser();
+        }
 
         return $event;
     }

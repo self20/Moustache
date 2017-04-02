@@ -1,7 +1,6 @@
 <?php
 
 use Behat\Behat\Hook\Scope\AfterFeatureScope;
-use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -14,7 +13,7 @@ trait DatabaseContextTrait
      *
      * @BeforeScenario
      *
-     * @param AfterScenarioScope $scope
+     * @param BeforeScenarioScope $scope
      */
     public function resetDatabase(BeforeScenarioScope $scope)
     {
@@ -40,7 +39,7 @@ trait DatabaseContextTrait
      *
      * @param AfterFeatureScope $scope
      */
-    public static function teardown(AfterFeatureScope $scope)
+    public static function teardownDatabase(AfterFeatureScope $scope)
     {
         self::dropDatabase();
     }

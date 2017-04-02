@@ -63,7 +63,6 @@ class DefaultController
     public function listAction()
     {
         $torrents = $this->getAllTorrents();
-
 //        dump($torrents);
 
         return $this->render('MoustacheBundle:Default:torrents.html.twig', ['torrents' => $torrents]);

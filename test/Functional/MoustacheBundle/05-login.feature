@@ -1,3 +1,4 @@
+@Authentication
 @Login
 Feature: Ability to login
 
@@ -10,8 +11,8 @@ Feature: Ability to login
         And I should be on "/login"
     Examples:
         | uri                          |
-        | /                            |
         | /content/1                   |
+        | /                            |
 
     Scenario: As Moustachor, I see the login form
         Given I am on "/login"

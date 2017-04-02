@@ -1,10 +1,8 @@
 @Message
-Feature: Ability to see a torrent list
-
-    Background:
-        Given I am authenticated as "normal" with password "test"
+Feature: Ability to see messages
 
     Scenario: As Moustachor, I am greeted when I first connect to the site
+        Given I am authenticated as "normal" with password "test"
         Then the response status code should be 200
         And I should be on "/"
         And I should see "Hi folks!" in the "#content .alert" element

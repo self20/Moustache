@@ -1,0 +1,20 @@
+{% extends 'MoustacheBundle::layout.html.twig' %}
+
+{% block title %}Signup. That’s so cool!{% endblock %}
+
+{% block bodyhead %}
+{% endblock bodyhead %}
+
+{% block body %}
+    <br />
+    <section class="container torrent-section">
+        <div class="row">
+            {{ form_start(formSignup, {'action': path('moustache_signup_signup', {'confirmationToken': user.confirmationToken}), 'attr': {'class': ''}}) }}
+                {{ form_errors(formSignup.plainPassword) }}
+                <input type="text" disable value="{{ user.username }}">
+                {{ form_widget(formSignup.plainPassword, {'id': '', 'attr': {}}) }}
+                <button class="btn btn-primary" type="submit"><i class="fa fa-upload" aria-hidden="true"> {% trans %}Signup{% endtrans %}</i></button>
+            {{ form_end(formSignup) }}
+        </div>
+    </section>
+{% endblock body %}
