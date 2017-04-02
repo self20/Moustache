@@ -24,7 +24,7 @@ Feature: Ability to login
         Given I am on "/login"
         Then I fill in "username" with "narmol"
         Then I fill in "password" with "test"
-        And I press "_submit"
+        When I press "_submit"
         Then I should be on "/login"
         Then I should see "Invalid credentials"
 
@@ -32,14 +32,20 @@ Feature: Ability to login
         Given I am on "/login"
         Then I fill in "username" with "normal"
         Then I fill in "password" with "badpass"
-        And I press "_submit"
+        When I press "_submit"
         Then I should be on "/login"
         Then I should see "Invalid credentials"
 
+    @saveCookies
     Scenario: As Moustachor, I log in
         Given I am on "/login"
         Then I fill in "username" with "normal"
         Then I fill in "password" with "test"
-        And I press "_submit"
+        When I press "_submit"
+        Then the response status code should be 200
         Then I should be on "/"
         Then I should not see "Invalid credentials"
+
+    Scenario: As moustachor, I cannot see the login page again
+        When I go to "/login"
+        Then the response status code should be 403

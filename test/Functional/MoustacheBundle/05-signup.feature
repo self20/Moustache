@@ -11,8 +11,8 @@ Feature: Ability to signup
         And I should see a "button" element
 
     Scenario: As a guest, I am warned that I did a typo on the second password
+        Given I am on "/signup/form/01234567abcdef"
         When I fill in "signup_plainPassword_first" with "mySuperPASS"
-        When I fill in "signup_plainPassword_second" with "ymSuperPASS"
         When I fill in "signup_plainPassword_second" with "ymSuperPASS"
         When I press "Signup"
         Then the response status code should be 200
@@ -43,3 +43,7 @@ Feature: Ability to signup
         When I reload the page
         And I should be on "/"
         Then the response status code should be 200
+
+    Scenario: As moustachor, I cannot see the signup page again
+        When I go to "/signup/form/01234567abcdef"
+        Then the response status code should be 403

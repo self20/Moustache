@@ -1,4 +1,5 @@
 @Content
+@List
 Feature: Ability to see a torrent list
 
     Scenario: As Admin, I see an empty list of torrents

@@ -110,6 +110,7 @@ trait AuthenticationContextTrait
 
     protected function login(string $username, string $password)
     {
+        $this->visit('/logout');
         $this->visit('/login');
         $this->fillField('username', $username);
         $this->fillField('password', $password);

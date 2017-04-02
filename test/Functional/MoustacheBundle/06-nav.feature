@@ -1,4 +1,5 @@
 @Content
+@Nav
 Feature: Ability to see the navbar
 
     Scenario: As anonymous, I see an branded navbar
