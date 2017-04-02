@@ -4,15 +4,17 @@
  *
 */
 
-@import "partial/_global.scss";
 @import "bootstrap.scss";
 @import "fontawesome.scss";
+@import "partial/_global.scss";
+@import "partial/_navbar.scss";
 
 .twig-exception-div {
     text-align: center;
 
     img {
         margin-bottom: 1em;
+        max-height: 300px;
     }
 
     .error-explanation {

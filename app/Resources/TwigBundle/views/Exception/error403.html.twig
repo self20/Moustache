@@ -7,7 +7,7 @@
     {% if exception.message is defined %}
         <p>
             {% trans %}This message bubbled up:{% endtrans %}<br>
-            “{{ exception.message }}”
+            <strong>“{{ exception.message }}”</strong>
         </p>
     {% endif %}
     <div class="error-explanation">

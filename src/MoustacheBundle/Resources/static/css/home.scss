@@ -4,9 +4,10 @@
  *
 */
 
-@import "partial/_global.scss";
 @import "bootstrap.scss";
 @import "fontawesome.scss";
+@import "partial/_global.scss";
+@import "partial/_navbar.scss";
 
 
 /* HOME STYLES
@@ -49,33 +50,6 @@
 
     .fa.directory {
         @extend .fa-folder-open-o;
-    }
-}
-
-.navbar {
-    .fa {
-        color: #FFF;
-    }
-
-    a {
-        color: #FFF;
-    }
-
-    img {
-        width: 120px;
-        height: 30px;
-    }
-
-    @include media-breakpoint-down(xs) {
-        .responsive-logo {
-            transform: translateX(-50%);
-            left: 50%;
-            position: absolute;
-        }
-
-        & {
-            height: 60px;
-        }
     }
 }
 
