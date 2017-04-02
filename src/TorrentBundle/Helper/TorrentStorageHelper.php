@@ -39,8 +39,6 @@ class TorrentStorageHelper implements HelperGetterInterface
         $this->authenticatedUserHelper = $authenticatedUserHelper;
         $this->filesystem = $filesystem;
         $this->torrentStorage = $torrentStorage;
-        // @HEYLISTEN Cannot do that now because it needs an authenticated user… when container is building itself.
-        $this->generatedPath = $this->generatePath();
     }
 
     /**
@@ -53,6 +51,8 @@ class TorrentStorageHelper implements HelperGetterInterface
 
     public function getWhenAvailable()
     {
+        $this->generatedPath = $this->generatePath();
+
         return $this->generatedPath;
     }
 
@@ -63,6 +63,8 @@ class TorrentStorageHelper implements HelperGetterInterface
      */
     public function get(): string
     {
+        $this->generatedPath = $this->generatePath();
+
         if (!$this->isValid()) {
             $processUser = posix_getpwuid(posix_geteuid());
             throw new BadTorrentStorageException(sprintf(
