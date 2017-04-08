@@ -114,27 +114,23 @@ services:
         class: "TorrentBundle\\Entity\\User"
 
     # --- Event Listeners
-    torrent.event.cache_updater_listener.after_torrent_added:
+    torrent.event.cache_updater_listener:
         class: "TorrentBundle\\EventListener\\CacheUpdaterListener"
         arguments:
             - "@torrent.client.current"
+            - "@torrent.cache.cache"
             - "@logger"
         tags:
-            - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
-    torrent.event.cache_updater_listener.after_torrent_removed:
-        class: "TorrentBundle\\EventListener\\CacheUpdaterListener"
-        arguments:
-            - "@torrent.client.current"
-            - "@logger"
-        tags:
-            - { name: kernel.event_listener, event: event.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.torrent.after.added, method: afterTorrentAdded, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 0 }
     torrent.event.cache_initializer_listener:
         class: "TorrentBundle\\EventListener\\CacheInitializerListener"
         arguments:
             - "@torrent.cache.cache"
             - "@logger"
         tags:
-            - { name: kernel.event_listener, event: event.client.after.initialize, method: afterClientInitialized, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.client.after.initialize, method: afterClientInitialized, priority: 0 }
     torrent.event.doctrine_flusher_listener:
         class: "TorrentBundle\\EventListener\\DoctrineFlusherListener"
         arguments:
@@ -146,19 +142,19 @@ services:
         arguments:
             - "@torrent.manager.torrent"
         tags:
-            - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.torrent.after.added, method: afterTorrentAdded, priority: 0 }
     torrent.event.uploaded_file_remover_listener:
         class: "TorrentBundle\\EventListener\\UploadedFileRemoverListener"
         arguments:
             - "@filesystem"
         tags:
-            - { name: kernel.event_listener, event: event.torrent.after.added, method: afterTorrentAdded, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.torrent.after.added, method: afterTorrentAdded, priority: 0 }
     torrent.event.torrent_remove_listener:
         class: "TorrentBundle\\EventListener\\TorrentRemoveListener"
         arguments:
             - "@torrent.manager.torrent"
         tags:
-            - { name: kernel.event_listener, event: event.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
 
     # --- External
     torrent.external.transmission:
