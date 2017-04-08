@@ -7,9 +7,9 @@ use Symfony\Component\BrowserKit\Cookie;
 
 trait AuthenticationContextTrait
 {
-    static public $authCookies;
+    public static $authCookies;
 
-    static public $mustLogout = false;
+    public static $mustLogout = false;
 
     /**
      * @Given /^I(?:’m|'m| am) authenticated as "(?P<username>[^"]+)" with password "(?P<password>[^"]+)"$/

@@ -22,7 +22,7 @@ class UserManager
 
     /**
      * @param EntityManagerInterface $entityManager
-     * @param FosUserManager $fosUserManager
+     * @param FosUserManager         $fosUserManager
      */
     public function __construct(EntityManagerInterface $entityManager, FosUserManager $fosUserManager)
     {

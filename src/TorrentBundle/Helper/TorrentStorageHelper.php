@@ -37,9 +37,9 @@ class TorrentStorageHelper implements HelperGetterInterface
 
     /**
      * @param AuthenticatedUserHelper $authenticatedUserHelper
-     * @param Filesystem $filesystem
-     * @param LoggerInterface $logger
-     * @param string $torrentStorage
+     * @param Filesystem              $filesystem
+     * @param LoggerInterface         $logger
+     * @param string                  $torrentStorage
      */
     public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, Filesystem $filesystem, LoggerInterface $logger, string $torrentStorage)
     {

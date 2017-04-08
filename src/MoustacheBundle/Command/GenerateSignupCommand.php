@@ -28,8 +28,8 @@ class GenerateSignupCommand extends SymfonyCommand
     private $router;
 
     /**
-     * @param UserRepository $userRepository
-     * @param UserManager $userManager
+     * @param UserRepository  $userRepository
+     * @param UserManager     $userManager
      * @param RouterInterface $router
      */
     public function __construct(UserRepository $userRepository, UserManager $userManager, RouterInterface $router)
@@ -56,6 +56,7 @@ class GenerateSignupCommand extends SymfonyCommand
 
         if (!$this->shouldProcess($user)) {
             $output->writeln('<error>This user already is registred.</error>');
+
             return;
         }
 

@@ -53,13 +53,13 @@ class SignupController
     private $request;
 
     /**
-     * @param EngineInterface $templateEngine
-     * @param UserManager $userManager
-     * @param UserRepository $userRepository
-     * @param FormInterface $signupForm
+     * @param EngineInterface       $templateEngine
+     * @param UserManager           $userManager
+     * @param UserRepository        $userRepository
+     * @param FormInterface         $signupForm
      * @param LoginManagerInterface $loginManager
-     * @param RedirectorInterface $redirector
-     * @param Request $request
+     * @param RedirectorInterface   $redirector
+     * @param Request               $request
      */
     public function __construct(EngineInterface $templateEngine, UserManager $userManager, UserRepository $userRepository, FormInterface $signupForm, LoginManagerInterface $loginManager, RedirectorInterface $redirector, Request $request)
     {
@@ -111,6 +111,7 @@ class SignupController
         }
 
         $this->redirector->addErrorMessage('%s', $this->signupForm->getErrors(true));
+
         return $this->redirector->redirect('moustache_signup_form', ['confirmationToken' => $confirmationToken]);
     }
 

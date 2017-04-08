@@ -33,8 +33,8 @@ class FakeAdapter implements AdapterInterface
 
     /**
      * @param AuthenticatedUserHelper $authenticatedUserHelper
-     * @param TorrentStorageHelper $torrentStorageHelper
-     * @param Session $session
+     * @param TorrentStorageHelper    $torrentStorageHelper
+     * @param Session                 $session
      */
     public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, TorrentStorageHelper $torrentStorageHelper, Session $session)
     {
