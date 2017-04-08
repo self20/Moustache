@@ -17,6 +17,11 @@ interface CacheInterface
     public function get(string $key);
 
     /**
+     * @return bool
+     */
+    public function isUpToDate(): bool;
+
+    /**
      * @param string $key
      * @param mixed  $value
      */

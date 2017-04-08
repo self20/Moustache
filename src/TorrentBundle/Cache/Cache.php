@@ -8,6 +8,8 @@ use Symfony\Component\Cache\Adapter\AbstractAdapter;
 
 class Cache implements CacheInterface
 {
+    const MAX_REFRESH_TIME = 15;
+
     /**
      * @var AbstractAdapter
      */
@@ -39,16 +41,39 @@ class Cache implements CacheInterface
     /**
      * {@inheritdoc}
      */
+    public function isUpToDate(): bool
+    {
+        return (time() - $this->getLatestUpdateTime()) < self::MAX_REFRESH_TIME;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function set(string $key, $value)
     {
         $cacheItem = $this->cacheAdapter->getItem($this->getKey($key));
         $cacheItem->set($value);
 
         $this->cacheAdapter->save($cacheItem);
+
+        $this->saveLatestUpdateTime();
     }
 
     private function getKey(string $key): string
     {
         return $this->rpcClient.'.'.$key;
+    }
+
+    private function saveLatestUpdateTime()
+    {
+        $timeCacheItem = $this->cacheAdapter->getItem($this->getKey('latestUpdate'));
+        $timeCacheItem->set(time());
+
+        $this->cacheAdapter->save($timeCacheItem);
+    }
+
+    private function getLatestUpdateTime()
+    {
+        return $this->cacheAdapter->getItem($this->getKey('latestUpdate'))->get();
     }
 }
