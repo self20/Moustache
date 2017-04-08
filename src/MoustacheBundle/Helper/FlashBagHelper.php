@@ -9,6 +9,7 @@ use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
 /**
+ * @HEYLISTEN It’s more a service than a helper, so change it.
  * Adds reusable messages to the flashbag.
  */
 class FlashBagHelper
@@ -49,5 +50,15 @@ class FlashBagHelper
         $this->flashMessenger->info('Hi folks! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.');
 
         $this->userManager->incrementCurrentMessage($user);
+    }
+
+    public function warnTorrentIsMissing()
+    {
+        $user = $this->authenticatedUserHelper->get();
+        if (null === $user) {
+            return;
+        }
+
+        $this->flashMessenger->warn('It seems one of your torrent have been deleted unexpectedly from the system.');
     }
 }

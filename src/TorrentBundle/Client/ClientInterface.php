@@ -8,4 +8,6 @@ interface ClientInterface
 {
     const FAKE = 'fake';
     const TRANSMISSION = 'transmission';
+
+    // @HEYLISTEN Fill this interface
 }

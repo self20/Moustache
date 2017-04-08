@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace TorrentBundle\Adapter;
 
 use TorrentBundle\Entity\TorrentInterface;
+use TorrentBundle\Exception\NoUploadedFileException;
+use TorrentBundle\Exception\TorrentNotFoundException;
 use Transmission\Transmission;
 
 class TransmissionAdapter implements AdapterInterface
@@ -56,7 +58,13 @@ class TransmissionAdapter implements AdapterInterface
      */
     public function get($id)
     {
-        return $this->transmissionClient->get($id);
+        $externalTorrent = $this->doGetTorrent($id);
+
+        if (empty($externalTorrent)) {
+            throw new TorrentNotFoundException($id, 0);
+        }
+
+        return $externalTorrent;
     }
 
     /**
@@ -112,5 +120,14 @@ class TransmissionAdapter implements AdapterInterface
     public function stop($torrent)
     {
         return $this->transmissionClient->stop($torrent);
+    }
+
+    private function doGetTorrent(int $id)
+    {
+        try {
+            return $this->transmissionClient->get($id);
+        } catch (\RuntimeException $ex) {
+            throw new TorrentNotFoundException($id, 0, $ex);
+        }
     }
 }

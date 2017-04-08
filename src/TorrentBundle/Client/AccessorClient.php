@@ -8,7 +8,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
 use TorrentBundle\Cache\CacheInterface;
 use TorrentBundle\Client\Traits\ExternalTorrentGetterTrait;
-use TorrentBundle\Entity\Torrent;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
@@ -96,31 +95,31 @@ class AccessorClient implements AccessorClientInterface
      **/
     public function get(int $id): TorrentInterface
     {
-        $notMappedTorrent = $this->getAuthenticatedUserTorrent($id);
-
-        return $this->getAndMapAndDispatchEvent($notMappedTorrent);
+        return $this->getAndMapAndDispatchEvent($this->getAuthenticatedUserTorrent($id));
     }
 
     /**
      * {@inheritdoc}
      *
-     * @throws TorrentNotFoundException
      * @throws CannotFillTorrentException
      */
     public function getAll(): array
     {
-        $notMappedTorrents = $this->torrentFilter->getAllAuthenticatedUserTorrents();
+        return array_filter(array_map(function ($notMappedTorrent) {
+            $externalTorrent = $this->getExternalTorrent($notMappedTorrent->getHash());
 
-        return array_map(function ($notMappedTorrent) {
-            return $this->getAndMapAndDispatchEvent($notMappedTorrent);
-        }, $notMappedTorrents);
+            if (null !== $externalTorrent) {
+                $torrent = $this->doMapTorrent($notMappedTorrent, $externalTorrent);
+                $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_GET, new TorrentAfterEvent($torrent));
+
+                return $torrent;
+            }
+        }, $this->torrentFilter->getAllAuthenticatedUserTorrents()));
     }
 
     private function getAndMapAndDispatchEvent(TorrentInterface $notMappedTorrent): TorrentInterface
     {
-        $externalTorrent = $this->getExternalTorrent($notMappedTorrent->getHash());
-
-        $torrent = $this->doMapTorrent($notMappedTorrent, $externalTorrent);
+        $torrent = $this->doMapTorrent($notMappedTorrent, $this->getExternalTorrent($notMappedTorrent->getHash()));
 
         $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_GET, new TorrentAfterEvent($torrent));
 
@@ -132,8 +131,7 @@ class AccessorClient implements AccessorClientInterface
         $notMappedTorrent = $this->torrentFilter->getAuthenticatedUserTorrent($id);
 
         if (null === $notMappedTorrent) {
-            // @HEYLISTEN All the not found exception should update the cache (remove the incriminated entry).
-            throw new TorrentNotFoundException(sprintf('A torrent with id “%s” was requested but it does not exist.', $id));
+            throw new TorrentNotFoundException($id);
         }
 
         return $notMappedTorrent;
