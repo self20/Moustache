@@ -155,11 +155,6 @@ class User extends FOSUser implements UserInterface
     protected $torrents;
 
     /**
-     * @var string[]
-     */
-    protected $torrentHashes = null;
-
-    /**
      * {@inheritdoc}
      */
     public function __toString(): string
@@ -197,20 +192,6 @@ class User extends FOSUser implements UserInterface
     public function getTorrents(): PersistentCollection
     {
         return $this->torrents;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTorrentHashes(): array
-    {
-        if (null === $this->torrentHashes) {
-            $this->torrentHashes = array_map(function ($torrent) {
-                return $torrent->getHash();
-            }, $this->torrents->toArray());
-        }
-
-        return $this->torrentHashes;
     }
 
     /**

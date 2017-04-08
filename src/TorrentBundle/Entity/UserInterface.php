@@ -25,11 +25,6 @@ interface UserInterface extends EntityInterface, FOSUserInterface
     public function getTorrents(): PersistentCollection;
 
     /**
-     * @return string[]
-     */
-    public function getTorrentHashes(): array;
-
-    /**
      * @param int $currentMessage
      */
     public function setCurrentMessage(int $currentMessage);
