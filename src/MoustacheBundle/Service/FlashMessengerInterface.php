@@ -9,7 +9,7 @@ interface FlashMessengerInterface
     const TYPE_ERROR = 'danger';
     const TYPE_INFO = 'info';
     const TYPE_SUCCESS = 'success';
-    const TYPE_WARN = 'warn';
+    const TYPE_WARN = 'warning';
 
     /**
      * @param string $message

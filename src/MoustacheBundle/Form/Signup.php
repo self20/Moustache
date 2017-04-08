@@ -26,7 +26,7 @@ class Signup extends AbstractType
                 'required' => true,
                 // @HEYLISTEN use the translator
                 'invalid_message' => 'The password does not match! Few! It was close.',
-                'first_options'  => ['label' => 'Password'],
+                'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])
         ;
