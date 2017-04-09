@@ -117,7 +117,7 @@ services:
     torrent.event.cache_updater_listener:
         class: "TorrentBundle\\EventListener\\CacheUpdaterListener"
         arguments:
-            - "@torrent.client.current"
+            - "@torrent.helper.torrent_client"
             - "@torrent.cache.cache"
             - "@logger"
         tags:

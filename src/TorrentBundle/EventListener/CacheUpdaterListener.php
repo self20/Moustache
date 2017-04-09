@@ -10,6 +10,7 @@ use TorrentBundle\Cache\CacheInterface;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\TorrentAfterEvent;
 use TorrentBundle\Exception\CacheOutdatedException;
+use TorrentBundle\Helper\TorrentClientHelper;
 
 /**
  * Fills the outdated cache with fresh data.
@@ -17,9 +18,9 @@ use TorrentBundle\Exception\CacheOutdatedException;
 final class CacheUpdaterListener
 {
     /**
-     * @var ClientInterface
+     * @var TorrentClientHelper
      */
-    private $client;
+    private $torrentClientHelper;
 
     /**
      * @var CacheInterface
@@ -32,13 +33,13 @@ final class CacheUpdaterListener
     private $logger;
 
     /**
-     * @param ClientInterface $client
-     * @param CacheInterface  $cache
+     * @param TorrentClientHelper $torrentClientHelper
+     * @param CacheInterface $cache
      * @param LoggerInterface $logger
      */
-    public function __construct(ClientInterface $client, CacheInterface $cache, LoggerInterface $logger)
+    public function __construct(TorrentClientHelper $torrentClientHelper, CacheInterface $cache, LoggerInterface $logger)
     {
-        $this->client = $client;
+        $this->torrentClientHelper = $torrentClientHelper;
         $this->cache = $cache;
         $this->logger = $logger;
     }
@@ -54,8 +55,8 @@ final class CacheUpdaterListener
             return;
         }
 
-        $this->client->updateCache();
-        $this->logger->info(sprintf('Cache updated for client “%s” after adding a new torrent.', $this->client->getName()));
+        $this->torrentClientHelper->get()->updateCache();
+        $this->logger->info(sprintf('Cache updated for client “%s” after adding a new torrent.', $this->torrentClientHelper->get()->getName()));
 
         return $event;
     }
@@ -71,8 +72,8 @@ final class CacheUpdaterListener
             return;
         }
 
-        $this->client->updateCache();
-        $this->logger->info(sprintf('Cache updated for client “%s” after removing a torrent.', $this->client->getName()));
+        $this->torrentClientHelper->get()->updateCache();
+        $this->logger->info(sprintf('Cache updated for client “%s” after removing a torrent.', $this->torrentClientHelper->get()->getName()));
 
         return $event;
     }
@@ -84,12 +85,16 @@ final class CacheUpdaterListener
      */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if (!$this->shouldUpdate() || !$event->getException() instanceof CacheOutdatedException) {
+        if (
+            !$this->shouldUpdate() ||
+            !$event->getException() instanceof CacheOutdatedException ||
+            null === $this->torrentClientHelper->getWhenAvailable()
+        ) {
             return;
         }
 
-        $this->client->updateCache();
-        $this->logger->warning(sprintf('Cache updated for client “%s” after an exception occured.', $this->client->getName()), ['exception' => $event->getException()]);
+        $this->torrentClientHelper->get()->updateCache();
+        $this->logger->warning(sprintf('Cache updated for client “%s” after an exception occured.', $this->torrentClientHelper->get()->getName()), ['exception' => $event->getException()]);
 
         return $event;
     }
