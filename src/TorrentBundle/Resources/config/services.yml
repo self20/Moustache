@@ -59,7 +59,7 @@ services:
             - "@torrent.client.transmission_availability"
             - "%torrent_rpc_client%"
         tags:
-            - { name: torrent.client }
+            - { name: torrent.client, type: transmission }
 
     torrent.client.fake_accessor:
         class: "TorrentBundle\\Client\\AccessorClient"
@@ -101,7 +101,7 @@ services:
             - "@torrent.client.fake_availability"
             - "%torrent_rpc_client%"
         tags:
-            - { name: torrent.client }
+            - { name: torrent.client, type: fake }
 
     torrent.client.current:
         class: "TorrentBundle\\Client\\Client"
@@ -178,14 +178,9 @@ services:
     torrent.helper.torrent_client:
         class: "TorrentBundle\\Helper\\TorrentClientHelper"
         arguments:
-            - "@service_container"
-            - "@torrent.helper.torrent_client_name"
             - "@event_dispatcher"
             - "%torrent_rpc_host%"
             - "%torrent_rpc_port%"
-    torrent.helper.torrent_client_name:
-        class: "TorrentBundle\\Helper\\TorrentClientNameHelper"
-        arguments:
             - "%torrent_rpc_client%"
     torrent.helper.torrent_storage:
         class: "TorrentBundle\\Helper\\TorrentStorageHelper"

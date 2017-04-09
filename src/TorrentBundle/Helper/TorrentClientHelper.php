@@ -4,26 +4,16 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\ClientAfterEvent;
 use TorrentBundle\Event\Events;
+use TorrentBundle\Exception\BadTorrentClientNameException;
 use TorrentBundle\Exception\NoClientConnectorOpen;
 use TorrentBundle\Exception\NoClientServiceAvailable;
 
 class TorrentClientHelper implements HelperGetterInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var HelperGetterInterface
-     */
-    private $torrentClientNameHelper;
-
     /**
      * @var EventDispatcherInterface
      */
@@ -40,19 +30,27 @@ class TorrentClientHelper implements HelperGetterInterface
     private $rpcPort;
 
     /**
-     * @param ContainerInterface       $container
-     * @param HelperGetterInterface    $torrentClientNameHelper
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param string                   $rpcHost
-     * @param int                      $rpcPort
+     * @var string
      */
-    public function __construct(ContainerInterface $container, HelperGetterInterface $torrentClientNameHelper, EventDispatcherInterface $eventDispatcher, string $rpcHost, int $rpcPort)
+    private $rpcName;
+
+    /**
+     * @var ClientInterface[]
+     */
+    private $torrentClients = [];
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param string $rpcHost
+     * @param int $rpcPort
+     * @param string $rpcName
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher, string $rpcHost, int $rpcPort, string $rpcName)
     {
-        $this->container = $container;
-        $this->torrentClientNameHelper = $torrentClientNameHelper;
         $this->eventDispatcher = $eventDispatcher;
         $this->rpcHost = $rpcHost;
         $this->rpcPort = $rpcPort;
+        $this->rpcName = $rpcName;
     }
 
     /**
@@ -60,47 +58,71 @@ class TorrentClientHelper implements HelperGetterInterface
      */
     public function isEmpty(): bool
     {
-        return null === $this->getWhenAvailable();
+        return !isset($this->torrentClients[$this->rpcName]);
     }
 
     /**
-     * @throws NoClientServiceAvailable
-     *
-     * @return ClientInterface
+     * @return ClientInterface|null
      */
     public function getWhenAvailable()
     {
-        // @HEYLISTEN use a compiler pass
-        $clientName = $this->torrentClientNameHelper->get();
-        $clientServiceName = 'torrent.client.'.$clientName;
-
-        if (!$this->container->has($clientServiceName)) {
-            throw new NoClientServiceAvailable(sprintf(
-                'A valid torrent RPC client was configured (%s) but the corresponding service configuration is missing.', $clientName
-            ));
+        if ($this->isEmpty()) {
+            return;
         }
 
-        return $this->container->get($clientServiceName);
+        return $this->torrentClients[$this->rpcName];
     }
 
     /**
      * @throws NoClientServiceAvailable
+     * @throws BadTorrentClientNameException
      * @throws NoClientConnectorOpen
      *
      * @return ClientInterface
      */
     public function get()
     {
-        $client = $this->getWhenAvailable();
+        $this->checkAtLeastOneClientAvailable();
+        $this->checkConfiguredClientName();
+        $this->checkClientAvailability();
 
-        if (!$client->isAvailable()) {
+        $this->eventDispatcher->dispatch(Events::AFTER_CLIENT_RETRIEVED, new ClientAfterEvent($this->torrentClients[$this->rpcName]));
+
+        return $this->torrentClients[$this->rpcName];
+    }
+
+    /**
+     * @param ClientInterface $torrentClient
+     * @param string $clientName
+     */
+    public function addTorrentclient(ClientInterface $torrentClient, string $clientName)
+    {
+        $this->torrentClients[$clientName] = $torrentClient;
+    }
+
+    private function checkAtLeastOneClientAvailable()
+    {
+        if (empty($this->torrentClients)) {
+            throw new NoClientServiceAvailable('No torrent client is configured. This should never happened, please submit an issue to moustache developpers.');
+        }
+    }
+
+    private function checkConfiguredClientName()
+    {
+        if ($this->isEmpty()) {
+            // @HEYLISTEN Classify exception by type
+            throw new BadTorrentClientNameException(sprintf(
+                'Torrent RPC client name “%s” given in parameters is invalid. Available: [%s]', $this->rpcName, implode(', ', array_keys($this->torrentClients))
+            ));
+        }
+    }
+
+    private function checkClientAvailability()
+    {
+        if (!$this->torrentClients[$this->rpcName]->isAvailable()) {
             throw new NoClientConnectorOpen(
-                sprintf('No %s client is listening on %s:%s', $client->getName(), $this->rpcHost, $this->rpcPort)
+                sprintf('No %s client is listening on %s:%s', $this->rpcName, $this->rpcHost, $this->rpcPort)
             );
         }
-
-        $this->eventDispatcher->dispatch(Events::AFTER_CLIENT_INITIALIZED, new ClientAfterEvent($client));
-
-        return $client;
     }
 }
