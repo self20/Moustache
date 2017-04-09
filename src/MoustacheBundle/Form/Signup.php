@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TorrentBundle\Entity\User;
 
-// @HEYLISTEN Do a 405 error!
 class Signup extends AbstractType
 {
     /**

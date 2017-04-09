@@ -1,0 +1,18 @@
+{% extends 'TwigBundle:Exception:layout.html.twig' %}
+
+{% block content %}
+    <h1>{% trans %}Oops! 405 Method Not Allowed.{% endtrans %}</h1>
+    <h2>{% trans %}You tried to access this page by the road, but only the railway is open.{% endtrans %}</h2>
+    <img class="img-responsive img-thumbnail" alt="405" src="{{ asset('css/img/errors/405.gif') }}" />
+    <div class="error-explanation">
+        <p>
+            {% if exception.headers.Allow is defined %}
+                {% trans with {'%method%': exception.headers.Allow } %}This page is only accessible with %method%.{% endtrans %}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="error-actions">
+        <a href="{{ path('moustache_torrent') }}" class="btn btn-primary btn-lg"><span class="fa fa-2x fa-home"> {% trans %}Take me home{% endtrans %}</a>
+    </div>
+{% endblock %}
