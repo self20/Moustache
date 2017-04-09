@@ -8,10 +8,9 @@ use Psr\Log\LoggerInterface;
 use TorrentBundle\Cache\CacheInterface;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\ClientAfterEvent;
-use TorrentBundle\Event\TorrentAfterEvent;
 
 /**
- * Fills cache with new data.
+ * Fills cache with new data after a client is retrieved.
  */
 final class CacheInitializerListener
 {
@@ -36,9 +35,9 @@ final class CacheInitializerListener
     }
 
     /**
-     * @param TorrentAfterEvent $event
+     * @param ClientAfterEvent $event
      */
-    public function afterClientInitialized(ClientAfterEvent $event)
+    public function afterClientRetrieved(ClientAfterEvent $event)
     {
         $client = $event->getClient();
 

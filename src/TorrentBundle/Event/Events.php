@@ -6,7 +6,7 @@ namespace TorrentBundle\Event;
 
 class Events
 {
-    const AFTER_CLIENT_INITIALIZED = 'torrent.client.after.initialize';
+    const AFTER_CLIENT_RETRIEVED = 'torrent.client.after.retrieved';
 
     const AFTER_TORRENT_ADDED = 'torrent.torrent.after.added';
 

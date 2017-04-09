@@ -130,7 +130,7 @@ services:
             - "@torrent.cache.cache"
             - "@logger"
         tags:
-            - { name: kernel.event_listener, event: torrent.client.after.initialize, method: afterClientInitialized, priority: 0 }
+            - { name: kernel.event_listener, event: torrent.client.after.retrieved, method: afterClientRetrieved, priority: 0 }
     torrent.event.doctrine_flusher_listener:
         class: "TorrentBundle\\EventListener\\DoctrineFlusherListener"
         arguments:
