@@ -20,7 +20,7 @@ moustache_torrent_remove:
     defaults: { _controller: moustache.controller.remove:removeAction  }
     requirements:
         id: \d+
-    methods:  [POST]
+    methods:  [POST,GET]
 
 moustache_torrent_stop:
     path: /stop/{id}
