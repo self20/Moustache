@@ -20,7 +20,9 @@ Moustache loves you (however it’s still a software).
 
         $ cd /var/www/moustache
         $ composer install -o --no-dev # If composer is installed on your system
-        $ php composer.phar install -o --no-dev # Alternative
+        $ php bin/composer.phar install -o --no-dev # Alternative
+
+- If it is the first time, composer will ask for every values in the Configuration section.
 
 ### Configuration ###
 
@@ -56,11 +58,9 @@ Ask your friend’s preference before chosing a name.
 ### KNOWN ISSUES ###
 
 - TODO: There is no UI function to remove a torrent. `/remove/{id}` is the URL. It’ll come later.
-- TODO: If torrent storage path does not exists, an error occurred. Moustache must be able to handle that itself.
 - TODO: Download buttons does not work.
-- TODO: It’s not possible to download a torrent with a direct URL or a magnet.
+- TODO: It’s not possible to download a torrent with a magnet.
 -
-- Sometimes, mime type guessing is wrong.
 - Torrent does not appear stopped or started after doing the action, the page has to be reloaded. It happens because Moustache is asynchronous and the torrent client is slower.
 
 ### Security ###

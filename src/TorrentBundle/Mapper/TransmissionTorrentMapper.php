@@ -47,8 +47,6 @@ class TransmissionTorrentMapper implements TorrentMapperInterface
         $torrent->setName($externalTorrent->getName());
         $torrent->setNbPeers(count($externalTorrent->getPeers()));
         $torrent->setDownloadDir($externalTorrent->getDownloadDir() ?? '');
-        // @HEYLISTEN This does not work, because files exists even if the torrent is the only file.
-        // @HEYLISTEN SHould not be determine everytime, because it does not depends on externalTorrent
         if (1 === count($externalTorrent->getFiles())) {
             $torrent->setMime($this->mimeGuesser->guessMimeByFilename($externalTorrent->getName()));
         } else {
