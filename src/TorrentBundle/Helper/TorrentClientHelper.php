@@ -110,7 +110,6 @@ class TorrentClientHelper implements HelperGetterInterface
     private function checkConfiguredClientName()
     {
         if ($this->isEmpty()) {
-            // @HEYLISTEN Classify exception by type
             throw new BadTorrentClientNameException(sprintf(
                 'Torrent RPC client name “%s” given in parameters is invalid. Available: [%s]', $this->rpcName, implode(', ', array_keys($this->torrentClients))
             ));

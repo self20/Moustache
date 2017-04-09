@@ -27,9 +27,9 @@ test:
         - php bin/console lint:yaml src
         - php bin/console lint:yaml app
         - php vendor/bin/php-cs-fixer fix --dry-run
-        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/Learning/*
-        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/MoustacheBundle/*
-        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/TorrentBundle/*
+        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/Learning/
+        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/MoustacheBundle/
+        - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/TorrentBundle/
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Connection
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Error
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Login
