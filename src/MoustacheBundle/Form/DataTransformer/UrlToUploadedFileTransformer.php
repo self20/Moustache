@@ -20,7 +20,7 @@ class UrlToUploadedFileTransformer implements DataTransformerInterface
         }
 
         $temporaryFile = new \SplFileObject(tempnam(sys_get_temp_dir(), 'moustache_torrent'), 'a', true);
-        $temporaryFile->fwrite(file_get_contents($url));
+        $temporaryFile->fwrite(file_get_contents($url, false, null, 0, 100000));
 
         return new File($temporaryFile->getRealPath(), true);
     }
