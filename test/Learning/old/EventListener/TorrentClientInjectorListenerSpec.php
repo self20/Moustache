@@ -9,8 +9,8 @@ use Prophecy\Argument;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use TorrentBundle\Adapter\TorrentClientInterface;
 use TorrentBundle\EventListener\TorrentClientInjectorListener;
-use TorrentBundle\Exception\NoClientAvailable;
 use TorrentBundle\Exception\Configuration\NoClientConnectorOpen;
+use TorrentBundle\Exception\NoClientAvailable;
 use TorrentBundle\Helper\HelperInterface;
 
 class TorrentClientInjectorListenerSpec extends ObjectBehavior

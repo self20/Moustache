@@ -16,6 +16,9 @@ class AuthenticatedUserHelper implements HelperGetterInterface
      */
     private $tokenStorage;
 
+    /**
+     * @param TokenStorageInterface $tokenStorage
+     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;

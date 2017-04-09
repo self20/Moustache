@@ -33,8 +33,8 @@ final class CacheUpdaterListener
 
     /**
      * @param TorrentClientHelper $torrentClientHelper
-     * @param CacheInterface $cache
-     * @param LoggerInterface $logger
+     * @param CacheInterface      $cache
+     * @param LoggerInterface     $logger
      */
     public function __construct(TorrentClientHelper $torrentClientHelper, CacheInterface $cache, LoggerInterface $logger)
     {

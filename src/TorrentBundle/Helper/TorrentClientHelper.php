@@ -41,9 +41,9 @@ class TorrentClientHelper implements HelperGetterInterface
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param string $rpcHost
-     * @param int $rpcPort
-     * @param string $rpcName
+     * @param string                   $rpcHost
+     * @param int                      $rpcPort
+     * @param string                   $rpcName
      */
     public function __construct(EventDispatcherInterface $eventDispatcher, string $rpcHost, int $rpcPort, string $rpcName)
     {
@@ -70,6 +70,8 @@ class TorrentClientHelper implements HelperGetterInterface
             return;
         }
 
+        $this->eventDispatcher->dispatch(Events::AFTER_CLIENT_RETRIEVED, new ClientAfterEvent($this->torrentClients[$this->rpcName]));
+
         return $this->torrentClients[$this->rpcName];
     }
 
@@ -93,7 +95,7 @@ class TorrentClientHelper implements HelperGetterInterface
 
     /**
      * @param ClientInterface $torrentClient
-     * @param string $clientName
+     * @param string          $clientName
      */
     public function addTorrentclient(ClientInterface $torrentClient, string $clientName)
     {

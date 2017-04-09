@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Spec\TorrentBundle\Exception\Configuration;
 
 use PhpSpec\ObjectBehavior;
-use TorrentBundle\Exception\Configuration\NoClientServiceAvailableException;
 use TorrentBundle\Exception\Configuration\ConfigurationException;
+use TorrentBundle\Exception\Configuration\NoClientServiceAvailableException;
 
 class NoClientServiceAvailableExceptionSpec extends ObjectBehavior
 {

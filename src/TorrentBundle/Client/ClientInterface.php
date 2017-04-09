@@ -9,5 +9,10 @@ interface ClientInterface
     const FAKE = 'fake';
     const TRANSMISSION = 'transmission';
 
+    /**
+     * @return bool
+     */
+    public function isAvailable(): bool;
+
     // @HEYLISTEN Fill this interface
 }

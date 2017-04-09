@@ -75,9 +75,9 @@ class SignupController
     /**
      * @param string $confirmationToken
      *
-     * @return string
-     *
      * @throws AccessDeniedHttpException
+     *
+     * @return string
      */
     public function formAction(string $confirmationToken): Response
     {

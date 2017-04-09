@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TorrentBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use TorrentBundle\Entity\UserInterface;
 use FOS\UserBundle\Doctrine\UserManager as FosUserManager;
+use TorrentBundle\Entity\UserInterface;
 
 class UserManager
 {

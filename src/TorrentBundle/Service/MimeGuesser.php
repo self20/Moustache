@@ -11,10 +11,10 @@ class MimeGuesser
     const EXTENSION_VIDEO = ['3gp', '3g2', 'avi', 'flv', 'm4v', 'mkv', 'mov', 'mp4', 'mpeg', 'mpg', 'ogg', 'ogv', 'vob', 'webm', 'wmv'];
     const EXTENSION_AUDIO = ['aac', 'aiff', 'flac', 'm4a', 'm4b', 'mmf', 'mp3', 'mpc', 'oga', 'opus', 'wav', 'wma'];
     const EXTENSION_IMAGE = ['bmp', 'bpg', 'heif', 'gif', 'ico', 'jpeg', 'jpg', 'pgm', 'png', 'ppm', 'psd', 'svg', 'tiff', 'xcf'];
-    const EXTENSION_ARCHIVE = ['7z', 'a', 'ar', 'bz2', 'cpt', 'cab', 'dar', 'gz', 'lz', 'lzma', 'lzo', 'rar', 's7z', 'tar', 'z'];
-    const EXTENSION_EXECUTABLE = ['app', 'apk', 'elf', 'exe', 'out'];
+    const EXTENSION_ARCHIVE = ['7z', 'a', 'ar', 'bz2', 'cpt', 'cab', 'dar', 'gz', 'lz', 'lzma', 'lzo', 'rar', 's7z', 'tar', 'zip'];
+    const EXTENSION_EXECUTABLE = ['app', 'apk', 'elf', 'exe', 'out', 'run', 'sh'];
     const EXTENSION_ISO = ['bin', 'cdi', 'cue', 'dmg', 'img', 'iso', 'mds', 'mdx'];
-    const EXTENSION_PDF = ['pdf', 'fdf', ''];
+    const EXTENSION_PDF = ['pdf', 'fdf'];
 
     const MIME_VIDEO = 'video';
     const MIME_AUDIO = 'audio';
