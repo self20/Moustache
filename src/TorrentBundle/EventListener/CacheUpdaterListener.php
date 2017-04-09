@@ -85,11 +85,7 @@ final class CacheUpdaterListener
      */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if (
-            !$this->shouldUpdate() ||
-            !$event->getException() instanceof CacheOutdatedException ||
-            null === $this->torrentClientHelper->getWhenAvailable()
-        ) {
+        if (!$event->getException() instanceof CacheOutdatedException || !$this->shouldUpdate()) {
             return;
         }
 
@@ -101,6 +97,9 @@ final class CacheUpdaterListener
 
     private function shouldUpdate(): bool
     {
-        return !$this->cache->isUpToDate();
+        return
+            !$this->torrentClientHelper->isEmpty() &&
+            !$this->cache->isUpToDate()
+        ;
     }
 }
