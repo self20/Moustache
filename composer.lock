@@ -3443,7 +3443,7 @@
                 "Context",
                 "Symfony2"
             ],
-            "time": "2017-04-01 20:55:28"
+            "time": "2017-04-01T20:55:28+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -4045,7 +4045,7 @@
                 "MIT"
             ],
             "description": "Integrates CodeCoverage with PhpSpec",
-            "time": "2017-02-21 14:32:44"
+            "time": "2017-02-21T14:32:44+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
