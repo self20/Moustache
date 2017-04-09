@@ -7,9 +7,9 @@ namespace TorrentBundle\Client\Traits;
 use MoustacheBundle\Event\Events;
 use MoustacheBundle\Event\TorrentMissingEvent;
 use TorrentBundle\Cache\CacheInterface;
-use TorrentBundle\Exception\CacheOutdatedException;
-use TorrentBundle\Exception\TorrentAdapterException;
-use TorrentBundle\Exception\TorrentNotFoundException;
+use TorrentBundle\Exception\Client\CacheOutdatedException;
+use TorrentBundle\Exception\Client\TorrentAdapterException;
+use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 
 trait ExternalTorrentGetterTrait
 {

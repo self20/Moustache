@@ -8,7 +8,7 @@ use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use TorrentBundle\Entity\UserInterface;
-use TorrentBundle\Exception\NoAuthenticatedUserException;
+use TorrentBundle\Exception\Permission\NoAuthenticatedUserException;
 use TorrentBundle\Helper\HelperGetterInterface;
 
 class AuthenticatedUserHelperSpec extends ObjectBehavior

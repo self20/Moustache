@@ -6,7 +6,7 @@ namespace TorrentBundle\Helper;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use TorrentBundle\Exception\BadTorrentStorageException;
+use TorrentBundle\Exception\Configuration\BadTorrentStorageException;
 
 class TorrentStorageHelper implements HelperGetterInterface
 {

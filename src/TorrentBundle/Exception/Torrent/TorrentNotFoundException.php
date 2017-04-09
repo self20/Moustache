@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TorrentBundle\Exception;
+namespace TorrentBundle\Exception\Torrent;
 
-class TorrentNotFoundException extends TorrentAdapterException
+class TorrentNotFoundException extends TorrentException
 {
+    const MESSAGE = 'A torrent with id “%s” was requested but it does not exist.';
+
     /**
      * @var int
      */
@@ -20,7 +22,7 @@ class TorrentNotFoundException extends TorrentAdapterException
     {
         $this->id = $id;
 
-        parent::__construct(sprintf('A torrent with id “%s” was requested but it does not exist.', $this->id), $code, $previous);
+        parent::__construct(sprintf(self::MESSAGE, $this->id), $code, $previous);
     }
 
     /**

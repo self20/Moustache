@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use TorrentBundle\DataFixtures\Data\TorrentData;
 use TorrentBundle\Entity\CanDownload;
 use TorrentBundle\Entity\TorrentInterface;
-use TorrentBundle\Exception\NoUploadedFileException;
+use TorrentBundle\Exception\Torrent\NoUploadedFileException;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Helper\TorrentStorageHelper;
 

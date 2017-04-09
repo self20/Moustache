@@ -12,7 +12,7 @@ use TorrentBundle\Entity\CanDownload;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
-use TorrentBundle\Exception\CannotStopTorrentException;
+use TorrentBundle\Exception\Torrent\CannotStopTorrentException;
 
 class LifeCycleClient implements LifeCycleClientInterface
 {

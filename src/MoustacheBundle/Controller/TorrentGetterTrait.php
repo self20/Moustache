@@ -6,7 +6,7 @@ namespace MoustacheBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TorrentBundle\Entity\TorrentInterface;
-use TorrentBundle\Exception\TorrentAdapterException;
+use TorrentBundle\Exception\Client\TorrentAdapterException;
 
 trait TorrentGetterTrait
 {

@@ -7,9 +7,8 @@ namespace TorrentBundle\EventListener;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use TorrentBundle\Cache\CacheInterface;
-use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\TorrentAfterEvent;
-use TorrentBundle\Exception\CacheOutdatedException;
+use TorrentBundle\Exception\Client\CacheOutdatedException;
 use TorrentBundle\Helper\TorrentClientHelper;
 
 /**

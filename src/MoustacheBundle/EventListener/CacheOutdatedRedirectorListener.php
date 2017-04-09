@@ -6,7 +6,7 @@ namespace MoustacheBundle\EventListener;
 
 use MoustacheBundle\Service\RedirectorInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use TorrentBundle\Exception\CacheOutdatedException;
+use TorrentBundle\Exception\Client\CacheOutdatedException;
 
 /**
  * Redirects (refresh) the user to the main page after a cache outdated exception.

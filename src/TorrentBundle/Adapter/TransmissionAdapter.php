@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TorrentBundle\Adapter;
 
 use TorrentBundle\Entity\TorrentInterface;
-use TorrentBundle\Exception\NoUploadedFileException;
-use TorrentBundle\Exception\TorrentNotFoundException;
+use TorrentBundle\Exception\Torrent\NoUploadedFileException;
+use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 use Transmission\Transmission;
 
 class TransmissionAdapter implements AdapterInterface

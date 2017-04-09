@@ -11,8 +11,8 @@ use TorrentBundle\Client\Traits\ExternalTorrentGetterTrait;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
-use TorrentBundle\Exception\CannotRemoveTorrentException;
-use TorrentBundle\Exception\TorrentNotFoundException;
+use TorrentBundle\Exception\Torrent\CannotRemoveTorrentException;
+use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 
 class RemoveClient implements RemoveClientInterface
 {

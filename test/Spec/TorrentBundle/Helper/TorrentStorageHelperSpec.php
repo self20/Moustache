@@ -8,7 +8,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Filesystem\Filesystem;
 use TorrentBundle\Entity\UserInterface;
-use TorrentBundle\Exception\BadTorrentStorageException;
+use TorrentBundle\Exception\Configuration\BadTorrentStorageException;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Helper\TorrentStorageHelper;
 

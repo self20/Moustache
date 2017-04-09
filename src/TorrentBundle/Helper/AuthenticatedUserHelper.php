@@ -7,7 +7,7 @@ namespace TorrentBundle\Helper;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use TorrentBundle\Entity\UserInterface;
-use TorrentBundle\Exception\NoAuthenticatedUserException;
+use TorrentBundle\Exception\Permission\NoAuthenticatedUserException;
 
 class AuthenticatedUserHelper implements HelperGetterInterface
 {

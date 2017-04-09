@@ -8,9 +8,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\ClientAfterEvent;
 use TorrentBundle\Event\Events;
-use TorrentBundle\Exception\BadTorrentClientNameException;
+use TorrentBundle\Exception\Configuration\BadTorrentClientNameException;
 use TorrentBundle\Exception\NoClientConnectorOpen;
-use TorrentBundle\Exception\NoClientServiceAvailable;
+use TorrentBundle\Exception\Configuration\NoClientServiceAvailableException;
 
 class TorrentClientHelper implements HelperGetterInterface
 {
@@ -74,7 +74,7 @@ class TorrentClientHelper implements HelperGetterInterface
     }
 
     /**
-     * @throws NoClientServiceAvailable
+     * @throws NoClientServiceAvailableException
      * @throws BadTorrentClientNameException
      * @throws NoClientConnectorOpen
      *
@@ -103,7 +103,7 @@ class TorrentClientHelper implements HelperGetterInterface
     private function checkAtLeastOneClientAvailable()
     {
         if (empty($this->torrentClients)) {
-            throw new NoClientServiceAvailable('No torrent client is configured. This should never happened, please submit an issue to moustache developpers.');
+            throw new NoClientServiceAvailableException('No torrent client is configured. This should never happened, please submit an issue to moustache developpers.');
         }
     }
 
