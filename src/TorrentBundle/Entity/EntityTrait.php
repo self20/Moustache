@@ -6,6 +6,8 @@ namespace TorrentBundle\Entity;
 
 trait EntityTrait
 {
+    protected $id;
+
     /**
      * {@inheritdoc}
      */

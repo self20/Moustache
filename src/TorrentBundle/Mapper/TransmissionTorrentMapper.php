@@ -49,10 +49,10 @@ class TransmissionTorrentMapper implements TorrentMapperInterface
         $torrent->setDownloadDir($externalTorrent->getDownloadDir() ?? '');
         // @HEYLISTEN This does not work, because files exists even if the torrent is the only file.
         // @HEYLISTEN SHould not be determine everytime, because it does not depends on externalTorrent
-        if (!empty($externalTorrent->getFiles())) {
-            $torrent->setMime(MimeGuesser::MIME_DIRECTORY);
-        } else {
+        if (1 === count($externalTorrent->getFiles())) {
             $torrent->setMime($this->mimeGuesser->guessMimeByFilename($externalTorrent->getName()));
+        } else {
+            $torrent->setMime(MimeGuesser::MIME_DIRECTORY);
         }
         $torrent->setFiles([]);
 
