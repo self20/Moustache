@@ -10,7 +10,7 @@
     <p>
         {% trans %}Please, try to contact the administrator to explain how upset you are.{% endtrans %}
     </p>
-    {% if content is defined and content %}
+    {% if content is defined %}
         <p>
             {% trans %}Take note of this message if you want to report:{% endtrans %}
             {% trans with {'%content%': content } %}“%content%”{% endtrans %}
