@@ -9,7 +9,7 @@ use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\ClientAfterEvent;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Exception\Configuration\BadTorrentClientNameException;
-use TorrentBundle\Exception\NoClientConnectorOpen;
+use TorrentBundle\Exception\Configuration\NoClientConnectorOpen;
 use TorrentBundle\Exception\Configuration\NoClientServiceAvailableException;
 
 class TorrentClientHelper implements HelperGetterInterface
