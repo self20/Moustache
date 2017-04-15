@@ -13,10 +13,10 @@ trait CanBeUploadedTrait
      * @var \SplFileInfo
      *
      * @Assert\File(
-     *     maxSize = "100k",
-     *     maxSizeMessage = "Your torrent file is too large to be valid.",
      *     mimeTypes = {"application/x-bittorrent"},
      *     mimeTypesMessage = "Your file was not recognize as a .torrent file.",
+     *     maxSize = "100k",
+     *     maxSizeMessage = "Your .torrent file was rejected because it is too large.",
      *     disallowEmptyMessage = "The uploaded torrent file seems completely empty.",
      *     uploadIniSizeErrorMessage = "Your torrent file was rejected because it is too big (limited by server). {{ limit }}{{ suffix }} max allowed.",
      *     groups={"default", "torrent_menu"}
@@ -28,10 +28,10 @@ trait CanBeUploadedTrait
      * @var \SplFileInfo
      *
      * @Assert\File(
-     *     maxSize = "100k",
-     *     maxSizeMessage = "Your torrent file is too large to be valid.",
      *     mimeTypes = {"application/x-bittorrent"},
      *     mimeTypesMessage = "Your file was not recognize as a .torrent file.",
+     *     maxSize = "100k",
+     *     maxSizeMessage = "Your .torrent file was rejected because it is too large.",
      *     disallowEmptyMessage = "The uploaded torrent file seems completely empty.",
      *     uploadIniSizeErrorMessage = "Your torrent file was rejected because it is too big (limited by server). {{ limit }}{{ suffix }} max allowed.",
      *     groups={"default", "torrent_menu"}

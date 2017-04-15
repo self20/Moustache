@@ -59,19 +59,19 @@ services:
             - "@moustache.shortcut.request"
 
     # --- Event Listeners
-    moustache.event.cache_outdated_redirector:
+    moustache.event_listener.cache_outdated_redirector:
         class: "MoustacheBundle\\EventListener\\CacheOutdatedRedirectorListener"
         arguments:
             - "@moustache.service.redirector"
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: -50 }
-    moustache.event.flash_bag_messenger:
+    moustache.event_listener.flash_bag_messenger:
         class: "MoustacheBundle\\EventListener\\FlashBagMessengerListener"
         arguments:
             - "@moustache.helper.flash_bag"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
-    moustache.event.missing_torrent_warner:
+    moustache.event_listener.missing_torrent_warner:
         class: "MoustacheBundle\\EventListener\\MissingTorrentWarnerListener"
         arguments:
             - "@logger"
@@ -79,6 +79,10 @@ services:
             - "@torrent.client.current"
         tags:
             - { name: kernel.event_listener, event: moustache.torrent.missing, method: onTorrentMissing, priority: 0}
+    moustache.event_listener.locale_setter:
+        class: "MoustacheBundle\\EventListener\\LocaleSetterListener"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 200}
 
     # --- Helper
     moustache.helper.flash_bag:

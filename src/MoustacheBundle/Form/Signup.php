@@ -23,7 +23,6 @@ class Signup extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
-                // @HEYLISTEN use the translator
                 'invalid_message' => 'The password does not match! Few! It was close.',
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],

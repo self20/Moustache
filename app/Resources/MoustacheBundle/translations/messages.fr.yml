@@ -1,0 +1,25 @@
+# Torrent list
+'Hello there!': 'Bien le bonjour!'
+'It seems you have no torrent yet, but stay cool!': 'Apparemment, vous n’avez aucun torrent, mais ça va aller !'
+'Hi folks! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.': 'Salut! Ici vous pouvez uploader for fichiers .torrent, attendre quelques secondes… puis télécharger le contenu sur votre ordinateur. Tellement facile que je pourrais me huiler moi-même.'
+
+# Torrent forms
+'Pick .torrent local file…': 'Choisissez un fichier .torrent local…'
+'or paste a torrent (http(s)://…) or a magnet (magnet:…) link': 'ou coller un lien web (http(s)://…) ou magnet (magnet:…)'
+'Start downloading': 'Télécharger'
+'Pick a .torrent file': 'Fichier .torrent'
+'or paste magnet/torrent link': 'ou coller un lien web/magnet'
+'Add torrent!': 'Ajouter le torrent'
+'Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.': 'Désolé, Moustache n’a pas pu ajouter votre fichier. Le gestionnaire de torrent a rencontré une erreur.'
+'“%s” has been suspended.': '« %s » a été suspendu.'
+'“%s” has been started.': '« %s » a été démarré.'
+
+# Signup/login form
+Signup: 'S’inscrire'
+'“%s” has been completely removed.': '“%s” a été complètement supprimé.'
+'Username': 'Nom d’utilisateur'
+'Password': 'Mot de passe'
+'Remember me': 'Se souvenir de moi'
+'Log in': 'Se connecter'
+'%s': '%s'
+'Repeat Password': 'Mot de passe (répétition)'

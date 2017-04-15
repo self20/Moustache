@@ -40,7 +40,7 @@ class RemoveController
 
         $this->torrentClient->removeAndDeleteLocalData($torrent);
 
-        $this->redirector->addSuccessMessage('“%s” has been completely removed from the server.', $torrent->getFriendlyName());
+        $this->redirector->addSuccessMessage('“%s” has been completely removed.', $torrent->getFriendlyName());
 
         return $this->redirector->redirect('moustache_torrent');
     }

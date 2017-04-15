@@ -18,7 +18,7 @@
                     {{ form_widget(formTorrentMenuBig.uploadedFile, {'id': 'torrent-selector-nav-big', 'attr': {'accept': '.torrent'}}) }}
                     {% trans %}Pick a .torrent file{% endtrans %}
                 </label>
-                {{ form_widget(formTorrentMenuBig.uploadedFileByUrl, {'attr': {'class': 'form-control torrent-url-nav', 'placeholder': 'or paste magnet/torrent link'|trans}}) }}
+                {{ form_widget(formTorrentMenuBig.uploadedFileByUrl, {'attr': {'class': 'form-control torrent-url-nav', 'placeholder': 'or paste magnet/torrent link' }}) }}
                 <span class="fa fa-ellipsis-v" aria-hidden="true"></span>
                 <button class="btn btn-primary" type="submit"><i class="fa fa-upload" aria-hidden="true"> {% trans %}Add torrent!{% endtrans %}</i></button>
             {{ form_end(formTorrentMenuBig) }}
@@ -31,7 +31,7 @@
                 {{ form_widget(formTorrentMenu.uploadedFile, {'id': 'torrent-selector-nav-small', 'attr': {'accept': '.torrent'}}) }}
                 {% trans %}Pick a .torrent file{% endtrans %}
             </label>
-            {{ form_widget(formTorrentMenu.uploadedFileByUrl, {'attr': {'class': 'form-control torrent-url-nav', 'placeholder': 'or paste magnet/torrent link'|trans}}) }}
+            {{ form_widget(formTorrentMenu.uploadedFileByUrl, {'attr': {'class': 'form-control torrent-url-nav', 'placeholder': 'or paste magnet/torrent link' }}) }}
             <span class="fa fa-ellipsis-v" aria-hidden="true"></span>
             <button class="btn btn-primary" type="submit"><i class="fa fa-upload" aria-hidden="true"> {% trans %}Add torrent!{% endtrans %}</i></button>
         {{ form_end(formTorrentMenu) }}

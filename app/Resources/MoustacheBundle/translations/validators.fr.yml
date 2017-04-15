@@ -1,0 +1,9 @@
+# Torrent form
+'Your file was not recognize as a .torrent file.': 'Votre fichier n’a pas été reconnu en tant que fichier .torrent.'
+'Your .torrent file was rejected because it is too large.': 'Votre fichier .torrent a été rejeté parce qu’il est trop volumineux.'
+'The uploaded torrent file seems completely empty.': 'The fichier torrent uploadé semble complètement vide.'
+'Your torrent file was rejected because it is too big (limited by server). {{ limit }}{{ suffix }} max allowed.': 'Votre fichier .torrent a été rejeté parce qu’il est trop volumineux. Le serveur limite le maximum à {{ limit }}{{ suffix }}.'
+
+# Signup
+'The password does not match! Few! It was close.': 'Les mots de passe ne concordent pas! Ouf… c’était juste.'
+'Please pick a password of at least {{ limit }} characters. That might seems a lot, but Moustache values security.': 'Choisissez un mot de passe d’au moins {{ limit }} caractères. Cela peut sembler beaucoup, mais Moustache valorise la sécurité.'
