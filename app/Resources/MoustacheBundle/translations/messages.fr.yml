@@ -18,6 +18,7 @@
 Signup: 'S’inscrire'
 '“%s” has been completely removed.': '“%s” a été complètement supprimé.'
 'Username': 'Nom d’utilisateur'
+'You will need this username to log in. You cannot change it.': 'Vous aurez besoin de ce pseudonyme plus tard pour vous connecter. Il n’est pas possible de le changer.'
 'Password': 'Mot de passe'
 'Remember me': 'Se souvenir de moi'
 'Log in': 'Se connecter'

@@ -86,6 +86,8 @@ class User extends FOSUser implements UserInterface
      * @Assert\Length(
      *      min = 10,
      *      minMessage = "Please pick a password of at least {{ limit }} characters. That might seems a lot, but Moustache values security.",
+     *      max = 70,
+     *      maxMessage = "Sorry but your password is too long: It must not exceed {{ limit }} characters.",
      *      groups={"default", "signup"}
      * )
      */

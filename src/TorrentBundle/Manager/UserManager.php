@@ -51,7 +51,7 @@ class UserManager
         $user->setEnabled(false);
         $user->setPlainPassword(random_bytes(20));
 
-        $this->fosUserManager->updatePassword($user);
+        $this->update($user);
 
         return $user;
     }
@@ -61,7 +61,7 @@ class UserManager
      */
     public function update(UserInterface $user)
     {
-        $this->fosUserManager->updateUser($user);
+        $this->fosUserManager->update($user);
     }
 
     /**

@@ -7,6 +7,8 @@ Feature: Ability to signup
         Then the response status code should be 200
         Then I should see a "input#signup_plainPassword_first" element
         And I should see a "input#signup_plainPassword_second" element
+        And I should see a "input#username[value=guest]" element
+        And I should see "You will need this username to log in"
         And I should see a "input#signup__token" element
         And I should see a "button" element
 
@@ -47,3 +49,7 @@ Feature: Ability to signup
     Scenario: As moustachor, I cannot see the signup page again
         When I go to "/signup/form/01234567abcdef"
         Then the response status code should be 403
+
+    Scenario: As moustachor, I can logout and login again
+        When I am authenticated as "guest" with password "passWORDisLongEn0ugh"
+        Then I should be on "/"

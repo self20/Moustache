@@ -104,7 +104,6 @@ services:
         factory: 'form.factory:create'
         arguments:
             - "MoustacheBundle\\Form\\Signup"
-            - "@torrent.entity.user"
 
     # --- Services
     moustache.service.flash_messager:

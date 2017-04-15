@@ -7,3 +7,4 @@
 # Signup
 'The password does not match! Few! It was close.': 'Les mots de passe ne concordent pas! Ouf… c’était juste.'
 'Please pick a password of at least {{ limit }} characters. That might seems a lot, but Moustache values security.': 'Choisissez un mot de passe d’au moins {{ limit }} caractères. Cela peut sembler beaucoup, mais Moustache valorise la sécurité.'
+'Sorry but your password is too long: It must not exceed {{ limit }} characters.': 'Désolé mais le mot de passe est trop long; Il ne doit pas faire plus de {{ limit }} caractères.'

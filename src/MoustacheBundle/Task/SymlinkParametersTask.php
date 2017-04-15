@@ -23,7 +23,7 @@ class SymlinkParametersTask implements TaskInterface
 
     /**
      * @param Filesystem $filesystem
-     * @param string $rootDirectory
+     * @param string     $rootDirectory
      */
     public function __construct(Filesystem $filesystem, string $rootDirectory)
     {

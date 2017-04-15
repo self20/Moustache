@@ -98,13 +98,12 @@ class SignupController
     {
         $user = $this->getUserByConfirmationToken($confirmationToken, 'Sorry, signup is not available for you. Token is invalid.');
 
+        $this->signupForm->setData($user);
         $this->signupForm->handleRequest($this->request);
         if ($this->signupForm->isSubmitted() && $this->signupForm->isValid()) {
             $user->setConfirmationToken(null);
             $user->setEnabled(true);
 
-            $this->userManager->flush();
-            // @HEYLISTEN Dynamically get the firewall name
             $this->loginManager->logInUser('main', $user);
 
             return $this->redirector->redirect('moustache_torrent');
