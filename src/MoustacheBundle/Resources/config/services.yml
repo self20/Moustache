@@ -13,7 +13,12 @@ services:
             - "@router"
         tags:
             - { name: console.command }
-
+    moustache.command.install:
+        class: "MoustacheBundle\\Command\\InstallCommand"
+        arguments:
+            - "@moustache.task.symlink_parameters"
+        tags:
+            - { name: console.command }
 
     # --- Controllers
     moustache.controller.default:
@@ -113,3 +118,10 @@ services:
     moustache.shortcut.request:
         class: "Symfony\\Component\\HttpFoundation\\Request"
         factory: 'request_stack:getCurrentRequest'
+
+    # --- Tasks
+    moustache.task.symlink_parameters:
+        class: "MoustacheBundle\\Task\\SymlinkParametersTask"
+        arguments:
+            - "@filesystem"
+            - "%kernel.root_dir%"
