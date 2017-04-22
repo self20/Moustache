@@ -2,6 +2,15 @@
 @Signup
 Feature: Ability to signup
 
+    Scenario: As a hak3r, I cannot send directly a signup request without filling the form.
+        When I send a "POST" request to "/signup/01234567abcdef" with parameters:
+            | key                            | value                       |
+            | signup_plainPassword_first     | passWORDisLongEn0ugh        |
+            | signup_plainPassword_second    | passWORDisLongEn0ugh        |
+        Then the response status code should be 302
+        When I follow the redirection
+        Then I should be on "/signup/form/01234567abcdef"
+
     Scenario: As a guest, I see the signup form
         Given I am on "/signup/form/01234567abcdef"
         Then the response status code should be 200

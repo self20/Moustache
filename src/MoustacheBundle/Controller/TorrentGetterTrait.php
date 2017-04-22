@@ -7,6 +7,7 @@ namespace MoustacheBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Exception\Client\TorrentAdapterException;
+use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 
 trait TorrentGetterTrait
 {
@@ -22,6 +23,8 @@ trait TorrentGetterTrait
         try {
             return $this->torrentClient->get($id);
         } catch (TorrentAdapterException $ex) {
+            throw new NotFoundHttpException('The requested torrent was not found.', $ex, $ex->getCode());
+        } catch (TorrentNotFoundException $ex) {
             throw new NotFoundHttpException('The requested torrent was not found.', $ex, $ex->getCode());
         }
     }

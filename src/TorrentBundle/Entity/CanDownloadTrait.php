@@ -39,6 +39,14 @@ trait CanDownloadTrait
     /**
      * {@inheritdoc}
      */
+    public function getDownloadHumanRate(): string
+    {
+        return StringUtils::humanFilesize($this->downloadRate);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getPercentDone(): float
     {
         if ($this->totalByteSize === 0) {

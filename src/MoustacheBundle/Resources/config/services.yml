@@ -57,6 +57,10 @@ services:
             - "@fos_user.security.login_manager"
             - "@moustache.service.redirector"
             - "@moustache.shortcut.request"
+    moustache.controller.status:
+        class: "MoustacheBundle\\Controller\\StatusController"
+        arguments:
+            - "@torrent.client.current"
 
     # --- Event Listeners
     moustache.event_listener.cache_outdated_redirector:

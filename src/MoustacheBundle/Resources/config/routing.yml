@@ -49,3 +49,15 @@ moustache_signup_signup:
     requirements:
         confirmationToken: "[a-f0-9]+"
     methods:  [POST]
+
+moustache_status_get:
+    path: /status/{id}
+    defaults: { _controller: moustache.controller.status:getAction }
+    requirements:
+        id: \d+
+    methods:  [GET]
+
+moustache_status_getAll:
+    path: /status
+    defaults: { _controller: moustache.controller.status:getAllAction }
+    methods:  [GET]

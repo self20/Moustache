@@ -4,12 +4,22 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
+use Rico\Slib\StringUtils;
+
 trait CanUploadTrait
 {
     /**
      * @var int
      */
     protected $uploadRate = 0;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUploadHumanRate(): string
+    {
+        return StringUtils::humanFilesize($this->uploadRate);
+    }
 
     /**
      * {@inheritdoc}

@@ -7,6 +7,11 @@ namespace TorrentBundle\Entity;
 interface CanUpload
 {
     /**
+     * @return string
+     */
+    public function getUploadHumanRate(): string;
+
+    /**
      * @return bool
      */
     public function isUploading(): bool;

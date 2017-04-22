@@ -18,6 +18,11 @@ interface CanDownload
     /**
      * @return string
      */
+    public function getDownloadHumanRate(): string;
+
+    /**
+     * @return string
+     */
     public function getPercentDone(): float;
 
     /**

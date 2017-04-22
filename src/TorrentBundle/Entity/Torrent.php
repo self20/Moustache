@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="TorrentBundle\Repository\TorrentRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Torrent implements TorrentInterface
+class Torrent implements TorrentInterface, \JsonSerializable
 {
     use EntityTrait;
     use CanDownloadTrait;
@@ -138,6 +138,31 @@ class Torrent implements TorrentInterface
     public function __toString(): string
     {
         return $this->name;
+    }
+
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'hash'=> $this->hash,
+            'name'=> $this->name,
+            'user'=> $this->user->getId(),
+            'status'=> $this->status,
+            'downloadRate'=> $this->downloadRate,
+            'downloadHumanRate'=> $this->getDownloadHumanRate(),
+            'downloadedByteSize'=> $this->downloadedByteSize,
+            'downloadedHumanSize'=> $this->getDownloadedHumanSize(),
+            'uploadRate'=> $this->uploadRate,
+            'uploadHumanRate'=> $this->getUploadHumanRate(),
+            'totalByteSize'=> $this->totalByteSize,
+            'totalHumanSize'=> $this->getTotalHumanSize(),
+            'percentDone'=> $this->getPercentDone(),
+            'isDone'=> $this->isDone(),
+            'isStopped'=> $this->isStopped(),
+            'isDownloading'=> $this->isDownloading(),
+            'isUploading'=> $this->isUploading(),
+        );
     }
 
     /**

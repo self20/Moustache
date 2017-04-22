@@ -4,6 +4,7 @@ default:
         "": "%paths.base%/../../../test/Functional/"
 
     extensions:
+        Behatch\Extension: ~
         Behat\Symfony2Extension:
             kernel:
                 env: test
@@ -23,3 +24,5 @@ default:
             bundle: "MoustacheBundle"
             contexts:
                 - MoustacheContext
+                - behatch:context:json
+                - behatch:context:rest
