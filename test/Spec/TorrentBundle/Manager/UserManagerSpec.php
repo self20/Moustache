@@ -39,7 +39,7 @@ class UserManagerSpec extends ObjectBehavior
         $user->setEmail('new')->shouldBeCalledTimes(1);
         $user->setEnabled(false)->shouldBeCalledTimes(1);
         $user->setPlainPassword(Argument::type('string'))->shouldBeCalledTimes(1);
-        $fosUserManager->updatePassword($user)->shouldBeCalledTimes(1);
+        $fosUserManager->updateUser($user)->shouldBeCalledTimes(1);
 
         $this->create('new')->shouldReturn($user);
     }

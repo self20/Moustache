@@ -9,7 +9,6 @@ Feature: Ability to get the status of one or more torrents
         When I go to "/status/6"
         Then the response status code should be 200
         And the response should be in JSON
-        Then print last response
         And the JSON nodes should be equal to:
             | id                   | 6                                           |
             | hash                 | d40470ee21ffd7d2e5f6875944a0d4166150c114    |
@@ -24,7 +23,7 @@ Feature: Ability to get the status of one or more torrents
             | uploadHumanRate      | 0B                                          |
             | totalByteSize        | 71012907225                                 |
             | totalHumanSize       | 66.1GB                                      |
-            | percentDone          | 61.149999999876783                          |
+            | percentDone          | 61.15                                       |
         And the JSON node "isDone" should be false
         And the JSON node "isStopped" should be false
         And the JSON node "isDownloading" should be true

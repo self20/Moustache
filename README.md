@@ -42,6 +42,11 @@ At the end of the composer process, you will be asked for some configuration.
 The configuration file is stored in `app/config/parameters.yml`.
 If your PHP installation enables it, a symlink has been created in `/etc/moustache/parameters.yml` on your system. We suppose you use Linux.
 
+### Server administration ###
+
+- You’ll need PHP **7.0 or more** with the following extensions: *iconv*, *mbstring*, *intl*, *dom* and *sqlite*.
+
+
 ### User creation ###
 
 Because this application was not made to be available for anyone to register, it implements a unique way to create new users.
@@ -57,6 +62,7 @@ Ask your friend’s preference before chosing a name.
 
 ### KNOWN ISSUES ###
 
+- TODO: Only handle transmission client for now.
 - TODO: There is no UI function to remove a torrent. `/remove/{id}` is the URL. It’ll come later.
 - TODO: Download buttons does not work.
 - TODO: It’s not possible to download a torrent with a magnet.

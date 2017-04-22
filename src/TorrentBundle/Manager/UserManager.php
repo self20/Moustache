@@ -61,7 +61,7 @@ class UserManager
      */
     public function update(UserInterface $user)
     {
-        $this->fosUserManager->update($user);
+        $this->fosUserManager->updateUser($user);
     }
 
     /**

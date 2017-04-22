@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Controller;
 
-use TorrentBundle\Client\ClientInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use TorrentBundle\Client\ClientInterface;
 
 class StatusController
 {

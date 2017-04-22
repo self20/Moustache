@@ -53,7 +53,7 @@ trait CanDownloadTrait
             return 0;
         }
 
-        return ($this->downloadedByteSize / $this->totalByteSize) * 100;
+        return round(($this->downloadedByteSize / $this->totalByteSize) * 100, 2);
     }
 
     /**

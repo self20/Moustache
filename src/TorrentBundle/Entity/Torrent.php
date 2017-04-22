@@ -140,29 +140,28 @@ class Torrent implements TorrentInterface, \JsonSerializable
         return $this->name;
     }
 
-
     public function jsonSerialize()
     {
-        return array(
+        return [
             'id' => $this->id,
-            'hash'=> $this->hash,
-            'name'=> $this->name,
-            'user'=> $this->user->getId(),
-            'status'=> $this->status,
-            'downloadRate'=> $this->downloadRate,
-            'downloadHumanRate'=> $this->getDownloadHumanRate(),
-            'downloadedByteSize'=> $this->downloadedByteSize,
-            'downloadedHumanSize'=> $this->getDownloadedHumanSize(),
-            'uploadRate'=> $this->uploadRate,
-            'uploadHumanRate'=> $this->getUploadHumanRate(),
-            'totalByteSize'=> $this->totalByteSize,
-            'totalHumanSize'=> $this->getTotalHumanSize(),
-            'percentDone'=> $this->getPercentDone(),
-            'isDone'=> $this->isDone(),
-            'isStopped'=> $this->isStopped(),
-            'isDownloading'=> $this->isDownloading(),
-            'isUploading'=> $this->isUploading(),
-        );
+            'hash' => $this->hash,
+            'name' => $this->name,
+            'user' => $this->user->getId(),
+            'status' => $this->status,
+            'downloadRate' => $this->downloadRate,
+            'downloadHumanRate' => $this->getDownloadHumanRate(),
+            'downloadedByteSize' => $this->downloadedByteSize,
+            'downloadedHumanSize' => $this->getDownloadedHumanSize(),
+            'uploadRate' => $this->uploadRate,
+            'uploadHumanRate' => $this->getUploadHumanRate(),
+            'totalByteSize' => $this->totalByteSize,
+            'totalHumanSize' => $this->getTotalHumanSize(),
+            'percentDone' => $this->getPercentDone(),
+            'isDone' => $this->isDone(),
+            'isStopped' => $this->isStopped(),
+            'isDownloading' => $this->isDownloading(),
+            'isUploading' => $this->isUploading(),
+        ];
     }
 
     /**
