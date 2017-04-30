@@ -20,6 +20,7 @@
 /var/bootstrap.php.cache
 /bin/*
 !bin/console
+!bin/composer.phar
 /vendor/
 /web/config.php
 
@@ -50,9 +51,6 @@
 
 # Build data
 /build/
-
-# Composer PHAR
-/composer.phar
 
 # Node dependencies
 /node_modules
