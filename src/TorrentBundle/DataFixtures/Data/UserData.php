@@ -17,6 +17,7 @@ class UserData
         }
 
         $user = new User();
+        $user->setId(1);
         $user->setUsername('normal');
         $user->setEmail('normal');
         $user->setPlainPassword('test');
@@ -24,6 +25,7 @@ class UserData
         self::$users['normal'] = $user;
 
         $userDisable = new User();
+        $userDisable->setId(2);
         $userDisable->setUsername('disable');
         $userDisable->setEmail('disable');
         $userDisable->setPlainPassword('test');
@@ -31,6 +33,7 @@ class UserData
         self::$users['disable'] = $userDisable;
 
         $userAdmin = new User();
+        $userAdmin->setId(3);
         $userAdmin->setUsername('admin');
         $userAdmin->setEmail('admin');
         $userAdmin->setPlainPassword('test');
@@ -39,6 +42,7 @@ class UserData
         self::$users['admin'] = $userAdmin;
 
         $guest = new User();
+        $guest->setId(4);
         $guest->setUsername('guest');
         $guest->setEmail('guest');
         $guest->setPlainPassword('test');
@@ -51,8 +55,6 @@ class UserData
 
     public static function freeAll()
     {
-        foreach (self::$users as $user) {
-            unset($user);
-        }
+        self::$users = [];
     }
 }

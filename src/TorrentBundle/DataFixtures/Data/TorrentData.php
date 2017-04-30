@@ -188,7 +188,7 @@ class TorrentData
         $torrent10->setTotalByteSize(87365169);
         $torrent10->setDownloadedByteSize(87365169);
         $torrent10->setFriendlyName('Les Trois Accords - Joie d\'être gai (2015) (MP3 - 320 Kbps)');
-        $torrent10->setStatus(CanDownload::STATUS_STOP);
+        $torrent10->setStatus(CanDownload::STATUS_DONE);
         $torrent10->setMime('directory');
         self::$torrents[10] = $torrent10;
 
@@ -231,8 +231,8 @@ class TorrentData
 
     public static function freeAll()
     {
-        foreach (self::$torrents as $torrent) {
-            unset($torrent);
-        }
+        UserData::freeAll();
+
+        self::$torrents = [];
     }
 }
