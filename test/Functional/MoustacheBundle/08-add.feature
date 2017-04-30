@@ -1,4 +1,5 @@
 @Scenario
+@Add
 Feature: Ability to add a new torrent
 
     Background:

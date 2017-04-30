@@ -30,13 +30,9 @@ test:
         - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/MoustacheBundle/
         - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/TorrentBundle/
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Connection
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags 403
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags 404
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags 405
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Login
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Signup
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags List
-        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Nav
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Error
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Authentication
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Content
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Message
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Add
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Remove
