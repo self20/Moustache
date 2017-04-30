@@ -5,6 +5,7 @@ use Behat\Behat\Hook\Scope\BeforeFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
+use TorrentBundle\DataFixtures\Data\TorrentData;
 
 trait DatabaseContextTrait
 {
@@ -32,6 +33,8 @@ trait DatabaseContextTrait
     {
         self::dropDatabase();
         self::initDatabase();
+        self::initData();
+
     }
 
     /**
@@ -42,6 +45,7 @@ trait DatabaseContextTrait
     public static function teardownDatabase(AfterFeatureScope $scope)
     {
         self::dropDatabase();
+        self::dropData();
     }
 
     /**
@@ -60,6 +64,11 @@ trait DatabaseContextTrait
         self::runCommand($app, 'doctrine:fixtures:load', ['-n' => true, '-e' => 'test']);
     }
 
+    private static function initData()
+    {
+        TorrentData::createAll();
+    }
+
     /**
      * Drop database.
      */
@@ -72,6 +81,11 @@ trait DatabaseContextTrait
         $app->setAutoExit(false);
 
         self::runCommand($app, 'doctrine:database:drop', ['--force' => true, '-e' => 'test']);
+    }
+
+    private static function dropData()
+    {
+        TorrentData::freeAll();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use Behat\Behat\Hook\Scope\AfterFeatureScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
+use Behat\Behat\Hook\Scope\BeforeFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Component\BrowserKit\Cookie;
 
@@ -89,11 +90,15 @@ trait AuthenticationContextTrait
         if (self::$mustLogout) {
             $client = $this->getSession()->getDriver()->getClient();
 
-            $this->visit('/logout');
-            $client->restart();
-            self::$authCookies = null;
+            // Needed and very tricky - Symfony refuses to logout if no user is in its internal token system
+            // But, desync with token system and sessions happens, resulting in /logout to do nothing.
+            // So the first visit resync sessions and token storage
+            $this->visit('/');
 
+            $this->visit('/logout');
+            self::$authCookies = null;
             self::$mustLogout = false;
+            $client->restart();
         }
     }
 
