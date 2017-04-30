@@ -95,6 +95,10 @@ assetic:
             inputs: "%kernel.root_dir%/../vendor/bmatzner/lodash-bundle/Bmatzner/LoDashBundle/Resources/public/js/lodash.underscore.min.js"
             filter: [uglifyjs2]
             output: "js/lib/lodash.underscore.min.js"
+        js_jquery:
+            inputs: "%kernel.root_dir%/../vendor/components/jquery/jquery.slim.min.js"
+            filter: [uglifyjs2]
+            output: "js/lib/jquery.slim.min.js"
 
 fos_user:
     db_driver: orm
