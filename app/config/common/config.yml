@@ -96,9 +96,9 @@ assetic:
             filter: [uglifyjs2]
             output: "js/lib/lodash.underscore.min.js"
         js_jquery:
-            inputs: "%kernel.root_dir%/../vendor/components/jquery/jquery.slim.min.js"
+            inputs: "%kernel.root_dir%/../vendor/components/jquery/jquery.min.js"
             filter: [uglifyjs2]
-            output: "js/lib/jquery.slim.min.js"
+            output: "js/lib/jquery.min.js"
 
 fos_user:
     db_driver: orm
