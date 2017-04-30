@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
-use Rico\Lib\StringUtils;
+use Rico\Slib\StringUtils;
 
 trait CanDownloadTrait
 {
@@ -69,10 +69,7 @@ trait CanDownloadTrait
      */
     public function isDone(): bool
     {
-        return
-            $this->downloadedByteSize === $this->totalByteSize &&
-            CanDownload::STATUS_DONE === $this->status
-        ;
+        return$this->downloadedByteSize === $this->totalByteSize;
     }
 
     /**
@@ -80,7 +77,7 @@ trait CanDownloadTrait
      */
     public function isDownloading(): bool
     {
-        return CanDownload::STATUS_DOWNLOADING === $this->status;
+        return $this->downloadRate > 0;
     }
 
     /**
