@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ceb045a2b81fc457e2dd02e2968e764b",
+    "content-hash": "895bb0843536cc201a99619e58f83529",
     "packages": [
         {
             "name": "bmatzner/lodash-bundle",
