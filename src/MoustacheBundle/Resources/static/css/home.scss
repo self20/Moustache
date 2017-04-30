@@ -20,8 +20,17 @@
        border: 1px solid #ccc;
     }
 
+    .card-header {
+        padding: .50rem 1rem;
+    }
+
     .card-inverse {
         background-color: #888;
+    }
+
+    .progress {
+        border-radius: 0;
+        margin-bottom: 0;
     }
 
     .fa.video {

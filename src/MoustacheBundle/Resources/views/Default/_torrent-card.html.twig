@@ -1,6 +1,6 @@
 <div class="card text-xs-center {% if torrent.isStopped %}card-inverse{% endif %}">
     <div class="card-header text-muted">
-        <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-toolbar float-xs-right" role="toolbar" aria-label="Toolbar with button groups">
             {% if torrent.id %}
                 <div class="btn-group btn-group-sm" role="group" aria-label="Play">
                   <a href="{{ path('moustache_torrent_start', { id: torrent.id }) }}" type="button" class="btn btn-secondary{% if not torrent.isStopped %} disabled{% endif %}"><span class="fa fa-share-alt" aria-hidden="true"></span></a>
@@ -14,22 +14,32 @@
                 </div>
             {% endif %}
 
-            <div class="btn-group btn-group-sm" role="group" aria-label="Separator">
+            <div class="btn-group btn-group-sm ml-1" role="group" aria-label="Separator">
                 <span class="fa fa-2x fa-ellipsis-v" aria-hidden="true"></span>
             </div>
 
             {% if torrent.isDone %}
-                <div class="btn-group btn-group-sm" role="group" aria-label="Download group">
+                <div class="btn-group btn-group-sm ml-1" role="group" aria-label="Download group">
                     <button type="button" class="btn btn-success"><span class="fa fa-2x fa-download" aria-hidden="true"></span></button>
                 </div>
             {% elseif not torrent.isFile %}
-                <div class="btn-group btn-group-sm" role="group" aria-label="More">
+                <div class="btn-group btn-group-sm ml-1" role="group" aria-label="More">
                   <a href="{{ path('moustache_torrent_content', { id: torrent.id }) }}" class="btn btn-info"><span class="fa fa-2x fa-share" aria-hidden="true"></span></a>
                 </div>
             {% endif %}
         </div>
     </div>
-    <progress class="progress {% if torrent.isDone %}progress-success{% else %}progress-info progress-animated{% endif %} progress-striped" value="{{ torrent.percentDone }}" max="100"></progress>
+    <progress class="progress {% if torrent.isDone %}progress-success{% else %}progress-info progress-animated{% endif %} progress-striped" value="{% if torrent.percentDone %}{{ torrent.percentDone }}{% else %}1{% endif %}" max="100">
+        {{ torrent.percentDone }}%
+    </progress>
+    <div class="grey">
+        {% if torrent.downloadRate %}
+            <small class="mr-1"><span class="fa fa-arrow-down" aria-hidden="true"></span> {{ torrent.getDownloadHumanRate }}</small>
+        {% endif %}
+        {% if torrent.uploadRate %}
+            <small><span class="fa fa-arrow-up" aria-hidden="true"></span> {{ torrent.getUploadHumanRate }}</small>
+        {% endif %}
+    </div>
     <div class="card-block">
         <p class="card-title">
             <span class="fa fa-5x {{ torrent.mime }}" aria-hidden="true"></span>
