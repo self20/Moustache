@@ -31,12 +31,12 @@ Feature: Ability to see a torrent list
         Then I should not see "Start downloading" in the ".torrent-section button" element
 
     Scenario: As Moustachor I see the progress of my torrents
-        Then I should see "100%" in the ".torrent-section div div:nth-of-type(1) progress" element
-        Then I should see "0.01%" in the ".torrent-section div div:nth-of-type(3) progress" element
-        Then I should see "0%" in the ".torrent-section div div:nth-of-type(4) progress" element
-        Then I should see "61.15%" in the ".torrent-section div div:nth-of-type(5) progress" element
+        Then I should see "100%" in the "#torrent-progress-1" element
+        Then I should see "0.01%" in the "#torrent-progress-4" element
+        Then I should see "0%" in the "#torrent-progress-5" element
+        Then I should see "61.15%" in the "#torrent-progress-6" element
 
     Scenario: As Moustachor I see the upload/download rate of my torrents
-        Then I should see "5.3KB" in the ".torrent-section div div:nth-of-type(3) div small" element
-        Then I should see "109KB" in the ".torrent-section div div:nth-of-type(5) div small" element
-        Then I should see "534B" in the ".torrent-section div div:nth-of-type(7) div small" element
+        Then I should see "5.42KB" in the "#torrent-down-value-4" element
+        Then I should see "112KB" in the "#torrent-down-value-6" element
+        Then I should see "534B" in the "#torrent-up-value-10" element
