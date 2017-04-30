@@ -37,12 +37,11 @@
 !/web/css/fonts/.gitkeep
 /web/fonts/
 /web/images/
-/web/js/
+/web/js/lib/
+!/web/js/lib/.gitkeep
 /web/uploads/
 /web/app_dev.php
 
-# Assets managed by Bower
-/web/assets/vendor/
 
 # PHPUnit
 /app/phpunit.xml
