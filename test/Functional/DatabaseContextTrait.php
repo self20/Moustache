@@ -34,7 +34,6 @@ trait DatabaseContextTrait
         self::dropDatabase();
         self::initDatabase();
         self::initData();
-
     }
 
     /**
