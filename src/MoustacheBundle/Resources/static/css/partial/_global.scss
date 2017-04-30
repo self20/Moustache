@@ -11,6 +11,8 @@ $purple: #802254;        // Primary color
 /*$lightpurple: #c2c2c2;   // Secondary color*/
 $cream: #fdf9eb;         // Tertiary color
 
+$a-tags: 'a, a:active, a:hover, a:visited';
+$a-tags-hover: 'a:active, a:hover';
 
 
 /* GENERAL STYLES
@@ -34,6 +36,9 @@ a:hover, a:active, a:focus {
     padding: 0 0 1em;
 }
 
+.h-1 {
+    height: 1.5rem;
+}
 
 /* BOOTSTRAP OVERRIDE STYLES
 -------------------------------------------------- */

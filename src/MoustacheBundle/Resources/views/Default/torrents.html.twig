@@ -16,4 +16,40 @@
         </div>
 
     </section>
+
+    <script>
+        // @HEYLISTEN Organize this code following best practices
+        // @HEYLISTEN This should run only when page has something to update
+        $(function() {
+            function ajaxCall() {
+                $.ajax({
+                    url: '/status',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $.each(result, function(index, item) {
+                            // @HEYLISTEN CHeck if any element exists before making any change.
+                            document.getElementById('torrent-down-value-'+item.id).innerHTML = item.downloadHumanRate;
+                            if (item.downloadRate > 0) {
+                                document.getElementById('torrent-down-'+item.id).classList.remove('text-muted');
+                            } else {
+                                document.getElementById('torrent-down-'+item.id).classList.add('text-muted');
+                            }
+                            document.getElementById('torrent-up-value-'+item.id).innerHTML = item.uploadHumanRate;
+                            if (item.uploadRate > 0) {
+                                document.getElementById('torrent-up-'+item.id).classList.remove('text-muted');
+                            } else {
+                                document.getElementById('torrent-up-'+item.id).classList.add('text-muted');
+                            }
+                            document.getElementById('torrent-progress-'+item.id).innerHTML = item.percentDone.toLocaleString()+'%';
+                            document.getElementById('torrent-progress-'+item.id).title = item.percentDone.toLocaleString()+'%';
+                            document.getElementById('torrent-progress-'+item.id).value = item.percentDone;
+                        });
+                    }
+                });
+            }
+
+            setInterval(ajaxCall, 2000);
+        });
+    </script>
 {% endblock body %}

@@ -132,3 +132,9 @@ services:
         arguments:
             - "@filesystem"
             - "%kernel.root_dir%"
+
+    # --- Twig
+    moustache.twig.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
