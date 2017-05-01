@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Adapter;
 
+use StandardBundle\CanDownload;
 use Symfony\Component\HttpFoundation\Session\Session;
 use TorrentBundle\DataFixtures\Data\TorrentData;
-use TorrentBundle\Entity\CanDownload;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Exception\Torrent\NoUploadedFileException;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
@@ -66,7 +66,7 @@ class FakeAdapter implements AdapterInterface
         $torrent->setUploadRate(0);
         $torrent->setNbPeers(0);
         $torrent->setTotalByteSize(12345678);
-        $torrent->setDownloadedByteSize(12345678);
+        $torrent->setCurrentByteSize(12345678);
         $torrent->setFriendlyName('torrent-'.$count);
         $torrent->setStatus(CanDownload::STATUS_DONE);
         $torrent->setMime('directory');

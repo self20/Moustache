@@ -2,15 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TorrentBundle\Entity;
+namespace StandardBundle;
 
-interface FileInterface extends EntityInterface, CanBeBrowsed, CanDownload
+interface FileInterface extends EntityInterface, CanBeBrowsed, CanBeIncomplete
 {
-    /**
-     * @return string
-     */
-    public function getFullPath(): string;
-
     /**
      * @return TorrentInterface|null
      */

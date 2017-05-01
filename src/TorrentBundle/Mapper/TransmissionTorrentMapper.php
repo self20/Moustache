@@ -41,7 +41,7 @@ class TransmissionTorrentMapper implements TorrentMapperInterface
         $torrent->setDownloadRate($externalTorrent->getDownloadRate());
         $torrent->setStatus($externalTorrent->getStatus());
         $torrent->setStartDate($externalTorrent->getStartDate() ? new \Datetime('@'.$externalTorrent->getStartDate()) : new \DateTime());
-        $torrent->setDownloadedByteSize((int) ($externalTorrent->getSize() * $externalTorrent->getPercentDone() / 100));
+        $torrent->setCurrentByteSize((int) ($externalTorrent->getSize() * $externalTorrent->getPercentDone() / 100));
         $torrent->setTotalByteSize($externalTorrent->getSize());
         $torrent->setFriendlyName($this->getFriendlyName($externalTorrent->getName()));
         $torrent->setName($externalTorrent->getName());

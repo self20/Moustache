@@ -17,14 +17,14 @@ Feature: Ability to get the status of one or more torrents
             | status               | 4                                           |
             | downloadRate         | 112000                                      |
             | downloadHumanRate    | 112KB                                       |
-            | downloadedByteSize   | 43424392768                                 |
-            | downloadedHumanSize  | 43.4GB                                      |
+            | currentByteSize      | 43424392768                                 |
+            | currentHumanSize     | 43.4GB                                      |
             | uploadRate           | 0                                           |
             | uploadHumanRate      | 0B                                          |
             | totalByteSize        | 71012907225                                 |
             | totalHumanSize       | 71GB                                        |
             | percentDone          | 61.15                                       |
-        And the JSON node "isDone" should be false
+        And the JSON node "isCompleted" should be false
         And the JSON node "isStopped" should be false
         And the JSON node "isDownloading" should be true
         And the JSON node "isUploading" should be false

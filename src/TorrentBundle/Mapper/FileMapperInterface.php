@@ -2,8 +2,8 @@
 
 namespace TorrentBundle\Mapper;
 
-use TorrentBundle\Entity\FileInterface;
-use TorrentBundle\Entity\TorrentInterface;
+use StandardBundle\FileInterface;
+use StandardBundle\TorrentInterface;
 
 interface FileMapperInterface
 {

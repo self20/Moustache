@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Torrent implements TorrentInterface, \JsonSerializable
 {
     use EntityTrait;
+    use CanBeIncompleteTrait;
     use CanDownloadTrait;
     use CanUploadTrait;
     use CanBeBrowsedTrait;
@@ -140,7 +141,7 @@ class Torrent implements TorrentInterface, \JsonSerializable
         return $this->name;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
@@ -150,14 +151,14 @@ class Torrent implements TorrentInterface, \JsonSerializable
             'status' => $this->status,
             'downloadRate' => $this->downloadRate,
             'downloadHumanRate' => $this->getDownloadHumanRate(),
-            'downloadedByteSize' => $this->downloadedByteSize,
-            'downloadedHumanSize' => $this->getDownloadedHumanSize(),
+            'currentByteSize' => $this->currentByteSize,
+            'currentHumanSize' => $this->getCurrentHumanSize(),
             'uploadRate' => $this->uploadRate,
             'uploadHumanRate' => $this->getUploadHumanRate(),
             'totalByteSize' => $this->totalByteSize,
             'totalHumanSize' => $this->getTotalHumanSize(),
             'percentDone' => $this->getPercentDone(),
-            'isDone' => $this->isDone(),
+            'isCompleted' => $this->isCompleted(),
             'isStopped' => $this->isStopped(),
             'isDownloading' => $this->isDownloading(),
             'isUploading' => $this->isUploading(),

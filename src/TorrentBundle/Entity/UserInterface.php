@@ -6,6 +6,7 @@ namespace TorrentBundle\Entity;
 
 use Doctrine\ORM\PersistentCollection;
 use FOS\UserBundle\Model\UserInterface as FOSUserInterface;
+use StandardBundle\EntityInterface;
 
 interface UserInterface extends EntityInterface, FOSUserInterface
 {

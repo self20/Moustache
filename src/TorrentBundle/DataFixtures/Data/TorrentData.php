@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TorrentBundle\DataFixtures\Data;
 
 use DateTime;
-use TorrentBundle\Entity\CanDownload;
+use StandardBundle\CanDownload;
 use TorrentBundle\Entity\Torrent;
 
 class TorrentData
@@ -33,7 +33,7 @@ class TorrentData
         $torrent1->setUploadRate(0);
         $torrent1->setNbPeers(2);
         $torrent1->setTotalByteSize(30414388907);
-        $torrent1->setDownloadedByteSize(30414388907);
+        $torrent1->setCurrentByteSize(30414388907);
         $torrent1->setFriendlyName('Rinne no Lagrange');
         $torrent1->setStatus(CanDownload::STATUS_DONE);
         $torrent1->setMime('directory');
@@ -50,7 +50,7 @@ class TorrentData
         $torrent2->setUploadRate(0);
         $torrent2->setNbPeers(0);
         $torrent2->setTotalByteSize(14312686115);
-        $torrent2->setDownloadedByteSize(14312686115);
+        $torrent2->setCurrentByteSize(14312686115);
         $torrent2->setFriendlyName('The great movie (1920x1080 Blu-ray FLAC).mkv');
         $torrent2->setStatus(CanDownload::STATUS_DONE);
         $torrent2->setMime('video');
@@ -67,7 +67,7 @@ class TorrentData
         $torrent3->setUploadRate(0);
         $torrent3->setNbPeers(0);
         $torrent3->setTotalByteSize(9772511564);
-        $torrent3->setDownloadedByteSize(9772511564);
+        $torrent3->setCurrentByteSize(9772511564);
         $torrent3->setFriendlyName('Digimon Adventure 02 (Zero Two) 01-50 Complete (DVD-MKV-H264)');
         $torrent3->setStatus(CanDownload::STATUS_DONE);
         $torrent3->setMime('directory');
@@ -84,7 +84,7 @@ class TorrentData
         $torrent4->setUploadRate(0);
         $torrent4->setNbPeers(5);
         $torrent4->setTotalByteSize(12250974847);
-        $torrent4->setDownloadedByteSize(1243324);
+        $torrent4->setCurrentByteSize(1243324);
         $torrent4->setFriendlyName('Digimon Tamers');
         $torrent4->setStatus(CanDownload::STATUS_DOWNLOADING);
         $torrent4->setMime('directory');
@@ -101,7 +101,7 @@ class TorrentData
         $torrent5->setUploadRate(0);
         $torrent5->setNbPeers(0);
         $torrent5->setTotalByteSize(302085952);
-        $torrent5->setDownloadedByteSize(0);
+        $torrent5->setCurrentByteSize(0);
         $torrent5->setFriendlyName('Disgaea 5');
         $torrent5->setStatus(CanDownload::STATUS_DOWNLOADING);
         $torrent5->setMime('directory');
@@ -118,7 +118,7 @@ class TorrentData
         $torrent6->setUploadRate(0);
         $torrent6->setNbPeers(2);
         $torrent6->setTotalByteSize(71012907225);
-        $torrent6->setDownloadedByteSize(43424392768);
+        $torrent6->setCurrentByteSize(43424392768);
         $torrent6->setFriendlyName('Suite Precure (1920x1080 Blu-Ray)');
         $torrent6->setStatus(CanDownload::STATUS_DOWNLOADING);
         $torrent6->setMime('directory');
@@ -135,7 +135,7 @@ class TorrentData
         $torrent7->setUploadRate(340);
         $torrent7->setNbPeers(1);
         $torrent7->setTotalByteSize(14676939902);
-        $torrent7->setDownloadedByteSize(14676939902);
+        $torrent7->setCurrentByteSize(14676939902);
         $torrent7->setFriendlyName('Kiki\'s Delivery Service.mkv');
         $torrent7->setStatus(CanDownload::STATUS_DONE);
         $torrent7->setMime('video');
@@ -152,7 +152,7 @@ class TorrentData
         $torrent8->setUploadRate(0);
         $torrent8->setNbPeers(0);
         $torrent8->setTotalByteSize(6883336600);
-        $torrent8->setDownloadedByteSize(6883336600);
+        $torrent8->setCurrentByteSize(6883336600);
         $torrent8->setFriendlyName('THE FUNE MOVIE (Xvid).mkv');
         $torrent8->setStatus(CanDownload::STATUS_DONE);
         $torrent8->setMime('video');
@@ -169,7 +169,7 @@ class TorrentData
         $torrent9->setUploadRate(0);
         $torrent9->setNbPeers(0);
         $torrent9->setTotalByteSize(4660024961);
-        $torrent9->setDownloadedByteSize(4660024961);
+        $torrent9->setCurrentByteSize(4660024961);
         $torrent9->setFriendlyName('Big song.mp3');
         $torrent9->setStatus(CanDownload::STATUS_DONE);
         $torrent9->setMime('audio');
@@ -186,7 +186,7 @@ class TorrentData
         $torrent10->setUploadRate(534);
         $torrent10->setNbPeers(1);
         $torrent10->setTotalByteSize(87365169);
-        $torrent10->setDownloadedByteSize(87365169);
+        $torrent10->setCurrentByteSize(87365169);
         $torrent10->setFriendlyName('Les Trois Accords - Joie d\'être gai (2015) (MP3 - 320 Kbps)');
         $torrent10->setStatus(CanDownload::STATUS_DONE);
         $torrent10->setMime('directory');
@@ -203,7 +203,7 @@ class TorrentData
         $torrent11->setUploadRate(0);
         $torrent11->setNbPeers(0);
         $torrent11->setTotalByteSize(124541774);
-        $torrent11->setDownloadedByteSize(124541774);
+        $torrent11->setCurrentByteSize(124541774);
         $torrent11->setFriendlyName('Les Blaireaux (2010) - Bouquet d\'Orties');
         $torrent11->setStatus(CanDownload::STATUS_STOP);
         $torrent11->setMime('directory');
@@ -220,7 +220,7 @@ class TorrentData
         $torrent12->setUploadRate(0);
         $torrent12->setNbPeers(0);
         $torrent12->setTotalByteSize(2556100);
-        $torrent12->setDownloadedByteSize(2556100);
+        $torrent12->setCurrentByteSize(2556100);
         $torrent12->setFriendlyName('Exercices pour le cours de physique de Feynman Dunod.pdf');
         $torrent12->setStatus(CanDownload::STATUS_DONE);
         $torrent12->setMime('pdf');

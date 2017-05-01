@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Client;
 
+use StandardBundle\CanDownload;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
 use TorrentBundle\Cache\CacheInterface;
 use TorrentBundle\Client\Traits\ExternalTorrentGetterTrait;
-use TorrentBundle\Entity\CanDownload;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;

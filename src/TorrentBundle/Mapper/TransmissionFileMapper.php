@@ -6,8 +6,8 @@ namespace TorrentBundle\Mapper;
 
 use Rico\Lib\StringUtils;
 use Rico\Lib\UrlUtils;
-use TorrentBundle\Entity\FileInterface;
-use TorrentBundle\Entity\TorrentInterface;
+use StandardBundle\FileInterface;
+use StandardBundle\TorrentInterface;
 use TorrentBundle\Service\MimeGuesser;
 
 class TransmissionFileMapper implements FileMapperInterface
@@ -39,12 +39,11 @@ class TransmissionFileMapper implements FileMapperInterface
      */
     public function map(FileInterface $file, $externalFile, TorrentInterface $torrent): FileInterface
     {
-        $file->setDownloadedByteSize($externalFile->getCompleted());
+        $file->setCurrentByteSize($externalFile->getCompleted());
         $file->setTotalByteSize($externalFile->getSize());
         $file->setName($this->urlUtils->getResourceName($externalFile->getName()));
         $file->setFriendlyName($this->getFriendlyName($externalFile->getName()));
         $file->setMime($this->mimeGuesser->guessMimeByFilename($externalFile->getName()));
-        $file->setStatus($torrent->getStatus());
         $file->setTorrent($torrent);
 
         return $file;

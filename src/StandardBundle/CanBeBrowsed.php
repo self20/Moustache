@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TorrentBundle\Entity;
+namespace StandardBundle;
 
 interface CanBeBrowsed
 {
@@ -15,6 +15,8 @@ interface CanBeBrowsed
      * @return bool
      */
     public function isFile(): bool;
+
+    // ---
 
     /**
      * @return string
@@ -35,6 +37,8 @@ interface CanBeBrowsed
      * @return string
      */
     public function getMime(): string;
+
+    // ---
 
     /**
      * @param string $name

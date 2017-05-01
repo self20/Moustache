@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TorrentBundle\Entity;
+namespace StandardBundle;
 
 interface EntityInterface
 {

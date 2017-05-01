@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
+use StandardBundle\FileInterface;
+use StandardBundle\TorrentInterface;
+
 class File implements FileInterface
 {
     use EntityTrait;
-    use CanDownloadTrait;
+    use CanBeIncompleteTrait;
     use CanBeBrowsedTrait;
 
     /**
@@ -51,14 +54,6 @@ class File implements FileInterface
     public function __toString(): string
     {
         return $this->name;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isDone(): bool
-    {
-        return $this->downloadedByteSize === $this->totalByteSize;
     }
 
     /**

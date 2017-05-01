@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
-interface TorrentInterface extends EntityInterface, CanBeBrowsed, CanDownload, CanUpload, CanBeUploaded
-{
-    /**
-     * @return string
-     */
-    public function getHash(): string;
+use StandardBundle\TorrentInterface as StandardTorrentInterface;
 
+interface TorrentInterface extends StandardTorrentInterface
+{
     /**
      * @return UserInterface|null
      */
@@ -22,42 +19,7 @@ interface TorrentInterface extends EntityInterface, CanBeBrowsed, CanDownload, C
     public function getUserId();
 
     /**
-     * @return FileInterface[]
-     */
-    public function getFiles(): array;
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getStartDate();
-
-    /**
-     * @return int
-     */
-    public function getNbPeers(): int;
-
-    /**
-     * @param string $hash
-     */
-    public function setHash(string $hash);
-
-    /**
      * @param UserInterface $user
      */
     public function setUser(UserInterface $user);
-
-    /**
-     * @param FileInterface[] $files
-     */
-    public function setFiles(array $files);
-
-    /**
-     * @param \DateTime $startDate
-     */
-    public function setStartDate(\DateTime $startDate);
-
-    /**
-     * @param int $nbPeers
-     */
-    public function setNbPeers(int $nbPeers);
 }
