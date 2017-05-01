@@ -1,0 +1,12 @@
+{% extends 'MoustacheBundle::layout.html.twig' %}
+
+{% block title %}So fancy!{% endblock %}
+
+{% block body %}
+    <section class="container torrent-section">
+        <div class="mb-2 row">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </section>
+{% endblock body %}

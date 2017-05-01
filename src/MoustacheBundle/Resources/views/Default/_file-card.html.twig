@@ -1,0 +1,24 @@
+{% extends 'MoustacheBundle:Default/Card:_card.html.twig' %}
+
+{% block cardAttributes %}
+    id="file-{{ file.id }}" class="card text-xs-center"
+{% endblock cardAttributes %}
+
+{% block cardHeader %}
+    {% if file.isCompleted %}
+        <div class="btn-group btn-group-sm ml-1" role="group" aria-label="Download group">
+            <button type="button" title="{{ 'Direct download'|trans }}" class="btn btn-secondary disabled"><span class="fa fa-download" aria-hidden="true"></span></button>
+        </div>
+    {% endif %}
+{% endblock cardHeader %}
+
+{% block cardBetween %}
+    <progress id="file-progress-{{ file.id }}" class="progress {% if file.isCompleted %}progress-success{% else %}progress-info{% endif %}" title="{{ file.percentDone|localizednumber }}%" value="{% if file.percentDone > 1 %}{{ file.percentDone }}{% else %}1{% endif %}" max="100">
+        {{ file.percentDone }}%
+    </progress>
+{% endblock cardBetween %}
+
+{% block cardContent %}
+    {% embed 'MoustacheBundle:Default/Card:_content.html.twig' %}
+    {% endembed %}
+{% endblock cardContent %}

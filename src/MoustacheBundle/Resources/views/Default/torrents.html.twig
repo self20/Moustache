@@ -1,22 +1,17 @@
-{% extends 'MoustacheBundle::layout.html.twig' %}
+{% extends 'MoustacheBundle:Default:base.html.twig' %}
 
-{% block title %}So fancy!{% endblock %}
-
-{% block body %}
-    <section class="torrent-section">
-        <div class="mb-2 row">
-            {% for torrent in torrents %}
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    {% embed 'MoustacheBundle:Default:_torrent-card.html.twig' %}
-                    {% endembed %}
-                </div>
-            {% else %}
-                {% include 'MoustacheBundle:Default:_torrents-empty.html.twig' %}
-            {% endfor %}
+{% block content %}
+    {% for torrent in torrents %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            {% embed 'MoustacheBundle:Default:_torrent-card.html.twig' %}
+            {% endembed %}
         </div>
+    {% else %}
+        {% include 'MoustacheBundle:Default:_torrents-empty.html.twig' %}
+    {% endfor %}
+{% endblock content %}
 
-    </section>
-
+{% block footerscripts %}
     <script>
         // @HEYLISTEN Organize this code following best practices
         // @HEYLISTEN This should run only when page has something to update
@@ -52,4 +47,4 @@
             setInterval(ajaxCall, 2000);
         });
     </script>
-{% endblock body %}
+{% endblock footerscripts %}

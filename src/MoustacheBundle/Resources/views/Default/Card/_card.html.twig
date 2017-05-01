@@ -1,0 +1,11 @@
+<div {% block cardAttributes %}{% endblock cardAttributes %}>
+    <div class="card-header text-muted">
+        <div class="btn-toolbar float-xs-right" role="toolbar" aria-label="Toolbar with button groups">
+            {% block cardHeader %}{% endblock cardHeader %}
+        </div>
+    </div>
+    {% block cardBetween %}{% endblock cardBetween %}
+    <div class="card-block">
+        {% block cardContent %}{% endblock cardContent %}
+    </div>
+</div>
