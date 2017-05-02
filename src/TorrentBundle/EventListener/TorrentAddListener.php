@@ -24,9 +24,13 @@ final class TorrentAddListener
 
     /**
      * @param TorrentAfterEvent $event
+     *
+     * @return TorrentAfterEvent
      */
     public function afterTorrentAdded(TorrentAfterEvent $event)
     {
         $this->torrentManager->persist($event->getTorrent())->save();
+
+        return $event;
     }
 }

@@ -28,7 +28,7 @@ final class TorrentRemoveListener
     /**
      * @param TorrentAfterEvent $event
      *
-     * @return $event
+     * @return TorrentAfterEvent
      */
     public function afterTorrentRemoved(TorrentAfterEvent $event)
     {
