@@ -19,6 +19,10 @@ class TorrentFilter implements TorrentFilterInterface
      */
     private $torrentRepository;
 
+    /**
+     * @param AuthenticatedUserHelper $authenticatedUserHelper
+     * @param TorrentRepository $torrentRepository
+     */
     public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, TorrentRepository $torrentRepository)
     {
         $this->authenticatedUserHelper = $authenticatedUserHelper;
