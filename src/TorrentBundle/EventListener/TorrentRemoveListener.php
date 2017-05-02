@@ -17,6 +17,9 @@ final class TorrentRemoveListener
      */
     private $torrentManager;
 
+    /**
+     * @param TorrentManager $torrentManager
+     */
     public function __construct(TorrentManager $torrentManager)
     {
         $this->torrentManager = $torrentManager;
@@ -24,9 +27,13 @@ final class TorrentRemoveListener
 
     /**
      * @param TorrentAfterEvent $event
+     *
+     * @return $event
      */
     public function afterTorrentRemoved(TorrentAfterEvent $event)
     {
         $this->torrentManager->remove($event->getTorrent())->save();
+
+        return $event;
     }
 }
