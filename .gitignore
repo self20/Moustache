@@ -37,8 +37,9 @@
 !/web/css/fonts/.gitkeep
 /web/fonts/
 /web/images/
-/web/js/lib/
 !/web/js/lib/.gitkeep
+!/web/js/lib/*
+/web/js/lib/*_*.js
 /web/uploads/
 /web/app_dev.php
 
