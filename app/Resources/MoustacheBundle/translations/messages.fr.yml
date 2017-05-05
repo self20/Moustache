@@ -11,6 +11,7 @@
 'It seems you have no torrent yet, but stay cool!': 'Apparemment, vous n’avez aucun torrent, mais ça va aller !'
 'It seems one of your torrent have been deleted unexpectedly from the system.': 'Il semblerait que l’un de vos torrents manque à l’appel. Il a peut-être été supprimé du système à la main.'
 'Hi folks! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.': 'Salut! Ici vous pouvez uploader for fichiers .torrent, attendre quelques secondes… puis télécharger le contenu sur votre ordinateur. Tellement facile que je pourrais me huiler moi-même.'
+'“%s” has been completely removed.': '“%s” a été complètement supprimé.'
 
 # Torrent forms
 'Pick .torrent local file…': 'Choisissez un fichier .torrent local…'
@@ -25,7 +26,6 @@
 
 # Signup/login form
 Signup: 'S’inscrire'
-'“%s” has been completely removed.': '“%s” a été complètement supprimé.'
 'Username': 'Nom d’utilisateur'
 'You will need this username to log in. You cannot change it.': 'Vous aurez besoin de ce pseudonyme plus tard pour vous connecter. Il n’est pas possible de le changer.'
 'Password': 'Mot de passe'
