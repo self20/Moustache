@@ -40,7 +40,6 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "gui-don/rico-library": "dev-master"
     },
-    "minimum-stability": "beta",
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
