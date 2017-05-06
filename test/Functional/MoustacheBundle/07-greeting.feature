@@ -5,7 +5,7 @@ Feature: Ability to see messages
         Given I am authenticated as "normal" with password "test"
         Then the response status code should be 200
         And I should be on "/"
-        And I should see "Hi folks!" in the "#content .alert" element
+        And I should see "Hi folk!" in the "#content .alert" element
         And I should see "Here you can upload your .torrent files" in the "#content .alert" element
 
     Scenario: As Moustachor, I do not see the greeting anymore once I reload the page

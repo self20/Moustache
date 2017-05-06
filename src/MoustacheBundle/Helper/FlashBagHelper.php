@@ -47,7 +47,7 @@ class FlashBagHelper
             return;
         }
 
-        $this->flashMessenger->info('Hi folks! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.');
+        $this->flashMessenger->info('Hi folk! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.');
 
         $this->userManager->incrementCurrentMessage($user);
     }
