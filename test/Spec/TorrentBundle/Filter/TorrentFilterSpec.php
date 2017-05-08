@@ -17,7 +17,7 @@ class TorrentFilterSpec extends ObjectBehavior
     public function let(
         AuthenticatedUserHelper $authenticatedUserHelper,
         TorrentRepository $torrentRepository,
-    
+
         UserInterface $user,
         TorrentInterface $torrent1,
         TorrentInterface $torrent2

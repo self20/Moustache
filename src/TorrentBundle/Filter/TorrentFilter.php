@@ -21,7 +21,7 @@ class TorrentFilter implements TorrentFilterInterface
 
     /**
      * @param AuthenticatedUserHelper $authenticatedUserHelper
-     * @param TorrentRepository $torrentRepository
+     * @param TorrentRepository       $torrentRepository
      */
     public function __construct(AuthenticatedUserHelper $authenticatedUserHelper, TorrentRepository $torrentRepository)
     {

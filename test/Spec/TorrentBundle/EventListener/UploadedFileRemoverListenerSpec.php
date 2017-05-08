@@ -10,7 +10,6 @@ use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\TorrentAfterEvent;
 use TorrentBundle\EventListener\UploadedFileRemoverListener;
 
-
 class UploadedFileRemoverListenerSpec extends ObjectBehavior
 {
     public function let(

@@ -22,7 +22,6 @@ class TorrentRemoveListenerSpec extends ObjectBehavior
 
         $torrentManager->remove($torrent)->willReturn($torrentManager);
 
-
         $this->beConstructedWith($torrentManager);
     }
 
