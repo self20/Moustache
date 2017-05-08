@@ -45,6 +45,14 @@ If your PHP installation enables it, a symlink has been created in `/etc/moustac
 ### Server administration ###
 
 - You’ll need PHP **7.0 or more** with the following extensions: *iconv*, *mbstring*, *intl*, *dom* and *sqlite*.
+- PHP configuration: *opcache* is recommended and should be enable by default. *8M* for *memory_limit* should be sufficient, if not *16M* will do.
+- HTTP server: nginx or apache2 are great solutions for any server. You
+- If you use Moustache at home, in a NAS for example, you can use PHP internal server:
+
+        $ cd /path/to/moustache
+        $ php -S your_ip:a_random_port -t web web/app.php
+
+- Security: **HTTPS** is mandatory to secure Moustache. If not, consider your and other users passwords public.
 
 
 ### User creation ###
