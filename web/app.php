@@ -2,6 +2,10 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+if (preg_match('/\.(?:png|jpg|jpeg|css|js|woff2|woff|svg|ttf|ico|gif)$/', $_SERVER['PHP_SELF'])) {
+    return false;
+}
+
 /**
  * @var Composer\Autoload\ClassLoader
  */
