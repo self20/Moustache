@@ -14,7 +14,7 @@ id="torrent-{{ torrent.id }}" class="card text-xs-center {% if torrent.isStopped
 
     {% if torrent.isCompleted %}
         <div class="btn-group btn-group-sm ml-1" role="group" aria-label="Download group">
-            <button type="button" title="{{ 'Direct download'|trans }}" class="btn btn-secondary disabled"><span class="fa fa-download" aria-hidden="true"></span></button>
+            <a href="{{ path('moustache_torrent_download', { id: torrent.id }) }}" type="button" title="{{ 'Direct download'|trans }}" class="btn btn-secondary"><span class="fa fa-download" aria-hidden="true"></span></a>
         </div>
     {% endif %}
 {% endblock cardHeader %}

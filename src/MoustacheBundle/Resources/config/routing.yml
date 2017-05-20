@@ -15,6 +15,11 @@ moustache_torrent_add:
     defaults: { _controller: moustache.controller.add:addAction  }
     methods:  [POST]
 
+moustache_torrent_download:
+    path: /ddl/{id}
+    defaults: { _controller: moustache.controller.download:downloadAction  }
+    methods:  [POST,GET]
+
 moustache_torrent_remove:
     path: /remove/{id}
     defaults: { _controller: moustache.controller.remove:removeAction  }

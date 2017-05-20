@@ -21,12 +21,6 @@ services:
             - { name: console.command }
 
     # --- Controllers
-    moustache.controller.default:
-        class: "MoustacheBundle\\Controller\\DefaultController"
-        arguments:
-            - "@torrent.client.current"
-            - "@templating"
-            - "@moustache.form.torrent_menu"
     moustache.controller.add:
         class: "MoustacheBundle\\Controller\\AddController"
         arguments:
@@ -37,6 +31,17 @@ services:
             - "@moustache.shortcut.request"
             - "@logger"
             - "%torrent_rpc_client%"
+    moustache.controller.default:
+        class: "MoustacheBundle\\Controller\\DefaultController"
+        arguments:
+            - "@torrent.client.current"
+            - "@templating"
+            - "@moustache.form.torrent_menu"
+    moustache.controller.download:
+        class: "MoustacheBundle\\Controller\\DownloadController"
+        arguments:
+            - "@torrent.client.current"
+            - "@moustache.service.redirector"
     moustache.controller.life_cycle:
         class: "MoustacheBundle\\Controller\\LifeCycleController"
         arguments:
