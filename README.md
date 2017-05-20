@@ -19,10 +19,15 @@ Moustache loves you (however it’s still a software).
 
 
         $ cd /var/www/moustache
-        $ composer install -o --no-dev # If composer is installed on your system
-        $ php bin/composer.phar install -o --no-dev # Alternative
+        $ SYMFONY_ENV=prod composer install -o --no-dev # If composer is installed on your system
+        $ SYMFONY_ENV=prod php bin/composer.phar install -o --no-dev # Alternative
 
 - If it is the first time, composer will ask for every values in the Configuration section.
+
+- Create database the first time:
+
+        $ bin/console doctrine:database:create --env=prod -v --if-not-exists
+        $ bin/console doctrine:schema:create --env=prod -v
 
 ### Configuration ###
 
@@ -33,7 +38,7 @@ At the end of the composer process, you will be asked for some configuration.
 - **secret**: A secret use to hash/password generation. Choose a random value.
 - **torrent_rpc_host**: The torrent RPC host. It’s likely to be *127.0.0.1*.
 - **torrent_rpc_port**: The torrent RPC port.
-- **torrent_storage**: The path where to store downloaded torrents. You can use a special variable `:username:` within the path, which will be replace dynamically by a Moustache user’s username. Careful, the path(s) must be RW for the system webserver user as well as the torrent RPC client or an error will occur at runtime.
+- **torrent_storage**: The path where to store downloaded torrents. You can use a special variable `:username:` (careful semicolons **:** not %) within the path, which will be replace dynamically by a Moustache user’s username. Careful, the path(s) must be RW for the system webserver user as well as the torrent RPC client or an error will occur at runtime.
 - **compass_path**: Compass path. Ignore this if you are not a developer.
 - **sass_path**: SASS path. Ignore this if you are not a developer.
 - **uglifycss_path**: Uglify CSS path. Ignore this if you are not a developer.
@@ -60,7 +65,7 @@ If your PHP installation enables it, a symlink has been created in `/etc/moustac
 Because this application was not made to be available for anyone to register, it implements a unique way to create new users.
 Administrator has to run the following command:
 
-        $ bin/console moustache:generate:signup newUser
+        $ bin/console moustache:generate:signup newUser --env=prod
 
 Where `newUser` is the username of the person you want to be able to signup.
 The command generates a unique signup link you can share with your friend so they can set a password and be able to log in.
