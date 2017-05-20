@@ -4,6 +4,12 @@
     <h1>{% trans %}Oops! 400 Bad request.{% endtrans %}</h1>
     <h2>{% trans %}Somehow, you made a request that was rejected by Moustache.{% endtrans %}</h2>
     <img class="img-responsive img-thumbnail" alt="400" src="{{ asset('css/img/errors/400.gif') }}" />
+    {% if exception.message is defined %}
+        <p>
+            {% trans %}This message bubbled up:{% endtrans %}<br>
+            <strong>{% trans with {'%message%': exception.message } %}“%message%”{% endtrans %}</strong>
+        </p>
+    {% endif %}
     <div class="error-explanation">
         <p>
             {% trans %}These might be some reasons why you ended here:{% endtrans %}
