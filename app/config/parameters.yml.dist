@@ -9,7 +9,7 @@ parameters:
     torrent_rpc_client: transmission # available: any | transmission | fake
     torrent_rpc_host: 127.0.0.1
     torrent_rpc_port: 9091
-    torrent_storage: /var/upload/%username%/
+    torrent_storage: /var/upload/:username:/
 
     # Tools path
     compass_path: /usr/bin/compass
