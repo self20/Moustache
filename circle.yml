@@ -37,4 +37,5 @@ test:
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Add
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Remove
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Share
+        - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Download
         - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Status
