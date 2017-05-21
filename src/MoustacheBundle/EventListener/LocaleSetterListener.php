@@ -11,6 +11,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 final class LocaleSetterListener
 {
+    /**
+     * @param GetResponseEvent $event
+     *
+     * @return GetResponseEvent|null
+     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
@@ -20,5 +25,7 @@ final class LocaleSetterListener
         }
 
         $request->setLocale(\Locale::acceptFromHttp($request->headers->get('accept-language')));
+
+        return $event;
     }
 }
