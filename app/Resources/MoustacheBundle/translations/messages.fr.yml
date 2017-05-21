@@ -1,3 +1,40 @@
+# Errors
+'Oops! 500 Server error.': 'Oops! 500 Erreur serveur.'
+'An unexpected error occured on the server!': 'Une erreur innatendue est survenue sur le serveur !'
+'We’re so sorry! Something went wrong and it wasn’t your fault.': 'Nous sommes vraiment désolé! Quelque chose ne s’est pas passé comme prévu et vous n’y êtes pour rien.'
+'Please, try to contact the administrator to explain how upset you are.': 'S’il vous plaît, essayer d’exprimer votre frustration auprès d’un administrateur.'
+
+'Oops! 503 Server unavailable.': 'Oops! 503 Serveur non disponible.'
+'The server is down for maintenance!': 'Le serveur est en maintenance !'
+'The servers are currently turning into better, faster, stronger servers. Sometimes, a Moustache needs some tender lovin’ care.': 'Nos serveurs sont en train de devenir plus robustes. Parfois, une Moustache nécessite des soins appropriés.'
+'Moustache is sorry if you were in the middle of something. Take a break, smoke a pipe and reload the page in a few moments.': 'Désolé si vous étiez au milieu de quelque chose. Prenez une pause, fumez une pipe et recharchez la page dans quelques temps.'
+
+'Oops! 404 Not Found.': 'Oops! 404 Introuvable.'
+'Sorry, you request a page that doesn’t exist!': 'Désolé, la page que vous recherchez n’existe pas!'
+'These might be some reasons why you ended here:': 'Quelques raisons pour lesquelles vous avez pu tomber ici :'
+'This page used to exists but it doesn’t anymore.': 'Cette page existait auparavant mais ce n’est plus le cas.'
+'You missed some part of a link before pasted it into your browser.': 'Vous avez fait un copier-coller incomplet d’un lien.'
+'You typed a wrong URL by hand.': 'Vous avez tapé un lien à la main en faisant une erreur.'
+'You <b>wanted</b> to see this page.': 'Vous êtes venu <b>exprès</b> pour voir cette page.'
+
+'Oops! 403 Forbidden.': 'Oops! 403 Interdit.'
+'This page/link is private!': 'Cette endroit est privé !'
+'These might be some reasons why you ended here:': 'Quelques raisons pour lesquelles vous avez pu tomber ici :'
+'You changed something on the URL or on the page.': 'Vous avez modifié quelque chose sur l’URL ou sur la page.'
+'You click on a link that doesn’t belong to you.': 'Vous avez cliqué sur un lien qui ne vous appartient pas.'
+'There is a bug. If you think this is the case, contact us.': 'C’est un bogue. Si c’est le cas, contactez-nous.'
+
+'This message bubbled up:': 'Le message suivant a été remonté :'
+'Take me home': 'Revenir à l’accueil'
+'“%message%”': '«&nbsp;%message%&nbsp;»'
+
+'Oops! 400 Bad request.': 'Oops! 400 Requête incorrecte.'
+'Somehow, you made a request that was rejected by Moustache.': 'D’une manière ou d’une autre, vous avez envoyé une requête rejetée par Moustache.'
+'There is a bug somewhere and the action you did should have worked.': 'Il y a un bogue quelque part et ça aurait dû fonctionner.'
+'Your browser is too old or unsecure.': 'Votre navigateur internet est trop ancien ou pas assez sécurisé.'
+'You tried to do nasty things. Boo! Stop being a bad guy, you suck.': 'Vous essayez de craquer cette application. Boo! C’est nul, arrêtez-ça.'
+'Either way, administrator has been warned.': 'Quoi qu’il en soit, l’administrateur a été prévenu.'
+
 # Layout
 'Login': 'Connexion'
 'Logout': 'Déconnexion'
