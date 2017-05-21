@@ -10,6 +10,6 @@ Feature: Ability to download a torrent
 #        And I should see 9 ".card" elements
 
     Scenario: As Moustachor, I see an error if I try to download a directory directly
-        When I go to "/download/3"
+        When I go to "/ddl/3"
         Then the response status code should be 400
         Then I should see "torrent cannot be downloaded"

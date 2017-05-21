@@ -28,7 +28,7 @@ Feature: Ability to see a torrent list
     Scenario: As Moustachor, I do not see a big torrent file form inside the page
         Then I should not see "no torrent yet" in the ".torrent-section" element
         Then I should not see "Pick .torrent" in the ".torrent-section" element
-        Then I should not see "Start downloading" in the ".torrent-section button" element
+        Then I should not see a ".torrent-section button" element
 
     Scenario: As Moustachor I see the progress of my torrents
         Then I should see "100%" in the "#torrent-progress-1" element
