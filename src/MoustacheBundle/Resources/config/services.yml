@@ -80,6 +80,12 @@ services:
             - "@moustache.helper.flash_bag"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
+    moustache.event_listener.maintenance:
+        class: "MoustacheBundle\\EventListener\\MaintenanceListener"
+        arguments:
+            - "%maintenance_lock_file%"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 2000}
     moustache.event_listener.missing_torrent_warner:
         class: "MoustacheBundle\\EventListener\\MissingTorrentWarnerListener"
         arguments:

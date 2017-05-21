@@ -11,6 +11,9 @@ parameters:
     torrent_rpc_port: 9091
     torrent_storage: /var/upload/:username:/
 
+    # Other
+    maintenance_lock_file: %kernel.root_dir%/../web/.down
+
     # Tools path
     compass_path: /usr/bin/compass
     sass_path: /usr/bin/sassc
