@@ -26,7 +26,7 @@ class DownloadController
 
     /**
      * @param ClientInterface $torrentClient
-     * @param Redirector $redirector
+     * @param Redirector      $redirector
      */
     public function __construct(ClientInterface $torrentClient, Redirector $redirector)
     {

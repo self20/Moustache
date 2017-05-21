@@ -29,8 +29,6 @@ final class MaintenanceListener
     /**
      * @param GetResponseEvent $event
      *
-     * @return null
-     *
      * @throws ServiceUnavailableHttpException
      */
     public function onKernelRequest(GetResponseEvent $event)
