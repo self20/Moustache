@@ -1,9 +1,20 @@
 ## Moustache ##
+[![Code Quality](https://scrutinizer-ci.com/g/gui-don/Moustache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gui-don/Moustache/?branch=master)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/gui-don/Moustache/master.svg)](https://circleci.com/gh/gui-don/Moustache)
+**PHP7 or more**
 ##### A multi-client, multi-user torrent web application #####
 
-<p align="center"><img width="150" src="moustache.png" /></p>
+<p align="center"><img width="120" src="moustache.png" /></p>
 
 It’s KISS. It’s elegant. Like a Moustache.
+
+Moustache is a web application that act as a front-end for a back-end torrent client (transmission, deluge…).
+
+It brings:
+- Multi-users on a single instance, with separation of torrents;
+- limitation of a simple user’s permission, only admin can administrate their back-end torrent client;
+- direct-download torrent files from Moustache to user’s browsers;
+- simple UI with a single click download.
 
 Moustache loves you (however it’s still a software).
 
@@ -40,6 +51,7 @@ At the end of the composer process, you will be asked for some configuration.
 - **torrent_rpc_port**: The torrent RPC port.
 - **torrent_storage**: The path where to store downloaded torrents. You can use a special variable `:username:` (careful semicolons **:** not %) within the path, which will be replace dynamically by a Moustache user’s username. Careful, the path(s) must be RW for the system webserver user as well as the torrent RPC client or an error will occur at runtime.
 - **maintenance_lock_file**: The path and filename of a file which, if present, will redirects all users to a 503 maintenance page.
+- **allow_direct_download**: Determines whether or not users are allowed to direct download their torrent.
 - **compass_path**: Compass path. Ignore this if you are not a developer.
 - **sass_path**: SASS path. Ignore this if you are not a developer.
 - **uglifycss_path**: Uglify CSS path. Ignore this if you are not a developer.
@@ -51,9 +63,9 @@ If your PHP installation enables it, a symlink has been created in `/etc/moustac
 ### Server administration ###
 
 - You’ll need PHP **7.0 or more** with the following extensions: *iconv*, *mbstring*, *intl*, *dom* and *sqlite*.
-- PHP configuration: *opcache* is recommended and should be enable by default. *8M* for *memory_limit* should be sufficient, if not *16M* will do.
-- HTTP server: nginx or apache2 are great solutions for any server. You
-- If you use Moustache at home, in a NAS for example, you can use PHP internal server:
+- PHP configuration: *opcache* is recommended and should be enabled by default. *8M* for *memory_limit* should be sufficient, if not *16M* will do.
+- HTTP server: nginx, apache2 or lighthttpd are great solutions for a public server use.
+- If you use Moustache at home, in a local NAS for example, you can use PHP internal server:
 
         $ cd /path/to/moustache
         $ php -S your_ip:a_random_port -t web web/app.php
@@ -76,7 +88,7 @@ Ask your friend’s preference before chosing a name.
 
 ### KNOWN ISSUES ###
 
-- TODO: Only handle transmission client for now.
+- TODO: Only handle transmission client for now. Ask for new client or make a PR.
 - TODO: There is no UI function to remove a torrent. `/remove/{id}` is the URL. It’ll come later.
 - TODO: Download buttons does not work.
 - TODO: It’s not possible to download a torrent with a magnet.
