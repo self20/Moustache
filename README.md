@@ -1,8 +1,13 @@
 ## Moustache ##
+##### A multi-client, multi-user torrent web application #####
 [![Code Quality](https://scrutinizer-ci.com/g/gui-don/Moustache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gui-don/Moustache/?branch=master)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/gui-don/Moustache/master.svg)](https://circleci.com/gh/gui-don/Moustache)
-**PHP7 or more**
-##### A multi-client, multi-user torrent web application #####
+
+| PHP                 | Support                                      |
+|---------------------|:--------------------------------------------:|
+| 7.1                 | [✔](https://travis-ci.org/gui-don/Moustache) |
+| 7.0                 | [✔](https://travis-ci.org/gui-don/Moustache) |
+| 5.6                 | [✖](https://travis-ci.org/gui-don/Moustache) |
 
 <p align="center"><img width="120" src="moustache.png" /></p>
 
