@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoustacheBundle\Controller;
 
 use MoustacheBundle\Service\Redirector;
+use Symfony\Component\HttpFoundation\Response;
 use TorrentBundle\Client\ClientInterface;
 
 class LifeCycleController
@@ -33,8 +34,10 @@ class LifeCycleController
 
     /**
      * @param int $id
+     *
+     * @return Response
      */
-    public function stopAction(int $id)
+    public function stopAction(int $id): Response
     {
         $torrent = $this->getSingleTorrent($id);
 
@@ -47,8 +50,10 @@ class LifeCycleController
 
     /**
      * @param int $id
+     *
+     * @return Response
      */
-    public function startAction(int $id)
+    public function startAction(int $id): Response
     {
         $torrent = $this->getSingleTorrent($id);
 

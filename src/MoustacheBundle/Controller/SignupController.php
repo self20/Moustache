@@ -77,7 +77,7 @@ class SignupController
      *
      * @throws AccessDeniedHttpException
      *
-     * @return string
+     * @return Response
      */
     public function formAction(string $confirmationToken): Response
     {
@@ -93,8 +93,10 @@ class SignupController
      * @param string $confirmationToken
      *
      * @throws AccessDeniedHttpException
+     *
+     * @return Response
      */
-    public function signupAction(string $confirmationToken)
+    public function signupAction(string $confirmationToken): Response
     {
         $user = $this->getUserByConfirmationToken($confirmationToken, 'Sorry, signup is not available for you. Token is invalid.');
 

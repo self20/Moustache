@@ -71,9 +71,9 @@ class AddController
     }
 
     /**
-     * @return RedirectResponse
+     * @return Response
      */
-    public function addAction()
+    public function addAction(): Response
     {
         // @HEYLISTEN Handle magnet links
         $this->torrentMenuForm->handleRequest($this->request);

@@ -29,6 +29,11 @@ class FlashBagHelper
      */
     private $userManager;
 
+    /**
+     * @param FlashMessengerInterface $flashMessenger
+     * @param AuthenticatedUserHelper $authenticatedUserHelper
+     * @param UserManager $userManager
+     */
     public function __construct(FlashMessengerInterface $flashMessenger, AuthenticatedUserHelper $authenticatedUserHelper, UserManager $userManager)
     {
         $this->flashMessenger = $flashMessenger;

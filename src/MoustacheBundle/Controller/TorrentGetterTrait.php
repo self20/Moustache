@@ -12,6 +12,11 @@ use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 trait TorrentGetterTrait
 {
     /**
+     * @var ClientInterface
+     */
+    private $torrentClient;
+
+    /**
      * @param int $id
      *
      * @throws NotFoundHttpException

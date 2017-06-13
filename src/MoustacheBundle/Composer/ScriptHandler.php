@@ -10,6 +10,9 @@ use Sensio\Bundle\DistributionBundle\Composer\ScriptHandler as SymfonyScriptHand
 
 class ScriptHandler extends SymfonyScriptHandler
 {
+    /**
+     * @param Event $event
+     */
     public static function install(Event $event)
     {
         $consoleDir = self::getConsoleDir($event, InstallCommand::NAME);

@@ -53,9 +53,9 @@ class DefaultController
     /**
      * Displays main page, with all the torrents.
      *
-     * @return string
+     * @return Response
      */
-    public function listAction()
+    public function listAction(): Response
     {
         $torrents = $this->getAllTorrents();
 
@@ -69,9 +69,9 @@ class DefaultController
      *
      * @throws NotFoundHttpException
      *
-     * @return string
+     * @return Response
      */
-    public function torrentContentAction(int $id)
+    public function torrentContentAction(int $id): Response
     {
         $torrent = $this->getSingleTorrent($id);
 

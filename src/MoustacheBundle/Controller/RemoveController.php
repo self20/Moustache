@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoustacheBundle\Controller;
 
 use MoustacheBundle\Service\Redirector;
+use Symfony\Component\HttpFoundation\Response;
 use TorrentBundle\Client\ClientInterface;
 
 class RemoveController
@@ -33,8 +34,10 @@ class RemoveController
 
     /**
      * @param int $id
+     *
+     * @return Response
      */
-    public function removeAction(int $id)
+    public function removeAction(int $id): Response
     {
         $torrent = $this->getSingleTorrent($id);
 
