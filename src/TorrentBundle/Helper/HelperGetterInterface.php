@@ -12,7 +12,7 @@ interface HelperGetterInterface
     public function isEmpty(): bool;
 
     /**
-     * @return \sdtClass|null
+     * @return \stdClass|null
      */
     public function getWhenAvailable();
 
@@ -21,7 +21,7 @@ interface HelperGetterInterface
      *
      * @throws \Exception
      *
-     * @return \sdtClass|null
+     * @return \stdClass|null
      */
     public function get();
 }

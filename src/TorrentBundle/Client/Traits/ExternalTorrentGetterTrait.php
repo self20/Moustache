@@ -13,6 +13,21 @@ use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 
 trait ExternalTorrentGetterTrait
 {
+    /**
+     * @var AdapterInterface
+     */
+    private $externalClient;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
+     * @var CacheInterface
+     */
+    private $cache;
+
     private function getExternalTorrent(string $hash)
     {
         if (!isset($this->cache->get(CacheInterface::KEY_TORRENT_HASHES)[$hash]) && !$this->cache->isUpToDate()) {

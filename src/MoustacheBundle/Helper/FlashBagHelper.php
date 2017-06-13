@@ -32,7 +32,7 @@ class FlashBagHelper
     /**
      * @param FlashMessengerInterface $flashMessenger
      * @param AuthenticatedUserHelper $authenticatedUserHelper
-     * @param UserManager $userManager
+     * @param UserManager             $userManager
      */
     public function __construct(FlashMessengerInterface $flashMessenger, AuthenticatedUserHelper $authenticatedUserHelper, UserManager $userManager)
     {

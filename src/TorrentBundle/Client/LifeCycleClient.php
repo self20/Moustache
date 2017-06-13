@@ -19,21 +19,6 @@ class LifeCycleClient implements LifeCycleClientInterface
     use ExternalTorrentGetterTrait;
 
     /**
-     * @var AdapterInterface
-     */
-    private $externalClient;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
      * @param AdapterInterface         $externalClient
      * @param EventDispatcherInterface $eventDispatcher
      * @param CacheInterface           $cache

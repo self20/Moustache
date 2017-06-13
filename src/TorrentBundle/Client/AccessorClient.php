@@ -23,11 +23,6 @@ class AccessorClient implements AccessorClientInterface
     use ExternalTorrentGetterTrait;
 
     /**
-     * @var AdapterInterface
-     */
-    private $externalClient;
-
-    /**
      * @var TorrentMapperInterface
      */
     private $torrentMapper;
@@ -41,16 +36,6 @@ class AccessorClient implements AccessorClientInterface
      * @var TorrentFilterInterface
      */
     private $torrentFilter;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
 
     /**
      * @param AdapterInterface         $externalClient
