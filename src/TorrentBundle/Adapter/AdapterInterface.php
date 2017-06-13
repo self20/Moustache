@@ -52,6 +52,11 @@ interface AdapterInterface
     /**
      * @param mixed $torrent
      */
+    public function startLater($torrent);
+
+    /**
+     * @param mixed $torrent
+     */
     public function startNow($torrent);
 
     /**

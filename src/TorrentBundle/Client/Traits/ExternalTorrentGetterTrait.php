@@ -19,6 +19,21 @@ trait ExternalTorrentGetterTrait
     private $externalClient;
 
     /**
+     * @var TorrentMapperInterface
+     */
+    private $torrentMapper;
+
+    /**
+     * @var TorrentStorageHelper
+     */
+    private $torrentStorageHelper;
+
+    /**
+     * @var TorrentFilterInterface
+     */
+    private $torrentFilter;
+
+    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;

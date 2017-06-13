@@ -57,7 +57,7 @@ class AddController
      * @param RedirectorInterface $redirector
      * @param Request             $request
      * @param LoggerInterface     $logger
-     * @param type                $torrentRpcClientName
+     * @param string              $torrentRpcClientName
      */
     public function __construct(FormInterface $torrentMenuForm, ClientInterface $torrentClient, TorrentManager $torrentManager, RedirectorInterface $redirector, Request $request, LoggerInterface $logger, $torrentRpcClientName)
     {

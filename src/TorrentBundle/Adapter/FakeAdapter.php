@@ -146,6 +146,13 @@ class FakeAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
+    public function startLater($torrent)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function startNow($torrent)
     {
     }

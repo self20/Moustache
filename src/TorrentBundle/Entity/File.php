@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
-use StandardBundle\FileInterface;
-use StandardBundle\TorrentInterface;
+use StandardBundle\FileInterface as StandardFileInterface;
+use StandardBundle\TorrentInterface as StandardTorrentInterface;
 
-class File implements FileInterface
+class File implements StandardFileInterface
 {
     use EntityTrait;
     use CanBeIncompleteTrait;
     use CanBeBrowsedTrait;
 
     /**
-     * @var TorrentInterface
+     * @var StandardTorrentInterface
      */
     protected $torrent;
 
@@ -59,7 +59,7 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function getTorrent(): TorrentInterface
+    public function getTorrent(): StandardTorrentInterface
     {
         return $this->torrent;
     }
@@ -67,7 +67,7 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function setTorrent(TorrentInterface $torrent)
+    public function setTorrent(StandardTorrentInterface $torrent)
     {
         $this->torrent = $torrent;
     }

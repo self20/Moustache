@@ -109,6 +109,14 @@ class TransmissionAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
+    public function startLater($torrent)
+    {
+        return $this->transmissionClient->start($torrent, $now = false);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function startNow($torrent)
     {
         return $this->transmissionClient->start($torrent, $now = true);
