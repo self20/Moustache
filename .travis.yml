@@ -1,0 +1,32 @@
+language: php
+
+php:
+    - nightly
+    - '7.1'
+    - '7.0'
+    - '5.6'
+allow_failures:
+    - php: nightly
+    - php: '5.6'
+
+env:
+    - SYMFONY_ENV=test
+
+install:
+    - cp app/config/test/parameters.yml app/config/parameters.yml
+    - SYMFONY_ENV=test php bin/composer.phar install -o --no-interaction
+
+script:
+    - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/Learning/
+    - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/MoustacheBundle/
+    - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/TorrentBundle/
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Connection
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Error
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Authentication
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Content
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Message
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Add
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Remove
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Share
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Download
+    - php vendor/bin/behat --config app/config/test/behat.yml --suite=moustache_suite --tags Status
