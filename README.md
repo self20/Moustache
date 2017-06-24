@@ -76,6 +76,8 @@ If your PHP installation enables it, a symlink has been created in `/etc/moustac
         $ php -S your_ip:a_random_port -t web web/app.php
 
 - Security: **HTTPS** is mandatory to secure Moustache. If not, consider your and other users passwords public.
+- Security: Moustache does not provide built-in security against brute force attacks on login form.
+- Security: please, refer to best security practices (web, PHP, IDS…) if you decide to put Moustache online.
 
 
 ### User creation ###
