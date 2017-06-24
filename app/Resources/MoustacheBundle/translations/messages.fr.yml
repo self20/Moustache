@@ -49,6 +49,9 @@
 'It seems one of your torrent have been deleted unexpectedly from the system.': 'Il semblerait que l’un de vos torrents manque à l’appel. Il a peut-être été supprimé du système à la main.'
 'Hi folk! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.': 'Salut! Ici vous pouvez uploader for fichiers .torrent, attendre quelques secondes… puis télécharger le contenu sur votre ordinateur. Tellement facile que je pourrais me huiler moi-même.'
 '“%s” has been completely removed.': '“%s” a été complètement supprimé.'
+'Direct download of files have been administratively prohibited.': 'Le téléchargement direct des fichiers a été interdit par l’administrateur.'
+'This torrent cannot be downloaded because it‘s a directory.': 'Ce torrent ne peut pas être téléchargé puisque c’est un dossier.'
+'This torrent cannot be downloaded because its extension may be dangerous.': 'Ce torrent ne peut pas être téléchargé parce que son extension est potentiellement dangereuse.'
 
 # Torrent forms
 'Pick .torrent local file…': 'Choisissez un fichier .torrent local…'

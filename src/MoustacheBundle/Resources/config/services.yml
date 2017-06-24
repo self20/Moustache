@@ -127,6 +127,18 @@ services:
         arguments:
             - "@session"
             - "@translator"
+    moustache.service.torrent_link_generator:
+        class: "MoustacheBundle\\Service\\TorrentLinkGenerator"
+        arguments:
+            - "@session"
+            - "@router"
+            - "%kernel.root_dir%"
+    moustache.service.torrent_publisher:
+        class: "MoustacheBundle\\Service\\TorrentPublisher"
+        arguments:
+            - "@filesystem"
+            - "@moustache.service.torrent_link_generator"
+            - "%allow_direct_download%"
     moustache.service.redirector:
         class: "MoustacheBundle\\Service\\Redirector"
         arguments:

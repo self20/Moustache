@@ -20,6 +20,9 @@ moustache_torrent_download:
     defaults: { _controller: moustache.controller.download:downloadAction  }
     methods:  [POST,GET]
 
+moustache_torrent_direct_download:
+    path: /download/{hash}/{filename}
+
 moustache_torrent_remove:
     path: /remove/{id}
     defaults: { _controller: moustache.controller.remove:removeAction  }

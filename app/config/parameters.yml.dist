@@ -13,6 +13,7 @@ parameters:
 
     # Other
     maintenance_lock_file: %kernel.root_dir%/../web/.down
+    allow_direct_download: 1
 
     # Tools path
     compass_path: /usr/bin/compass
