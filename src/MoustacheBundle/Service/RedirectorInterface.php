@@ -12,7 +12,14 @@ interface RedirectorInterface extends CanAddMessage
      * @param string $route
      * @param array  $parameters
      *
-     * @return ResponseInterface
+     * @return Response
      */
     public function redirect(string $route, array $parameters = []): Response;
+
+    /**
+     * @param string $path
+     *
+     * @return Response
+     */
+    public function redirectToPath(string $path): Response;
 }

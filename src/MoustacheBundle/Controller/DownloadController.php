@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Controller;
 
+use MoustacheBundle\Exception\Permission\DownloadPermissionException;
 use MoustacheBundle\Service\Redirector;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use MoustacheBundle\Service\RedirectorInterface;
+use MoustacheBundle\Service\TorrentPublisher;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Entity\TorrentInterface;
@@ -20,33 +23,48 @@ class DownloadController
     private $torrentClient;
 
     /**
-     * @var Redirector
+     * @var TorrentPublisher
+     */
+    private $torrentPublisher;
+
+    /**
+     * @var RedirectorInterface
      */
     private $redirector;
 
     /**
-     * @param ClientInterface $torrentClient
-     * @param Redirector      $redirector
+     * @param ClientInterface     $torrentClient
+     * @param TorrentPublisher    $torrentPublisher
+     * @param RedirectorInterface $redirector
      */
-    public function __construct(ClientInterface $torrentClient, Redirector $redirector)
+    public function __construct(ClientInterface $torrentClient, TorrentPublisher $torrentPublisher, RedirectorInterface $redirector)
     {
         $this->torrentClient = $torrentClient;
+        $this->torrentPublisher = $torrentPublisher;
         $this->redirector = $redirector;
     }
 
     /**
-     * @return JsonResponse
+     * @param int $id
+     *
+     * @throws BadRequestHttpException
+     * @throws DownloadPermissionException
+     *
+     * @return Response
      */
-    public function downloadAction(int $id): string
+    public function downloadAction(int $id): Response
     {
-        $torrent = $this->getSingleTorrent($id);
-        $this->isDownloadable($torrent);
+        $downloadLink = $this->doPublishTorrent($this->getSingleTorrent($id));
+
+        return $this->redirector->redirectToPath($downloadLink);
     }
 
-    private function isDownloadable(TorrentInterface $torrent): bool
+    private function doPublishTorrent(TorrentInterface $torrent): string
     {
-        if (!$torrent->isFile()) {
-            throw new BadRequestHttpException('This torrent cannot be downloaded because it‘s a directory.');
+        try {
+            return $this->torrentPublisher->publish($torrent);
+        } catch (DownloadPermissionException $ex) {
+            throw new BadRequestHttpException($ex->getMessage(), 0, $ex);
         }
     }
 }

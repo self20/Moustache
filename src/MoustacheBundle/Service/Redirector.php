@@ -20,6 +20,10 @@ class Redirector implements RedirectorInterface
      */
     private $flashMessenger;
 
+    /**
+     * @param RouterInterface         $router
+     * @param FlashMessengerInterface $flashMessenger
+     */
     public function __construct(RouterInterface $router, FlashMessengerInterface $flashMessenger)
     {
         $this->router = $router;
@@ -66,5 +70,15 @@ class Redirector implements RedirectorInterface
         $completeRoute = $this->router->generate($route, $parameters);
 
         return new RedirectResponse($completeRoute);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function redirectToPath(string $path): Response
+    {
+        $this->router->match($path);
+
+        return new RedirectResponse($path);
     }
 }

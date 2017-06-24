@@ -20,6 +20,10 @@ class TorrentManager
      */
     private $authenticatedUserHelper;
 
+    /**
+     * @param EntityManagerInterface  $entityManager
+     * @param AuthenticatedUserHelper $authenticatedUserHelper
+     */
     public function __construct(EntityManagerInterface $entityManager, AuthenticatedUserHelper $authenticatedUserHelper)
     {
         $this->entityManager = $entityManager;

@@ -41,6 +41,7 @@ services:
         class: "MoustacheBundle\\Controller\\DownloadController"
         arguments:
             - "@torrent.client.current"
+            - "@moustache.service.torrent_publisher"
             - "@moustache.service.redirector"
     moustache.controller.life_cycle:
         class: "MoustacheBundle\\Controller\\LifeCycleController"
