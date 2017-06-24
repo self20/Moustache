@@ -14,5 +14,10 @@ interface ClientInterface
      */
     public function isAvailable(): bool;
 
+    /**
+     * @return string
+     */
+    public function getName(): string;
+
     // @HEYLISTEN Fill this interface
 }

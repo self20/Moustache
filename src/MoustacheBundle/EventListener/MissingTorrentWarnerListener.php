@@ -7,6 +7,7 @@ namespace MoustacheBundle\EventListener;
 use MoustacheBundle\Event\TorrentMissingEvent;
 use MoustacheBundle\Helper\FlashBagHelper;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Client\ClientInterface;
 
 /**
@@ -30,15 +31,22 @@ final class MissingTorrentWarnerListener
     private $client;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @param LoggerInterface $logger
      * @param FlashBagHelper  $flashBagHelper
      * @param ClientInterface $client
+     * @param RequestStack    $requestStack
      */
-    public function __construct(LoggerInterface $logger, FlashBagHelper $flashBagHelper, ClientInterface $client)
+    public function __construct(LoggerInterface $logger, FlashBagHelper $flashBagHelper, ClientInterface $client, RequestStack $requestStack)
     {
         $this->logger = $logger;
         $this->flashBagHelper = $flashBagHelper;
         $this->client = $client;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -48,6 +56,10 @@ final class MissingTorrentWarnerListener
      */
     public function onTorrentMissing(TorrentMissingEvent $event)
     {
+        if (!$this->shouldProcess()) {
+            return;
+        }
+
         $this->flashBagHelper->warnTorrentIsMissing();
 
         $this->logger->error(sprintf(
@@ -56,5 +68,12 @@ final class MissingTorrentWarnerListener
             $this->client->getName(),
             $this->client->getName()
         ));
+
+        return $event;
+    }
+
+    private function shouldProcess(): bool
+    {
+        return !$this->requestStack->getCurrentRequest()->isXmlHttpRequest();
     }
 }

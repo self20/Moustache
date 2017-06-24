@@ -92,6 +92,7 @@ services:
             - "@logger"
             - "@moustache.helper.flash_bag"
             - "@torrent.client.current"
+            - "@request_stack"
         tags:
             - { name: kernel.event_listener, event: moustache.torrent.missing, method: onTorrentMissing, priority: 0}
     moustache.event_listener.locale_setter:
