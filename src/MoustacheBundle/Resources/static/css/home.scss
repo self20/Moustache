@@ -49,6 +49,10 @@
         @extend .fa-film;
     }
 
+    .fa.iso {
+        @extend .fa-hdd-o;
+    }
+
     .fa.audio {
         @extend .fa-music;
     }
