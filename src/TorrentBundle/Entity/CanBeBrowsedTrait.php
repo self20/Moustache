@@ -47,6 +47,26 @@ trait CanBeBrowsedTrait
     /**
      * {@inheritdoc}
      */
+    public function getLastAccessTimestamp(): int
+    {
+        clearstatcache(true, $this->getFullPath());
+
+        return fileatime($this->getFullPath());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSecondsSinceLastAccess(): int
+    {
+        return time() - $this->getLastAccessTimestamp();
+    }
+
+    // ---
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return $this->name;

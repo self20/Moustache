@@ -16,6 +16,16 @@ interface CanBeBrowsed
      */
     public function isFile(): bool;
 
+    /**
+     * @return int
+     */
+    public function getLastAccessTimestamp(): int;
+
+    /**
+     * @return int
+     */
+    public function getSecondsSinceLastAccess(): int;
+
     // ---
 
     /**
