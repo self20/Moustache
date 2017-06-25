@@ -46,7 +46,7 @@ final class CacheUpdaterListener
     /**
      * @param TorrentAfterEvent $event
      *
-     * @return $event|null
+     * @return TorrentAfterEvent|null
      */
     public function afterTorrentAdded(TorrentAfterEvent $event)
     {
@@ -63,7 +63,7 @@ final class CacheUpdaterListener
     /**
      * @param TorrentAfterEvent $event
      *
-     * @return $event|null
+     * @return TorrentAfterEvent|null
      */
     public function afterTorrentRemoved(TorrentAfterEvent $event)
     {
@@ -80,7 +80,7 @@ final class CacheUpdaterListener
     /**
      * @param GetResponseForExceptionEvent $event
      *
-     * @return $event|null
+     * @return TorrentAfterEvent|null
      */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {

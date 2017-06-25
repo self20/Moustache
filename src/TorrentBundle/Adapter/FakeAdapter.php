@@ -132,6 +132,13 @@ class FakeAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
+    public function reannounce($torrent)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function remove($torrent, $withLocalData)
     {
     }
@@ -165,5 +172,12 @@ class FakeAdapter implements AdapterInterface
             TorrentData::createAll();
             $this->session->set(self::SESSION_KEY, TorrentData::$torrents);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($torrent)
+    {
     }
 }

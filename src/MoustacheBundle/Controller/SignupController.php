@@ -83,6 +83,7 @@ class SignupController
     {
         $user = $this->getUserByConfirmationToken($confirmationToken, 'Sorry, signup is not available for you. This link has expired or is invalid.');
 
+        $values = [];
         $values['formSignup'] = $this->signupForm->setData($user)->createView();
         $values['user'] = $user;
 

@@ -45,6 +45,11 @@ interface AdapterInterface
 
     /**
      * @param mixed $torrent
+     */
+    public function reannounce($torrent);
+
+    /**
+     * @param mixed $torrent
      * @param bool  $withLocalData
      */
     public function remove($torrent, $withLocalData);
@@ -63,4 +68,9 @@ interface AdapterInterface
      * @param mixed $torrent
      */
     public function stop($torrent);
+
+    /**
+     * @param mixed $torrent
+     */
+    public function verify($torrent);
 }

@@ -32,7 +32,7 @@ class TorrentPublisher implements TorrentPublisherInterface
     /**
      * @param Filesystem                    $filesystem
      * @param TorrentLinkGeneratorInterface $torrentLinkGenerator
-     * @param type                          $allowDirectDownload
+     * @param bool                          $allowDirectDownload
      */
     public function __construct(Filesystem $filesystem, TorrentLinkGeneratorInterface $torrentLinkGenerator, bool $allowDirectDownload)
     {

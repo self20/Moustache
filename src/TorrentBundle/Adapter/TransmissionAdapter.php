@@ -101,6 +101,14 @@ class TransmissionAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
+    public function reannounce($torrent)
+    {
+        return $this->transmissionClient->reannounce($torrent);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function remove($torrent, $withLocalData)
     {
         return $this->transmissionClient->remove($torrent, $withLocalData);
@@ -137,5 +145,13 @@ class TransmissionAdapter implements AdapterInterface
         } catch (\RuntimeException $ex) {
             throw new TorrentNotFoundException($id, 0, $ex);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($torrent)
+    {
+        return $this->transmissionClient->verify($torrent);
     }
 }
