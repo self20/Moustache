@@ -1,10 +1,10 @@
-<div>
+<div class="col-xs-12">
     <h1>{% trans %}Hello there!{% endtrans %}</h1>
     <br>
     <h3>{% trans %}It seems you have no torrent yet, but stay cool!{% endtrans %}</h3>
     <br>
 
-    {{ form_start(formTorrent, {'action': path('moustache_torrent_add'), 'attr': {'class': 'hidden-xs-down'}}) }}
+    {{ form_start(formTorrent, {'action': path('moustache_torrent_add')}) }}
         <div class="form-group row">
             <div class="col-lg-4 col-md-5 col-sm-6">
                 <label class="btn btn-secondary btn-lg btn-block torrent-selector" for="torrent-selector">
@@ -18,7 +18,7 @@
             </div>
             <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12 mx-auto">
                 <button class="btn btn-primary btn-block btn-lg mt-1" type="submit">
-                    <span class="fa fa-2x fa-cloud-download" aria-hidden="true"></span>
+                    <span class="fa fa-cloud-download" aria-hidden="true"></span>
                      {% trans %}Start downloading{% endtrans %}</span>
                 </button>
             </div>

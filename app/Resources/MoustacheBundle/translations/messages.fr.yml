@@ -45,7 +45,7 @@
 
 # Torrent list
 'Hello there!': 'Bien le bonjour!'
-'It seems you have no torrent yet, but stay cool!': 'Apparemment, vous n’avez aucun torrent, mais ça va aller !'
+'It seems you have no torrent yet, but stay cool!': 'Apparemment, vous n’avez aucun torrent, mais tout va bien !'
 'It seems one of your torrent have been deleted unexpectedly from the system.': 'Il semblerait que l’un de vos torrents manque à l’appel. Il a peut-être été supprimé du système à la main.'
 'Hi folk! Here you can upload your .torrent files, wait a few seconds… then download the content to your computer. Sooo easy I could wax myself.': 'Salut! Ici vous pouvez uploader for fichiers .torrent, attendre quelques secondes… puis télécharger le contenu sur votre ordinateur. Tellement facile que je pourrais me huiler moi-même.'
 '“%s” has been completely removed.': '“%s” a été complètement supprimé.'
@@ -54,7 +54,7 @@
 'This torrent cannot be downloaded because its extension may be dangerous.': 'Ce torrent ne peut pas être téléchargé parce que son extension est potentiellement dangereuse.'
 
 # Torrent forms
-'Pick .torrent local file…': 'Choisissez un fichier .torrent local…'
+'Pick .torrent local file…': 'Choisissez un fichier .torrent'
 'or paste a torrent (http(s)://…) or a magnet (magnet:…) link': 'ou coller un lien web (http(s)://…) ou magnet (magnet:…)'
 'Start downloading': 'Télécharger'
 'Pick a .torrent file': 'Fichier .torrent'
