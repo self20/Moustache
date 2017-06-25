@@ -1,10 +1,25 @@
 suites:
+    torrent_suite:
+        namespace: TorrentBundle
+        spec_prefix: Spec
+        psr4_prefix:
+        src_path: %paths.config%/../../../src/
+        spec_path: %paths.config%/../../../test/
+
+    learning_suite:
+        namespace: Learning
+        spec_prefix: Spec
+        psr4_prefix:
+        src_path: %paths.config%/../../../test/Learning/
+        spec_path: %paths.config%/../../../test/
+
     moustache_suite:
         namespace: MoustacheBundle
         spec_prefix: Spec
         psr4_prefix:
-        src_path: %kernel.root_dir%/../src/
-        spec_path: %kernel.root_dir%/../test/
+        src_path: %paths.config%/../../../src/
+        spec_path: %paths.config%/../../../test/
+
 extensions:
     PhpSpecCodeCoverage\CodeCoverageExtension:
         format:
