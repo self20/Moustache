@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Service;
 
+use StandardBundle\TorrentInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
-use TorrentBundle\Entity\TorrentInterface;
 
 /**
  * Generates unpredictable download links for torrents.

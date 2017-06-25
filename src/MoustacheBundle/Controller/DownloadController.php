@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MoustacheBundle\Controller;
 
 use MoustacheBundle\Exception\Permission\DownloadPermissionException;
-use MoustacheBundle\Service\Redirector;
 use MoustacheBundle\Service\RedirectorInterface;
 use MoustacheBundle\Service\TorrentPublisher;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +63,7 @@ class DownloadController
         try {
             return $this->torrentPublisher->publish($torrent);
         } catch (DownloadPermissionException $ex) {
-            throw new BadRequestHttpException($ex->getMessage(), 0, $ex);
+            throw new BadRequestHttpException($ex->getMessage(), $ex);
         }
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Service;
 
-use TorrentBundle\Entity\TorrentInterface;
+use StandardBundle\TorrentInterface;
 
 interface TorrentLinkGeneratorInterface
 {

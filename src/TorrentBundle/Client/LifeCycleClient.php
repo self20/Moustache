@@ -50,7 +50,7 @@ class LifeCycleClient implements LifeCycleClientInterface
      */
     public function startLater(TorrentInterface $torrent)
     {
-        $this->externalClient->start($torrent, $now = false);
+        $this->externalClient->startLater($torrent);
     }
 
     /**
