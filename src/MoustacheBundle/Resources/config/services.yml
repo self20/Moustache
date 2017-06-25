@@ -28,7 +28,7 @@ services:
             - "@torrent.client.current"
             - "@torrent.manager.torrent"
             - "@moustache.service.redirector"
-            - "@moustache.shortcut.request"
+            - "@request_stack"
             - "@logger"
             - "%torrent_rpc_client%"
     moustache.controller.default:

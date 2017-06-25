@@ -8,6 +8,7 @@ use MoustacheBundle\Service\RedirectorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Entity\TorrentInterface;
@@ -46,28 +47,27 @@ class AddController
     private $logger;
 
     /**
-     * @var string
-     */
-    private $torrentRpcClientName;
-
-    /**
-     * @param FormInterface       $torrentMenuForm
-     * @param ClientInterface     $torrentClient
-     * @param TorrentManager      $torrentManager
+     * @param FormInterface $torrentMenuForm
+     * @param ClientInterface $torrentClient
+     * @param TorrentManager $torrentManager
      * @param RedirectorInterface $redirector
-     * @param Request             $request
-     * @param LoggerInterface     $logger
-     * @param string              $torrentRpcClientName
+     * @param RequestStack $requestStack
+     * @param LoggerInterface $logger
      */
-    public function __construct(FormInterface $torrentMenuForm, ClientInterface $torrentClient, TorrentManager $torrentManager, RedirectorInterface $redirector, Request $request, LoggerInterface $logger, $torrentRpcClientName)
-    {
+    public function __construct(
+        FormInterface $torrentMenuForm,
+        ClientInterface $torrentClient,
+        TorrentManager $torrentManager,
+        RedirectorInterface $redirector,
+        RequestStack $requestStack,
+        LoggerInterface $logger
+    ) {
         $this->torrentMenuForm = $torrentMenuForm;
         $this->torrentClient = $torrentClient;
         $this->torrentManager = $torrentManager;
         $this->redirector = $redirector;
-        $this->request = $request;
+        $this->request = $requestStack->getCurrentRequest();
         $this->logger = $logger;
-        $this->torrentRpcClientName = $torrentRpcClientName;
     }
 
     /**
