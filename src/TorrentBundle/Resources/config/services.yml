@@ -15,7 +15,6 @@ services:
     torrent.cache.cache:
         class: "TorrentBundle\\Cache\\Cache"
         arguments:
-            - "@cache.app"
             - "%torrent_rpc_client%"
 
     # --- Client

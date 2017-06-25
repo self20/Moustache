@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TorrentBundle\Cache;
 
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class Cache implements CacheInterface
 {
@@ -21,12 +22,11 @@ class Cache implements CacheInterface
     private $rpcClient;
 
     /**
-     * @param AbstractAdapter $cacheAdapter
-     * @param string          $rpcClient
+     * @param string $rpcClient
      */
-    public function __construct(AbstractAdapter $cacheAdapter, string $rpcClient)
+    public function __construct(string $rpcClient)
     {
-        $this->cacheAdapter = $cacheAdapter;
+        $this->cacheAdapter = new FilesystemAdapter();
         $this->rpcClient = $rpcClient;
     }
 
