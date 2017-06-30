@@ -47,12 +47,12 @@ class AddController
     private $logger;
 
     /**
-     * @param FormInterface $torrentMenuForm
-     * @param ClientInterface $torrentClient
-     * @param TorrentManager $torrentManager
+     * @param FormInterface       $torrentMenuForm
+     * @param ClientInterface     $torrentClient
+     * @param TorrentManager      $torrentManager
      * @param RedirectorInterface $redirector
-     * @param RequestStack $requestStack
-     * @param LoggerInterface $logger
+     * @param RequestStack        $requestStack
+     * @param LoggerInterface     $logger
      */
     public function __construct(
         FormInterface $torrentMenuForm,

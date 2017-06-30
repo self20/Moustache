@@ -3,19 +3,19 @@ suites:
         namespace: TorrentBundle
         spec_prefix: Spec
         psr4_prefix:
-        src_path: %paths.config%/../../../src/
-        spec_path: %paths.config%/../../../test/
+        src_path: "%paths.config%/../../../src/"
+        spec_path: "%paths.config%/../../../test/"
 
     learning_suite:
         namespace: Learning
         spec_prefix: Spec
         psr4_prefix:
-        src_path: %paths.config%/../../../test/Learning/
-        spec_path: %paths.config%/../../../test/
+        src_path: "%paths.config%/../../../test/Learning/"
+        spec_path: "%paths.config%/../../../test/"
 
     moustache_suite:
         namespace: MoustacheBundle
         spec_prefix: Spec
         psr4_prefix:
-        src_path: %paths.config%/../../../src/
-        spec_path: %paths.config%/../../../test/
+        src_path: "%paths.config%/../../../src/"
+        spec_path: "%paths.config%/../../../test/"
