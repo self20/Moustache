@@ -59,7 +59,7 @@ class FlashBagHelper
 
     public function warnTorrentIsMissing()
     {
-        $user = $this->authenticatedUserHelper->get();
+        $user = $this->authenticatedUserHelper->getWhenAvailable();
         if (null === $user) {
             return;
         }

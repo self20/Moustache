@@ -36,7 +36,7 @@ class TorrentRepositorySpec extends ObjectBehavior
         $queryBuilder->getQuery(Argument::cetera())->willReturn($query);
 
         $entityManager->createQueryBuilder()->willReturn($queryBuilder);
-        
+
         $this->beConstructedWith($entityManager, $classMetadata);
     }
 

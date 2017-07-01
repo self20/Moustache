@@ -19,7 +19,6 @@ class TorrentDataLoaderSpec extends ObjectBehavior
         $manager->getReference(User::class, Argument::any())->willReturn($user);
         $manager->persist(Argument::type(TorrentInterface::class))->willReturn(null);
         $manager->flush()->willReturn(null);
-
     }
 
     public function it_is_initializable()

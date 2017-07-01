@@ -1,22 +1,23 @@
 parameters:
-    database_name:     moustache
-    database_path:     "/var/lib/moustache/moustache.db3"
+    database_name:      moustache
+    database_path:      "/var/lib/moustache/moustache.db3"
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisIsNotSecretPleaseChangeIt
+    secret:             ThisIsNotSecretPleaseChangeIt
 
     # Torrent
     torrent_rpc_client: transmission # available: any | transmission | fake
-    torrent_rpc_host: 127.0.0.1
-    torrent_rpc_port: 9091
-    torrent_storage: /var/upload/:username:/
+    torrent_rpc_host:   127.0.0.1
+    torrent_rpc_port:   9091
+    torrent_storage:    "/var/upload/:username:/"
 
     # Other
-    maintenance_lock_file: %kernel.root_dir%/../web/.down
-    allow_direct_download: 1
+    maintenance_lock_file:  "%kernel.root_dir%/../web/.down"
+    system_conf_dir:        "/etc"
+    allow_direct_download:  1
 
     # Tools path
-    compass_path: /usr/bin/compass
-    sass_path: /usr/bin/sassc
-    uglifycss_path: %kernel.root_dir%/../node_modules/.bin/uglifycss
-    uglifyjs_path: %kernel.root_dir%/../node_modules/.bin/uglifyjs
+    compass_path:   "/usr/bin/compass"
+    sass_path:      "/usr/bin/sassc"
+    uglifycss_path: "%kernel.root_dir%/../node_modules/.bin/uglifycss"
+    uglifyjs_path:  "%kernel.root_dir%/../node_modules/.bin/uglifyjs"

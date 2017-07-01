@@ -40,6 +40,15 @@ class FlashBagHelperSpec extends ObjectBehavior
         $this->greetUser()->shouldReturn(null);
     }
 
+    public function it_does_not_warn_if_no_user_is_authenticated($authenticatedUserHelper, $flashMessenger)
+    {
+        $authenticatedUserHelper->getWhenAvailable()->willReturn(null);
+
+        $flashMessenger->warn(Argument::type('string'))->shouldNotBeCalled();
+
+        $this->warnTorrentIsMissing()->shouldReturn(null);
+    }
+
     public function it_does_not_greet_a_older_users($user, $flashMessenger, $userManager)
     {
         $user->isNew()->willReturn(false);
@@ -62,5 +71,12 @@ class FlashBagHelperSpec extends ObjectBehavior
         $userManager->incrementCurrentMessage(Argument::any())->shouldBeCalledTimes(1);
 
         $this->greetUser()->shouldReturn(null);
+    }
+
+    public function it_warns_user_a_torrent_is_missing($flashMessenger)
+    {
+        $flashMessenger->warn(Argument::type('string'))->shouldBeCalledTimes(1);
+
+        $this->warnTorrentIsMissing()->shouldReturn(null);
     }
 }

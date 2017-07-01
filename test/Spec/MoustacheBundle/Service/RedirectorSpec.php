@@ -8,6 +8,7 @@ use MoustacheBundle\Service\FlashMessengerInterface;
 use MoustacheBundle\Service\Redirector;
 use MoustacheBundle\Service\RedirectorInterface;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -18,6 +19,7 @@ class RedirectorSpec extends ObjectBehavior
         FlashMessengerInterface $flashMessenger
     ) {
         $router->generate('route', ['parameters'])->willReturn('correct uri');
+        $router->match(Argument::type('string'))->willReturn(true);
 
         $this->beConstructedWith($router, $flashMessenger);
     }
@@ -35,6 +37,11 @@ class RedirectorSpec extends ObjectBehavior
     public function it_returns_a_redirect_response()
     {
         $this->redirect('route', ['parameters'])->shouldReturnAnInstanceOf(RedirectResponse::class);
+    }
+
+    public function it_redirets_to_an_already_built_path()
+    {
+        $this->redirectToPath('/existing/route/')->shouldReturnAnInstanceOf(RedirectResponse::class);
     }
 
     public function it_redirects_on_the_correct_uri()

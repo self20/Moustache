@@ -157,6 +157,7 @@ services:
         arguments:
             - "@filesystem"
             - "%kernel.root_dir%"
+            - "%system_conf_dir%"
 
     # --- Twig
     moustache.twig.intl:

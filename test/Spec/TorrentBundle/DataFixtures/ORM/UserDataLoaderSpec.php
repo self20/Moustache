@@ -16,7 +16,6 @@ class UserDataLoaderSpec extends ObjectBehavior
     {
         $manager->persist(Argument::type(UserInterface::class))->willReturn(null);
         $manager->flush()->willReturn(null);
-
     }
 
     public function it_is_initializable()
