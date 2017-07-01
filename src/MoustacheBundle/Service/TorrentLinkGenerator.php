@@ -13,8 +13,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class TorrentLinkGenerator implements TorrentLinkGeneratorInterface
 {
-    const RELATIVE_KERNEL_TO_WEB_ROUTE = '/../web';
-
     /**
      * @var SessionInterface
      */

@@ -8,6 +8,8 @@ use StandardBundle\TorrentInterface;
 
 interface TorrentLinkGeneratorInterface
 {
+    const RELATIVE_KERNEL_TO_WEB_ROUTE = '/../web';
+
     /**
      * @param TorrentInterface $torrent
      *

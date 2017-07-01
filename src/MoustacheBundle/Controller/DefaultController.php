@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Templating\EngineInterface;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Entity\Torrent;
 

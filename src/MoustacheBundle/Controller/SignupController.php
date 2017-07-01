@@ -6,11 +6,11 @@ namespace MoustacheBundle\Controller;
 
 use FOS\UserBundle\Security\LoginManagerInterface;
 use MoustacheBundle\Service\RedirectorInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Templating\EngineInterface;
 use TorrentBundle\Entity\UserInterface;
 use TorrentBundle\Manager\UserManager;
 use TorrentBundle\Repository\UserRepository;
