@@ -54,7 +54,6 @@ At the end of the composer process, you will be asked for some configuration.
 - **torrent_rpc_port**: The torrent RPC port.
 - **torrent_storage**: The path where to store downloaded torrents. You can use a special variable `:username:` (careful semicolons **:** not %) within the path, which will be replace dynamically by a Moustache user’s username. Careful, the path(s) must be RW for the system webserver user as well as the torrent RPC client or an error will occur at runtime.
 - **maintenance_lock_file**: The path and filename of a file which, if present, will redirects all users to a 503 maintenance page.
-- **maintenance_lock_file**: The path and filename of a file which, if present, will redirects all users to a 503 maintenance page.
 - **allow_direct_download**: Determines whether or not users are allowed to direct download their torrent.
 - **compass_path**: Compass path. Ignore this if you are not a developer.
 - **sass_path**: SASS path. Ignore this if you are not a developer.
