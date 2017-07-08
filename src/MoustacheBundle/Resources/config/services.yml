@@ -5,6 +5,12 @@ services:
             - { name: twig.extension }
 
     # --- Command
+    moustache.command.clean_downloads:
+        class: "MoustacheBundle\\Command\\CleanDownloadsCommand"
+        arguments:
+            - "@moustache.task.clean_downloads"
+        tags:
+            - { name: console.command }
     moustache.command.generate_signup:
         class: "MoustacheBundle\\Command\\GenerateSignupCommand"
         arguments:
