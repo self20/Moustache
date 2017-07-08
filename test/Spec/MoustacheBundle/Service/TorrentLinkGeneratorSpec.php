@@ -24,6 +24,8 @@ class TorrentLinkGeneratorSpec extends ObjectBehavior
             return $args[0].' + '.implode(' + ', $args[1]);
         });
 
+        $router->generate(Argument::type('string'))->willReturn('/partial/route');
+
         $torrent->getName()->willReturn('name');
         $torrent->getHash()->willReturn('hash');
 
@@ -50,5 +52,10 @@ class TorrentLinkGeneratorSpec extends ObjectBehavior
     public function it_generates_an_absolute_link($torrent)
     {
         $this->generateAbsoluteLink($torrent)->shouldReturn('/some/route/../webmoustache_torrent_direct_download   1a4876706e0c54158d3f7b37ebe1b87bd5a9c10b0f7f7c7d851dfb33feeec72f   name');
+    }
+
+    public function it_generates_a_partial_absolute_link()
+    {
+        $this->generatePartialAbsoluteLink()->shouldReturn('/some/route/../web/partial/route');
     }
 }

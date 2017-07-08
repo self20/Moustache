@@ -22,6 +22,8 @@ moustache_torrent_download:
 
 moustache_torrent_direct_download:
     path: /download/{hash}/{filename}
+    defaults: {hash: '', filename: ''}
+    methods:  [GET]
 
 moustache_torrent_remove:
     path: /remove/{id}

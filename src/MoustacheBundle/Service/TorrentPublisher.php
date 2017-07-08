@@ -49,6 +49,7 @@ class TorrentPublisher implements TorrentPublisherInterface
         $this->checkDownloadPermissions($torrent);
 
         $this->filesystem->symlink($torrent->getFullPath(), $this->torrentLinkGenerator->generateAbsoluteLink($torrent));
+        $this->filesystem->touch($torrent->getFullPath(), null, time());
 
         return $this->torrentLinkGenerator->generateWebLink($torrent);
     }

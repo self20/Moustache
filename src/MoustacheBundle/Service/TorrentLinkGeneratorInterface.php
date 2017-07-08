@@ -23,4 +23,9 @@ interface TorrentLinkGeneratorInterface
      * @return string
      */
     public function generateAbsoluteLink(TorrentInterface $torrent): string;
+
+    /**
+     * @return string
+     */
+    public function generatePartialAbsoluteLink(): string;
 }

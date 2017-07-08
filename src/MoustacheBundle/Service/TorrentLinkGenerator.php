@@ -56,6 +56,14 @@ class TorrentLinkGenerator implements TorrentLinkGeneratorInterface
         return urldecode($this->kernelRouteDirectory.self::RELATIVE_KERNEL_TO_WEB_ROUTE.$this->generateWebLink($torrent));
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generatePartialAbsoluteLink(): string
+    {
+        return $this->kernelRouteDirectory.self::RELATIVE_KERNEL_TO_WEB_ROUTE.$this->router->generate('moustache_torrent_direct_download');
+    }
+
     private function generateHash(TorrentInterface $torrent): string
     {
         return hash('sha256', $this->session->getId().$torrent->getHash());

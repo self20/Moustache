@@ -9,6 +9,7 @@ use MoustacheBundle\Service\TorrentLinkGeneratorInterface;
 use MoustacheBundle\Service\TorrentPublisher;
 use MoustacheBundle\Service\TorrentPublisherInterface;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Symfony\Component\Filesystem\Filesystem;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Service\MimeGuesser;
@@ -22,6 +23,7 @@ class TorrentPublisherSpec extends ObjectBehavior
         TorrentInterface $torrent
     ) {
         $filesystem->symlink('/torrent/full/path', '/absolute/link')->willReturn(null);
+        $filesystem->touch('/torrent/full/path', null, Argument::type('int'))->willReturn(null);
 
         $torrentLinkGenerator->generateAbsoluteLink($torrent)->willReturn('/absolute/link');
         $torrentLinkGenerator->generateWebLink($torrent)->willReturn('web/link');
@@ -67,6 +69,7 @@ class TorrentPublisherSpec extends ObjectBehavior
     public function it_generates_a_downloadable_public_link($filesystem, $torrent)
     {
         $filesystem->symlink('/torrent/full/path', '/absolute/link')->shouldBeCalledTimes(1);
+        $filesystem->touch('/torrent/full/path', null, Argument::type('int'))->shouldBeCalledTimes(1);
 
         $this->publish($torrent);
     }
