@@ -7,6 +7,8 @@
 |:--------------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|
 | [✔](https://travis-ci.org/gui-don/Moustache) | [✔](https://travis-ci.org/gui-don/Moustache) | [✖](https://travis-ci.org/gui-don/Moustache) | [✖](https://travis-ci.org/gui-don/Moustache) |
 
+----
+
 <p align="center"><img width="120" src="moustache.png" /></p>
 
 It’s KISS. It’s elegant. Like a Moustache.
@@ -55,6 +57,7 @@ At the end of the composer process, you will be asked for some configuration.
 - **torrent_storage**: The path where to store downloaded torrents. You can use a special variable `:username:` (careful semicolons **:** not %) within the path, which will be replace dynamically by a Moustache user’s username. Careful, the path(s) must be RW for the system webserver user as well as the torrent RPC client or an error will occur at runtime.
 - **maintenance_lock_file**: The path and filename of a file which, if present, will redirects all users to a 503 maintenance page.
 - **allow_direct_download**: Determines whether or not users are allowed to direct download their torrent.
+- **clean_downloads_delay_in_seconds**: Times in seconds a file is made available after a user had hit the download button (careful, this value is checked against the file latest access time. Adjust the value whether your webserver modifies atime or not…)
 - **compass_path**: Compass path. Ignore this if you are not a developer.
 - **sass_path**: SASS path. Ignore this if you are not a developer.
 - **uglifycss_path**: Uglify CSS path. Ignore this if you are not a developer.
