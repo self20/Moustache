@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MoustacheBundle\Command;
 
 use MoustacheBundle\Exception\Permission\SystemPermissionException;
-use MoustacheBundle\Task\SymlinkParametersTask;
+use MoustacheBundle\Task\TaskInterface;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,14 +15,14 @@ class InstallCommand extends SymfonyCommand
     const NAME = 'moustache:install';
 
     /**
-     * @var SymlinkParametersTask
+     * @var TaskInterface
      */
     private $symlinkParametersTask;
 
     /**
-     * @param SymlinkParametersTask $symlinkParametersTask
+     * @param TaskInterface $symlinkParametersTask
      */
-    public function __construct(SymlinkParametersTask $symlinkParametersTask)
+    public function __construct(TaskInterface $symlinkParametersTask)
     {
         $this->symlinkParametersTask = $symlinkParametersTask;
 
