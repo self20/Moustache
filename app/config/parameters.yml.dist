@@ -15,6 +15,7 @@ parameters:
     maintenance_lock_file:  "%kernel.root_dir%/../web/.down"
     system_conf_dir:        "/etc"
     allow_direct_download:  1
+    clean_downloads_delay_in_seconds: 18000
 
     # Tools path
     compass_path:   "/usr/bin/compass"

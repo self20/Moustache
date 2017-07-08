@@ -152,6 +152,12 @@ services:
         factory: 'request_stack:getCurrentRequest'
 
     # --- Tasks
+    moustache.task.clean_downloads:
+        class: "MoustacheBundle\\Task\\CleanDownloadsTask"
+        arguments:
+            - "@moustache.service.torrent_link_generator"
+            - "@filesystem"
+            - "%clean_downloads_delay_in_seconds%"
     moustache.task.symlink_parameters:
         class: "MoustacheBundle\\Task\\SymlinkParametersTask"
         arguments:
