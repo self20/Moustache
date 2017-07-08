@@ -9,6 +9,7 @@ use MoustacheBundle\Service\RedirectorInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use TorrentBundle\Entity\UserInterface;
@@ -59,9 +60,9 @@ class SignupController
      * @param FormInterface         $signupForm
      * @param LoginManagerInterface $loginManager
      * @param RedirectorInterface   $redirector
-     * @param Request               $request
+     * @param RequestStack          $requestStack
      */
-    public function __construct(EngineInterface $templateEngine, UserManager $userManager, UserRepository $userRepository, FormInterface $signupForm, LoginManagerInterface $loginManager, RedirectorInterface $redirector, Request $request)
+    public function __construct(EngineInterface $templateEngine, UserManager $userManager, UserRepository $userRepository, FormInterface $signupForm, LoginManagerInterface $loginManager, RedirectorInterface $redirector, RequestStack $requestStack)
     {
         $this->templateEngine = $templateEngine;
         $this->userManager = $userManager;
@@ -69,7 +70,7 @@ class SignupController
         $this->signupForm = $signupForm;
         $this->loginManager = $loginManager;
         $this->redirector = $redirector;
-        $this->request = $request;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     /**

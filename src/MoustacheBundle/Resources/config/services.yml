@@ -68,7 +68,7 @@ services:
             - "@moustache.form.signup"
             - "@fos_user.security.login_manager"
             - "@moustache.service.redirector"
-            - "@moustache.shortcut.request"
+            - "@request_stack"
     moustache.controller.status:
         class: "MoustacheBundle\\Controller\\StatusController"
         arguments:
