@@ -141,21 +141,24 @@ class Torrent implements TorrentInterface, \JsonSerializable
         return $this->name;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'hash' => $this->hash,
-            'name' => $this->name,
-            'user' => $this->user->getId(),
-            'status' => $this->status,
-            'downloadRate' => $this->downloadRate,
+            'id' => $this->getId(),
+            'hash' => $this->getHash(),
+            'name' => $this->getName(),
+            'user' => $this->getUser()->getId(),
+            'status' => $this->getStatus(),
+            'downloadRate' => $this->getDownloadRate(),
             'downloadHumanRate' => $this->getDownloadHumanRate(),
-            'currentByteSize' => $this->currentByteSize,
+            'currentByteSize' => $this->getCurrentByteSize(),
             'currentHumanSize' => $this->getCurrentHumanSize(),
-            'uploadRate' => $this->uploadRate,
+            'uploadRate' => $this->getUploadRate(),
             'uploadHumanRate' => $this->getUploadHumanRate(),
-            'totalByteSize' => $this->totalByteSize,
+            'totalByteSize' => $this->getTotalByteSize(),
             'totalHumanSize' => $this->getTotalHumanSize(),
             'percentDone' => $this->getPercentDone(),
             'isCompleted' => $this->isCompleted(),
