@@ -56,21 +56,13 @@ class FakeAdapter implements AdapterInterface
 
         $count = count(TorrentData::$torrents) + 1;
 
-        $torrent->setId($count);
-        $torrent->setHash(sha1((string) $count));
-        $torrent->setUser($this->authenticatedUserHelper->get());
-        $torrent->setName('torrent-'.$count);
-        $torrent->setStartDate(new \DateTime());
-        $torrent->setDownloadDir($this->torrentStorageHelper->get());
-        $torrent->setDownloadRate(0);
-        $torrent->setUploadRate(0);
-        $torrent->setNbPeers(0);
-        $torrent->setTotalByteSize(12345678);
-        $torrent->setCurrentByteSize(12345678);
-        $torrent->setFriendlyName('torrent-'.$count);
-        $torrent->setStatus(CanDownload::STATUS_DONE);
-        $torrent->setMime('directory');
-        TorrentData::$torrents[$count] = $torrent;
+        TorrentData::createOneTorrent([
+            'id' => $count, 'hash' => sha1((string) $count),
+            'user' => $this->authenticatedUserHelper->get(), 'status' => CanDownload::STATUS_DONE, 'downloadDir' => $this->torrentStorageHelper->get(),
+            'name' => 'torrent-'.$count, 'friendlyName' => 'torrent-'.$count, 'mime' => 'directory',
+            'startDate' => new \DateTime(),
+            'nbPeers' => 0, 'uploadRate' => 0, 'downloadRate' => 0, 'totalByteSize' => 12345678, 'currentByteSize' => 12345678,
+        ], $torrent);
 
         $this->session->set(self::SESSION_KEY, TorrentData::$torrents);
 

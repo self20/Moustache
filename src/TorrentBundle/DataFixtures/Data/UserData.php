@@ -16,41 +16,45 @@ class UserData
             return false;
         }
 
-        $user = new User();
-        $user->setId(1);
-        $user->setUsername('normal');
-        $user->setEmail('normal');
-        $user->setPlainPassword('test');
-        $user->setEnabled(true);
-        self::$users['normal'] = $user;
+        self::createOneUser([
+            'id' => 1, 'enabled' => true,
+            'username' => 'normal', 'password' => 'test',
+        ]);
 
-        $userDisable = new User();
-        $userDisable->setId(2);
-        $userDisable->setUsername('disable');
-        $userDisable->setEmail('disable');
-        $userDisable->setPlainPassword('test');
-        $userDisable->setEnabled(false);
-        self::$users['disable'] = $userDisable;
+        self::createOneUser([
+            'id' => 2, 'enabled' => false,
+            'username' => 'disable', 'password' => 'test',
+        ]);
 
-        $userAdmin = new User();
-        $userAdmin->setId(3);
-        $userAdmin->setUsername('admin');
-        $userAdmin->setEmail('admin');
-        $userAdmin->setPlainPassword('test');
-        $userAdmin->addRole('ROLE_ADMIN');
-        $userAdmin->setEnabled(true);
-        self::$users['admin'] = $userAdmin;
+        self::createOneUser([
+            'id' => 3, 'enabled' => true, 'role' => 'ROLE_ADMIN',
+            'username' => 'admin', 'password' => 'test',
+        ]);
 
-        $guest = new User();
-        $guest->setId(4);
-        $guest->setUsername('guest');
-        $guest->setEmail('guest');
-        $guest->setPlainPassword('test');
-        $guest->setEnabled(false);
-        $guest->setConfirmationToken('01234567abcdef');
-        self::$users['guest'] = $guest;
+        self::createOneUser([
+            'id' => 4, 'enabled' => true, 'confirmationToken' => '01234567abcdef',
+            'username' => 'guest', 'password' => 'test',
+        ]);
 
         return true;
+    }
+
+    public static function createOneUser(array $data, UserInterface $user = null)
+    {
+        if (null == $user) {
+            $user = new User();
+        }
+
+        $user->setId($data['id']);
+        $user->setUsername($data['username']);
+        $user->setEmail($data['username']);
+        $user->setPlainPassword($data['password']);
+        $user->setEnabled($data['enabled']);
+        $user->setConfirmationToken($data['confirmationToken'] ?? null);
+        if (isset($data['role'])) {
+            $user->addRole('role');
+        }
+        self::$users[$data['username']] = $user;
     }
 
     public static function freeAll()
