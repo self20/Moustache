@@ -124,7 +124,7 @@ class TorrentData
 
     public static function createOneTorrent(array $data, TorrentInterface $torrent = null)
     {
-        if (null == $torrent) {
+        if (null === $torrent) {
             $torrent = new Torrent();
         }
 

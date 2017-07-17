@@ -131,17 +131,17 @@ class Client implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function startLater(TorrentInterface $torrent)
+    public function start(TorrentInterface $torrent)
     {
-        return $this->lifeCycleClient->startLater($torrent);
+        return $this->lifeCycleClient->start($torrent);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function startNow(TorrentInterface $torrent)
+    public function startWithoutLimits(TorrentInterface $torrent)
     {
-        $this->lifeCycleClient->startNow($torrent);
+        $this->lifeCycleClient->startWithoutLimits($torrent);
     }
 
     /**

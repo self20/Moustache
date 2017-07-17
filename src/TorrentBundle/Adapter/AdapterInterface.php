@@ -57,12 +57,12 @@ interface AdapterInterface
     /**
      * @param mixed $torrent
      */
-    public function startLater($torrent);
+    public function start($torrent);
 
     /**
      * @param mixed $torrent
      */
-    public function startNow($torrent);
+    public function startWithoutLimits($torrent);
 
     /**
      * @param mixed $torrent

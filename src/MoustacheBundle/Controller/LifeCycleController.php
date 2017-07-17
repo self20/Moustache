@@ -57,7 +57,7 @@ class LifeCycleController
     {
         $torrent = $this->getSingleTorrent($id);
 
-        $this->torrentClient->startNow($torrent);
+        $this->torrentClient->start($torrent);
 
         $this->redirector->addSuccessMessage('“%s” has been started.', $torrent->getFriendlyName());
 

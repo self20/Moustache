@@ -21,18 +21,18 @@ services:
     torrent.client.transmission_accessor:
         class: "TorrentBundle\\Client\\AccessorClient"
         arguments:
+            - "@event_dispatcher"
             - "@torrent.adapter.transmission"
             - "@torrent.mapper.transmission_torrent"
             - "@torrent.helper.torrent_storage"
             - "@torrent.filter.torrent"
-            - "@event_dispatcher"
-            - "@torrent.cache.cache"
+            - "@torrent.client.transmission.external_torrent_getter"
     torrent.client.transmission_life_cycle:
         class: "TorrentBundle\\Client\\LifeCycleClient"
         arguments:
-            - "@torrent.adapter.transmission"
             - "@event_dispatcher"
-            - "@torrent.cache.cache"
+            - "@torrent.adapter.transmission"
+            - "@torrent.client.transmission.external_torrent_getter"
     torrent.client.transmission_misc:
         class: "TorrentBundle\\Client\\MiscClient"
         arguments:
@@ -41,9 +41,9 @@ services:
     torrent.client.transmission_remove:
         class: "TorrentBundle\\Client\\RemoveClient"
         arguments:
-            - "@torrent.adapter.transmission"
             - "@event_dispatcher"
-            - "@torrent.cache.cache"
+            - "@torrent.adapter.transmission"
+            - "@torrent.client.transmission.external_torrent_getter"
     torrent.client.transmission_availability:
         class: "TorrentBundle\\Client\\AvailabilityClient"
         arguments:
@@ -59,22 +59,28 @@ services:
             - "%torrent_rpc_client%"
         tags:
             - { name: torrent.client, type: transmission }
+    torrent.client.transmission.external_torrent_getter:
+        class: "TorrentBundle\\Client\\ExternalTorrentGetter"
+        arguments:
+            - "@event_dispatcher"
+            - "@torrent.adapter.transmission"
+            - "@torrent.cache.cache"
 
     torrent.client.fake_accessor:
         class: "TorrentBundle\\Client\\AccessorClient"
         arguments:
+            - "@event_dispatcher"
             - "@torrent.adapter.fake"
             - "@torrent.mapper.fake_torrent"
             - "@torrent.helper.torrent_storage"
             - "@torrent.filter.torrent"
-            - "@event_dispatcher"
-            - "@torrent.cache.cache"
+            - "@torrent.client.fake.external_torrent_getter"
     torrent.client.fake_life_cycle:
         class: "TorrentBundle\\Client\\LifeCycleClient"
         arguments:
-            - "@torrent.adapter.fake"
             - "@event_dispatcher"
-            - "@torrent.cache.cache"
+            - "@torrent.adapter.fake"
+            - "@torrent.client.fake.external_torrent_getter"
     torrent.client.fake_misc:
         class: "TorrentBundle\\Client\\MiscClient"
         arguments:
@@ -83,9 +89,9 @@ services:
     torrent.client.fake_remove:
         class: "TorrentBundle\\Client\\RemoveClient"
         arguments:
-            - "@torrent.adapter.fake"
             - "@event_dispatcher"
-            - "@torrent.cache.cache"
+            - "@torrent.adapter.fake"
+            - "@torrent.client.fake.external_torrent_getter"
     torrent.client.fake_availability:
         class: "TorrentBundle\\Client\\AvailabilityClient"
         arguments:
@@ -101,6 +107,12 @@ services:
             - "%torrent_rpc_client%"
         tags:
             - { name: torrent.client, type: fake }
+    torrent.client.fake.external_torrent_getter:
+        class: "TorrentBundle\\Client\\ExternalTorrentGetter"
+        arguments:
+            - "@event_dispatcher"
+            - "@torrent.adapter.fake"
+            - "@torrent.cache.cache"
 
     torrent.client.current:
         class: "TorrentBundle\\Client\\Client"

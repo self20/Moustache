@@ -41,7 +41,7 @@ class UserData
 
     public static function createOneUser(array $data, UserInterface $user = null)
     {
-        if (null == $user) {
+        if (null === $user) {
             $user = new User();
         }
 

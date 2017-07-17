@@ -7,16 +7,18 @@ namespace TorrentBundle\Client;
 use StandardBundle\CanDownload;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
-use TorrentBundle\Cache\CacheInterface;
-use TorrentBundle\Client\Traits\ExternalTorrentGetterTrait;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
+use TorrentBundle\Exception\Torrent\CannotStartTorrentException;
 use TorrentBundle\Exception\Torrent\CannotStopTorrentException;
 
 class LifeCycleClient implements LifeCycleClientInterface
 {
-    use ExternalTorrentGetterTrait;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     /**
      * @var AdapterInterface
@@ -24,41 +26,28 @@ class LifeCycleClient implements LifeCycleClientInterface
     private $externalClient;
 
     /**
-     * @var EventDispatcherInterface
+     * @var ExternalTorrentGetter
      */
-    private $eventDispatcher;
+    private $externalTorrentGetter;
 
     /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
-     * @param AdapterInterface         $externalClient
      * @param EventDispatcherInterface $eventDispatcher
-     * @param CacheInterface           $cache
+     * @param AdapterInterface         $externalClient
+     * @param ExternalTorrentGetter    $externalTorrentGetter
      */
-    public function __construct(AdapterInterface $externalClient, EventDispatcherInterface $eventDispatcher, CacheInterface $cache)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AdapterInterface $externalClient, ExternalTorrentGetter $externalTorrentGetter)
     {
-        $this->externalClient = $externalClient;
         $this->eventDispatcher = $eventDispatcher;
-        $this->cache = $cache;
+        $this->externalClient = $externalClient;
+        $this->externalTorrentGetter = $externalTorrentGetter;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function startLater(TorrentInterface $torrent)
+    public function start(TorrentInterface $torrent)
     {
-        $this->externalClient->startLater($torrent);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function startNow(TorrentInterface $torrent)
-    {
-        $this->doStartTorrent($torrent, $this->getExternalTorrent($torrent->getHash()));
+        $this->doStartTorrent($torrent, $this->externalTorrentGetter->get($torrent->getHash()));
 
         $torrent->setStatus(CanDownload::STATUS_DOWNLOADING);
     }
@@ -66,9 +55,17 @@ class LifeCycleClient implements LifeCycleClientInterface
     /**
      * {@inheritdoc}
      */
+    public function startWithoutLimits(TorrentInterface $torrent)
+    {
+        $this->start($torrent);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function stop(TorrentInterface $torrent)
     {
-        $this->doStopTorrent($torrent, $this->getExternalTorrent($torrent->getHash()));
+        $this->doStopTorrent($torrent, $this->externalTorrentGetter->get($torrent->getHash()));
 
         $torrent->setStatus(CanDownload::STATUS_STOP);
     }
@@ -87,9 +84,9 @@ class LifeCycleClient implements LifeCycleClientInterface
     private function doStartTorrent(TorrentInterface $torrent, $externalTorrent)
     {
         try {
-            $this->externalClient->startNow($externalTorrent);
+            $this->externalClient->start($externalTorrent);
         } catch (\Exception $ex) {
-            throw new CannotStopTorrentException(sprintf('Oops, it seems “%s” torrent cannot be started.', $torrent->getFriendlyName()), 0, $ex);
+            throw new CannotStartTorrentException(sprintf('Oops, it seems “%s” torrent cannot be started.', $torrent->getFriendlyName()), 0, $ex);
         }
 
         $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_STARTED, new TorrentAfterEvent($torrent));

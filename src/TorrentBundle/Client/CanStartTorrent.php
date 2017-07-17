@@ -11,10 +11,10 @@ interface CanStartTorrent
     /**
      * @param TorrentInterface $torrent
      */
-    public function startLater(TorrentInterface $torrent);
+    public function start(TorrentInterface $torrent);
 
     /**
      * @param TorrentInterface $torrent
      */
-    public function startNow(TorrentInterface $torrent);
+    public function startWithoutLimits(TorrentInterface $torrent);
 }

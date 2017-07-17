@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Spec\MoustacheBundle\EventListener;
 
-use MoustacheBundle\Event\TorrentMissingEvent;
 use MoustacheBundle\EventListener\MissingTorrentWarnerListener;
 use MoustacheBundle\Helper\FlashBagHelper;
 use PhpSpec\ObjectBehavior;
@@ -13,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Client\ClientInterface;
+use TorrentBundle\Event\TorrentMissingEvent;
 
 class MissingTorrentWarnerListenerSpec extends ObjectBehavior
 {

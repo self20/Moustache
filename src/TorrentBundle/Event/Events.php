@@ -19,4 +19,6 @@ class Events
     const AFTER_TORRENT_STARTED = 'torrent.torrent.after.started';
 
     const AFTER_TORRENT_STOPPED = 'torrent.torrent.after.stopped';
+
+    const TORRENT_MISSING = 'torrent.missing';
 }

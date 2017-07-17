@@ -13,6 +13,9 @@ class AvailabilityClient implements CanBeAvailable
      */
     private $externalClient;
 
+    /**
+     * @param AdapterInterface $externalClient
+     */
     public function __construct(AdapterInterface $externalClient)
     {
         $this->externalClient = $externalClient;

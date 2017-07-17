@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MoustacheBundle\Event;
+namespace TorrentBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 

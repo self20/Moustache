@@ -6,8 +6,6 @@ namespace TorrentBundle\Client;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
-use TorrentBundle\Cache\CacheInterface;
-use TorrentBundle\Client\Traits\ExternalTorrentGetterTrait;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
@@ -20,7 +18,10 @@ use TorrentBundle\Mapper\TorrentMapperInterface;
 
 class AccessorClient implements AccessorClientInterface
 {
-    use ExternalTorrentGetterTrait;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     /**
      * @var AdapterInterface
@@ -43,31 +44,26 @@ class AccessorClient implements AccessorClientInterface
     private $torrentFilter;
 
     /**
-     * @var EventDispatcherInterface
+     * @var ExternalTorrentGetter
      */
-    private $eventDispatcher;
+    private $externalTorrentGetter;
 
     /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
+     * @param EventDispatcherInterface $eventDispatcher
      * @param AdapterInterface         $externalClient
      * @param TorrentMapperInterface   $torrentMapper
      * @param TorrentStorageHelper     $torrentStorageHelper
      * @param TorrentFilterInterface   $torrentFilter
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param CacheInterface           $cache
+     * @param ExternalTorrentGetter    $externalTorrentGetter
      */
-    public function __construct(AdapterInterface $externalClient, TorrentMapperInterface $torrentMapper, TorrentStorageHelper $torrentStorageHelper, TorrentFilterInterface $torrentFilter, EventDispatcherInterface $eventDispatcher, CacheInterface $cache)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AdapterInterface $externalClient, TorrentMapperInterface $torrentMapper, TorrentStorageHelper $torrentStorageHelper, TorrentFilterInterface $torrentFilter, ExternalTorrentGetter $externalTorrentGetter)
     {
+        $this->eventDispatcher = $eventDispatcher;
         $this->externalClient = $externalClient;
         $this->torrentMapper = $torrentMapper;
         $this->torrentStorageHelper = $torrentStorageHelper;
         $this->torrentFilter = $torrentFilter;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->cache = $cache;
+        $this->externalTorrentGetter = $externalTorrentGetter;
     }
 
     /**
@@ -106,7 +102,7 @@ class AccessorClient implements AccessorClientInterface
     public function getAll(): array
     {
         return array_filter(array_map(function ($notMappedTorrent) {
-            $externalTorrent = $this->getExternalTorrent($notMappedTorrent->getHash());
+            $externalTorrent = $this->externalTorrentGetter->get($notMappedTorrent->getHash());
 
             if (null !== $externalTorrent) {
                 $torrent = $this->doMapTorrent($notMappedTorrent, $externalTorrent);
@@ -119,7 +115,7 @@ class AccessorClient implements AccessorClientInterface
 
     private function getAndMapAndDispatchEvent(TorrentInterface $notMappedTorrent): TorrentInterface
     {
-        $torrent = $this->doMapTorrent($notMappedTorrent, $this->getExternalTorrent($notMappedTorrent->getHash()));
+        $torrent = $this->doMapTorrent($notMappedTorrent, $this->externalTorrentGetter->get($notMappedTorrent->getHash()));
 
         $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_GET, new TorrentAfterEvent($torrent));
 

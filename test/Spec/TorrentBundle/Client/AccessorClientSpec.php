@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Spec\TorrentBundle\Client;
 
-use MoustacheBundle\Event\Events as MoustacheEvent;
-use MoustacheBundle\Event\TorrentMissingEvent;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
-use TorrentBundle\Cache\CacheInterface;
 use TorrentBundle\Client\AccessorClient;
 use TorrentBundle\Client\AccessorClientInterface;
+use TorrentBundle\Client\ExternalTorrentGetter;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
-use TorrentBundle\Exception\Client\CacheOutdatedException;
 use TorrentBundle\Exception\Client\TorrentAdapterException;
 use TorrentBundle\Exception\Torrent\CannotFillTorrentException;
 use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
@@ -28,12 +25,12 @@ use TorrentBundle\Mapper\TorrentMapperInterface;
 class AccessorClientSpec extends ObjectBehavior
 {
     public function let(
+        EventDispatcherInterface $eventDispatcher,
         AdapterInterface $externalClient,
         TorrentMapperInterface $torrentMapper,
         TorrentStorageHelper $torrentStorageHelper,
         TorrentFilterInterface $torrentFilter,
-        EventDispatcherInterface $eventDispatcher,
-        CacheInterface $cache,
+        ExternalTorrentGetter $externalTorrentGetter,
 
         TorrentInterface $torrent,
         TorrentInterface $partialTorrent,
@@ -41,8 +38,9 @@ class AccessorClientSpec extends ObjectBehavior
     ) {
         $torrent->getHash()->willReturn('hash');
 
+        $eventDispatcher->dispatch(Argument::type('string'), Argument::type(Event::class))->willReturn(null);
+
         $externalClient->add($torrent, Argument::type('string'))->willReturn(null);
-        $externalClient->get('cache_value')->willReturn($torrent);
 
         $torrentMapper->map($torrent, Argument::any())->willReturn($partialTorrent);
         $torrentMapper->mapFiles($partialTorrent, Argument::any())->willReturn($completeTorrent);
@@ -52,12 +50,9 @@ class AccessorClientSpec extends ObjectBehavior
         $torrentFilter->getAuthenticatedUserTorrent(3)->willReturn($torrent);
         $torrentFilter->getAllAuthenticatedUserTorrents()->willreturn([$torrent, $torrent]);
 
-        $cache->get(CacheInterface::KEY_TORRENT_HASHES)->willReturn(['hash' => 'cache_value']);
-        $cache->isUpToDate()->willReturn(true);
+        $externalTorrentGetter->get('hash')->willReturn($torrent);
 
-        $eventDispatcher->dispatch(Argument::type('string'), Argument::type(Event::class))->willReturn(null);
-
-        $this->beConstructedWith($externalClient, $torrentMapper, $torrentStorageHelper, $torrentFilter, $eventDispatcher, $cache);
+        $this->beConstructedWith($eventDispatcher, $externalClient, $torrentMapper, $torrentStorageHelper, $torrentFilter, $externalTorrentGetter);
     }
 
     public function it_is_initializable()
@@ -91,31 +86,6 @@ class AccessorClientSpec extends ObjectBehavior
         $this->shouldThrow(TorrentNotFoundException::class)->during('get', [2]);
     }
 
-    public function it_throws_an_exception_when_cache_is_outdated($cache)
-    {
-        $cache->isUpToDate()->willReturn(false);
-        $cache->get(CacheInterface::KEY_TORRENT_HASHES)->willReturn([]);
-
-        $this->shouldThrow(CacheOutdatedException::class)->during('get', [3]);
-        $this->shouldThrow(CacheOutdatedException::class)->during('getAll');
-    }
-
-    public function it_throws_an_exception_if_a_specific_torrent_is_not_found_because_cache_is_out_of_date($externalClient)
-    {
-        $externalClient->get('cache_value')->willThrow(new TorrentNotFoundException(3));
-
-        $this->shouldThrow(CacheOutdatedException::class)->during('get', [3]);
-        $this->shouldThrow(CacheOutdatedException::class)->during('getAll');
-    }
-
-    public function it_throws_an_exception_if_a_specific_torrent_is_not_found_for_unknown_reasons($externalClient)
-    {
-        $externalClient->get('cache_value')->willThrow(new \Exception());
-
-        $this->shouldThrow(TorrentAdapterException::class)->during('get', [3]);
-        $this->shouldThrow(TorrentAdapterException::class)->during('getAll');
-    }
-
     public function it_adds_a_torrent($torrent, $externalClient)
     {
         $externalClient->add($torrent, Argument::type('string'))->shouldBeCalledTimes(1);
@@ -143,16 +113,6 @@ class AccessorClientSpec extends ObjectBehavior
     public function it_dispatches_a_torrent_get_event_when_torrent_is_retrieved($eventDispatcher)
     {
         $eventDispatcher->dispatch(Events::AFTER_TORRENT_GET, Argument::type(TorrentAfterEvent::class))->shouldBeCalledTimes(3);
-
-        $this->get(3);
-        $this->getAll();
-    }
-
-    public function it_dispatches_a_torrent_missing_event_when_torrent_hash_is_not_found_in_cache($cache, $eventDispatcher)
-    {
-        $cache->get(CacheInterface::KEY_TORRENT_HASHES)->willReturn([]);
-
-        $eventDispatcher->dispatch(MoustacheEvent::TORRENT_MISSING, Argument::type(TorrentMissingEvent::class))->shouldBeCalledTimes(3);
 
         $this->get(3);
         $this->getAll();

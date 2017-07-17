@@ -6,8 +6,6 @@ namespace TorrentBundle\Client;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
-use TorrentBundle\Cache\CacheInterface;
-use TorrentBundle\Client\Traits\ExternalTorrentGetterTrait;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
@@ -16,7 +14,10 @@ use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 
 class RemoveClient implements RemoveClientInterface
 {
-    use ExternalTorrentGetterTrait;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     /**
      * @var AdapterInterface
@@ -24,25 +25,20 @@ class RemoveClient implements RemoveClientInterface
     private $externalClient;
 
     /**
-     * @var EventDispatcherInterface
+     * @var ExternalTorrentGetter
      */
-    private $eventDispatcher;
+    private $externalTorrentGetter;
 
     /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
-     * @param AdapterInterface         $externalClient
      * @param EventDispatcherInterface $eventDispatcher
-     * @param CacheInterface           $cache
+     * @param AdapterInterface         $externalClient
+     * @param ExternalTorrentGetter    $externalTorrentGetter
      */
-    public function __construct(AdapterInterface $externalClient, EventDispatcherInterface $eventDispatcher, CacheInterface $cache)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AdapterInterface $externalClient, ExternalTorrentGetter $externalTorrentGetter)
     {
-        $this->externalClient = $externalClient;
         $this->eventDispatcher = $eventDispatcher;
-        $this->cache = $cache;
+        $this->externalClient = $externalClient;
+        $this->externalTorrentGetter = $externalTorrentGetter;
     }
 
     /**
@@ -52,7 +48,7 @@ class RemoveClient implements RemoveClientInterface
      */
     public function remove(TorrentInterface $torrent)
     {
-        $this->doRemoveTorrent($torrent, $this->getExternalTorrent($torrent->getHash()), $localData = false);
+        $this->doRemoveTorrent($torrent, $this->externalTorrentGetter->get($torrent->getHash()), $withLocalData = false);
     }
 
     /**
@@ -62,7 +58,7 @@ class RemoveClient implements RemoveClientInterface
      */
     public function removeAndDeleteLocalData(TorrentInterface $torrent)
     {
-        $this->doRemoveTorrent($torrent, $this->getExternalTorrent($torrent->getHash()), $localData = true);
+        $this->doRemoveTorrent($torrent, $this->externalTorrentGetter->get($torrent->getHash()), $withLocalData = true);
     }
 
     private function doRemoveTorrent(TorrentInterface $torrent, $externalTorrent, bool $withLocalData = true)
