@@ -176,7 +176,7 @@ class FakeAdapter implements AdapterInterface
     private function getTorrentTotalByteSize(TorrentInterface $torrent)
     {
         if ('big.torrent' === $torrent->getUploadedFile()->getClientOriginalName()) {
-            return 800000000000;
+            return 80000000000000;
         }
 
         return 12345678;
