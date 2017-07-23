@@ -217,15 +217,15 @@ services:
     torrent.mapper.transmission_torrent:
         class: "TorrentBundle\\Mapper\\TransmissionTorrentMapper"
         arguments:
-            - "@torrent.utils.string"
+            - "@external.utils.string"
             - '@torrent.service.mime_guesser'
             - '@torrent.mapper.transmission_file'
             - '@torrent.repository.torrent'
     torrent.mapper.transmission_file:
         class: "TorrentBundle\\Mapper\\TransmissionFileMapper"
         arguments:
-            - "@torrent.utils.string"
-            - "@torrent.utils.url"
+            - "@external.utils.string"
+            - "@external.utils.url"
             - '@torrent.service.mime_guesser'
     torrent.mapper.fake_torrent:
         class: "TorrentBundle\\Mapper\\FakeTorrentMapper"
@@ -246,18 +246,4 @@ services:
     torrent.service.mime_guesser:
         class: "TorrentBundle\\Service\\MimeGuesser"
         arguments:
-            - '@torrent.utils.file'
-
-    # --- Utils
-    torrent.utils.array:
-        class: "Rico\\Lib\\ArrayUtils"
-    torrent.utils.file:
-        class: "Rico\\Lib\\FileUtils"
-    torrent.utils.filesystem:
-        class: "Rico\\Lib\\FilesystemUtils"
-    torrent.utils.string:
-        class: "Rico\\Lib\\StringUtils"
-    torrent.utils.validation:
-        class: "Rico\\Lib\\ValidationUtils"
-    torrent.utils.url:
-        class: "Rico\\Lib\\UrlUtils"
+            - "@external.utils.file"

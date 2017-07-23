@@ -1,3 +1,18 @@
 imports:
     - { resource: "@TorrentBundle/Resources/config/services.yml"}
     - { resource: "@MoustacheBundle/Resources/config/services.yml"}
+
+services:
+    # --- Utils
+    external.utils.array:
+        class: "Rico\\Lib\\ArrayUtils"
+    external.utils.file:
+        class: "Rico\\Lib\\FileUtils"
+    external.utils.filesystem:
+        class: "Rico\\Lib\\FilesystemUtils"
+    external.utils.string:
+        class: "Rico\\Lib\\StringUtils"
+    external.utils.validation:
+        class: "Rico\\Lib\\ValidationUtils"
+    external.utils.url:
+        class: "Rico\\Lib\\UrlUtils"
