@@ -32,11 +32,17 @@ Feature: Ability to see a torrent list
 
     Scenario: As Moustachor I see the progress of my torrents
         Then I should see "100%" in the "#torrent-progress-1" element
-        Then I should see "0.01%" in the "#torrent-progress-4" element
+        Then I should see "0.1%" in the "#torrent-progress-4" element
         Then I should see "0%" in the "#torrent-progress-5" element
-        Then I should see "61.15%" in the "#torrent-progress-6" element
+        Then I should see "99.86%" in the "#torrent-progress-6" element
 
     Scenario: As Moustachor I see the upload/download rate of my torrents
         Then I should see "5.42KB" in the "#torrent-down-value-4" element
         Then I should see "112KB" in the "#torrent-down-value-6" element
         Then I should see "534B" in the "#torrent-up-value-10" element
+
+    Scenario: Ad Moustachor, I see an warning message if a torrent exists in database but is absent from external client
+        Given I add a new torrent in database
+        When I am on "/"
+        Then I should see "It seems one of your torrent have been deleted unexpectedly from the system" in the "#content .alert" element
+        And I should see 9 ".card" elements

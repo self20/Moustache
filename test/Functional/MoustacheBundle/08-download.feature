@@ -22,3 +22,5 @@ Feature: Ability to download a torrent
         When I go to "/ddl/3"
         Then the response status code should be 400
         Then I should see "torrent cannot be downloaded"
+
+        # @HEYLISTEN Test that script is not downloadable
