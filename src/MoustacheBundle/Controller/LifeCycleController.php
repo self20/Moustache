@@ -7,6 +7,8 @@ namespace MoustacheBundle\Controller;
 use MoustacheBundle\Service\Redirector;
 use Symfony\Component\HttpFoundation\Response;
 use TorrentBundle\Client\ClientInterface;
+use TorrentBundle\Entity\TorrentInterface;
+use TorrentBundle\Exception\Permission\NotEnoughDiskSpaceException;
 
 class LifeCycleController
 {
@@ -57,10 +59,24 @@ class LifeCycleController
     {
         $torrent = $this->getSingleTorrent($id);
 
-        $this->torrentClient->start($torrent);
+        $this->doStartAction($torrent);
 
         $this->redirector->addSuccessMessage('“%s” has been started.', $torrent->getFriendlyName());
 
         return $this->redirector->redirect('moustache_torrent');
+    }
+
+    // @HEYLISTEN This is always the same thing: try catch and redirector addMessage + potentially logger. : Must be deduplicated
+    private function doStartAction(TorrentInterface $torrent)
+    {
+        try {
+            return $this->torrentClient->start($torrent);
+        } catch (NotEnoughDiskSpaceException $ex) {
+            $this->redirector->addWarnMessage(
+                'The torrent cannot be started because there is not enough disk space (needed: %s, available: %s).',
+                $ex->getNeededSpace(),
+                $ex->getAvailableSpace()
+            );
+        }
     }
 }

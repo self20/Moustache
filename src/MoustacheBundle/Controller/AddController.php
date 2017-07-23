@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Controller;
 
+use Exception;
 use MoustacheBundle\Service\RedirectorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Entity\TorrentInterface;
+use TorrentBundle\Exception\Permission\NotEnoughDiskSpaceException;
 use TorrentBundle\Manager\TorrentManager;
 
 class AddController
@@ -92,7 +94,14 @@ class AddController
     {
         try {
             return $this->torrentClient->add($torrent);
-        } catch (\Exception $ex) {
+        } catch (NotEnoughDiskSpaceException $ex) {
+            $this->redirector->addWarnMessage(
+                'The torrent has been added but it cannot be started because there is not enough disk space (needed: %s, available: %s).',
+                $ex->getNeededSpace(),
+                $ex->getAvailableSpace()
+            );
+        } catch (Exception $ex) {
+            // @HEYLISTEN Logs only loggable exception.
             $this->logger->error('A user failed to add a new torrent.', ['exception' => $ex]);
             $this->redirector->addErrorMessage('Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.');
         }

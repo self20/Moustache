@@ -48,8 +48,6 @@ class LifeCycleClient implements LifeCycleClientInterface
     public function start(TorrentInterface $torrent)
     {
         $this->doStartTorrent($torrent, $this->externalTorrentGetter->get($torrent->getHash()));
-
-        $torrent->setStatus(CanDownload::STATUS_DOWNLOADING);
     }
 
     /**
@@ -66,8 +64,6 @@ class LifeCycleClient implements LifeCycleClientInterface
     public function stop(TorrentInterface $torrent)
     {
         $this->doStopTorrent($torrent, $this->externalTorrentGetter->get($torrent->getHash()));
-
-        $torrent->setStatus(CanDownload::STATUS_STOP);
     }
 
     private function doStopTorrent(TorrentInterface $torrent, $externalTorrent)
@@ -77,6 +73,8 @@ class LifeCycleClient implements LifeCycleClientInterface
         } catch (\Exception $ex) {
             throw new CannotStopTorrentException(sprintf('Oops, an error occured when trying to stop “%s” torrent.', $torrent->getFriendlyName()), 0, $ex);
         }
+
+        $torrent->setStatus(CanDownload::STATUS_STOP);
 
         $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_STOPPED, new TorrentAfterEvent($torrent));
     }
@@ -88,6 +86,8 @@ class LifeCycleClient implements LifeCycleClientInterface
         } catch (\Exception $ex) {
             throw new CannotStartTorrentException(sprintf('Oops, it seems “%s” torrent cannot be started.', $torrent->getFriendlyName()), 0, $ex);
         }
+
+        $torrent->setStatus(CanDownload::STATUS_DOWNLOADING);
 
         $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_STARTED, new TorrentAfterEvent($torrent));
     }

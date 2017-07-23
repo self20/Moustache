@@ -60,6 +60,8 @@
 'or paste magnet/torrent link': 'ou coller un lien web/magnet'
 'Add torrent!': 'Ajouter le torrent'
 'Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.': 'Désolé, Moustache n’a pas pu ajouter votre fichier. Le gestionnaire de torrent a rencontré une erreur.'
+'The torrent has been added but it cannot be started because there is not enough disk space (needed: %s, available: %s).': 'Le torrent a été ajouté mais il n’a pas pu être démarré par manque d’espace disque (besoin: %s, disponible: %s).'
+'The torrent cannot be started because there is not enough disk space (needed: %s, available: %s).': 'Le torrent n’a pas pu être démarré par manque d’espace disque (besoin: %s, disponible: %s).'
 '“%s” has been suspended.': '« %s » a été suspendu.'
 '“%s” has been started.': '« %s » a été démarré.'
 

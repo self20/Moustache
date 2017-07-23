@@ -52,7 +52,7 @@ class TorrentData
             'user' => UserData::$users['normal'], 'status' => CanDownload::STATUS_DOWNLOADING, 'downloadDir' => '/var/downloads',
             'name' => '[Digimon Tamers [WildBunch][PLSP][PLSP-card]', 'friendlyName' => 'Digimon Tamers', 'mime' => 'directory',
             'startDate' => new DateTime('2016-01-21 22:02:13'),
-            'nbPeers' => 5, 'uploadRate' => 0, 'downloadRate' => 5424, 'totalByteSize' => 12250974847, 'currentByteSize' => 1243324,
+            'nbPeers' => 5, 'uploadRate' => 0, 'downloadRate' => 5424, 'totalByteSize' => 12250974, 'currentByteSize' => 12433,
         ]);
 
         self::createOneTorrent([
@@ -60,7 +60,7 @@ class TorrentData
             'user' => UserData::$users['normal'], 'status' => CanDownload::STATUS_DOWNLOADING, 'downloadDir' => '/var/downloads',
             'name' => 'Disgaea 5', 'friendlyName' => 'Disgaea 5', 'mime' => 'directory',
             'startDate' => new DateTime('2014-10-21 20:12:53'),
-            'nbPeers' => 0, 'uploadRate' => 0, 'downloadRate' => 0, 'totalByteSize' => 302085952, 'currentByteSize' => 0,
+            'nbPeers' => 0, 'uploadRate' => 0, 'downloadRate' => 0, 'totalByteSize' => 102085952, 'currentByteSize' => 0,
         ]);
 
         self::createOneTorrent([
@@ -68,7 +68,7 @@ class TorrentData
             'user' => UserData::$users['normal'], 'status' => CanDownload::STATUS_DOWNLOADING, 'downloadDir' => '/var/downloads',
             'name' => '[Group]_Suite_Precure_(1920x1080_Blu-Ray)', 'friendlyName' => 'Suite Precure (1920x1080 Blu-Ray)', 'mime' => 'directory',
             'startDate' => new DateTime('2014-10-21 20:12:53'),
-            'nbPeers' => 2, 'uploadRate' => 0, 'downloadRate' => 112000, 'totalByteSize' => 71012907225, 'currentByteSize' => 43424392768,
+            'nbPeers' => 2, 'uploadRate' => 0, 'downloadRate' => 112000, 'totalByteSize' => 71012907225, 'currentByteSize' => 70912907225,
         ]);
 
         self::createOneTorrent([
