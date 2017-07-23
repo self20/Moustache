@@ -17,6 +17,9 @@ final class TorrentAddListener
      */
     private $torrentManager;
 
+    /**
+     * @param TorrentManager $torrentManager
+     */
     public function __construct(TorrentManager $torrentManager)
     {
         $this->torrentManager = $torrentManager;

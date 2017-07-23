@@ -61,7 +61,7 @@ class FakeAdapter implements AdapterInterface
             'user' => $this->authenticatedUserHelper->get(), 'status' => CanDownload::STATUS_DONE, 'downloadDir' => $this->torrentStorageHelper->get(),
             'name' => 'torrent-'.$count, 'friendlyName' => 'torrent-'.$count, 'mime' => 'directory',
             'startDate' => new \DateTime(),
-            'nbPeers' => 0, 'uploadRate' => 0, 'downloadRate' => 0, 'totalByteSize' => 12345678, 'currentByteSize' => 12345678,
+            'nbPeers' => 0, 'uploadRate' => 0, 'downloadRate' => 0, 'totalByteSize' => $this->getTorrentTotalByteSize($torrent), 'currentByteSize' => 0,
         ], $torrent);
 
         $this->session->set(self::SESSION_KEY, TorrentData::$torrents);
@@ -156,6 +156,13 @@ class FakeAdapter implements AdapterInterface
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($torrent)
+    {
+    }
+
     private function retreiveTorrentsFromSession()
     {
         if ($this->session->has(self::SESSION_KEY)) {
@@ -166,10 +173,12 @@ class FakeAdapter implements AdapterInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function verify($torrent)
+    private function getTorrentTotalByteSize(TorrentInterface $torrent)
     {
+        if ('big.torrent' === $torrent->getUploadedFile()->getClientOriginalName()) {
+            return 800000000000;
+        }
+
+        return 12345678;
     }
 }
