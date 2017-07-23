@@ -38,6 +38,14 @@ trait CanDownloadTrait
     /**
      * {@inheritdoc}
      */
+    public function isStarted(): bool
+    {
+        return CanDownload::STATUS_STOP !== $this->status;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isStopped(): bool
     {
         return CanDownload::STATUS_STOP === $this->status;
