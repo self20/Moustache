@@ -42,11 +42,11 @@ class File implements StandardFileInterface
     /**
      * @var int
      * @Assert\Range(
-     *     min=0, minMessage="Torrent file downloaded size is invalid (given: “{{ value }}”).",
-     *     invalidMessage="Torrent file downloaded size must be an integer."
+     *     min=0, minMessage="Torrent file current size is invalid (given: “{{ value }}”).",
+     *     invalidMessage="Torrent file current size must be an integer."
      * )
      */
-    protected $downloadedByteSize = 0;
+    protected $currentByteSize = 0;
 
     /**
      * @return string

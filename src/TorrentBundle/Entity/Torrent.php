@@ -127,11 +127,11 @@ class Torrent implements TorrentInterface, \JsonSerializable
     /**
      * @var int
      * @Assert\Range(
-     *     min=0, minMessage="Torrent downloaded size is invalid (given: “{{ value }}”).",
-     *     invalidMessage="Torrent downloaded size must be an integer."
+     *     min=0, minMessage="Torrent current size is invalid (given: “{{ value }}”).",
+     *     invalidMessage="Torrent current size must be an integer."
      * )
      */
-    protected $downloadedByteSize = 0;
+    protected $currentByteSize = 0;
 
     /**
      * @return string
