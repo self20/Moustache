@@ -6,6 +6,7 @@ namespace MoustacheBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use TorrentBundle\Entity\User;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
@@ -52,7 +53,7 @@ class FlashMessageGenerator
     {
         $user = $this->authenticatedUserHelper->getWhenAvailable();
 
-        if (!$this->shouldAddMessage() || !$user->isNew()) {
+        if (!$this->shouldAddMessage($user) || !$user->isNew()) {
             return;
         }
 
@@ -63,17 +64,17 @@ class FlashMessageGenerator
 
     public function warnTorrentIsMissing()
     {
-        if (!$this->shouldAddMessage()) {
+        if (!$this->shouldAddMessage($this->authenticatedUserHelper->getWhenAvailable())) {
             return;
         }
 
         $this->flashMessenger->warn('It seems one of your torrent have been deleted unexpectedly from the system.');
     }
 
-    private function shouldAddMessage(): bool
+    private function shouldAddMessage(User $user): bool
     {
         return
-            null !== $this->authenticatedUserHelper->getWhenAvailable() &&
+            null !== $user &&
             !$this->request->isXmlHttpRequest()
         ;
     }
