@@ -22,6 +22,11 @@ interface CanBeIncomplete
     public function getTotalHumanSize(): string;
 
     /**
+     * @return int
+     */
+    public function getVirtualUsedByteSize(): int;
+
+    /**
      * @return bool
      */
     public function isCompleted(): bool;

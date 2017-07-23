@@ -49,6 +49,14 @@ trait CanBeIncompleteTrait
     /**
      * {@inheritdoc}
      */
+    public function getVirtualUsedByteSize(): int
+    {
+        return $this->totalByteSize - $this->currentByteSize;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isCompleted(): bool
     {
         return$this->currentByteSize === $this->totalByteSize;
