@@ -15,29 +15,29 @@
 
 .torrent-section {
     .card {
-       width: 100%;
-       height: 95%;
-       border: 1px solid #ccc;
+        width: 100%;
+        height: 95%;
+        border: 1px solid #ccc;
     }
 
     .card-header {
         padding: .50rem 1rem;
     }
 
+    .card-inverse {
+        background-color: #DDD;
+    }
+
     .card-block {
-        #{$a-tags} {
+        #{$a-tags}, .card-title, .card-text {
             transition: color 0.5s ease;
-            color: rgb(55, 58, 60);
+            color: #444;
             text-decoration: none;
         }
 
-        #{$a-tags-hover} {
+        #{$a-tags-hover}, a .card-title:active, a .card-title:hover, a .card-text:active, a .card-text:hover {
            color: #000;
         }
-    }
-
-    .card-inverse {
-        background-color: #888;
     }
 
     .progress {
