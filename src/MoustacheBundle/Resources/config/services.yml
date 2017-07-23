@@ -81,10 +81,10 @@ services:
             - "@moustache.service.redirector"
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: -50 }
-    moustache.event_listener.flash_bag_messenger:
-        class: "MoustacheBundle\\EventListener\\FlashBagMessengerListener"
+    moustache.event_listener.global_messenger:
+        class: "MoustacheBundle\\EventListener\\GlobalMessengerListener"
         arguments:
-            - "@moustache.helper.flash_bag"
+            - "@moustache.service.flash_message_generator"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
     moustache.event_listener.maintenance:
@@ -97,23 +97,14 @@ services:
         class: "MoustacheBundle\\EventListener\\MissingTorrentWarnerListener"
         arguments:
             - "@logger"
-            - "@moustache.helper.flash_bag"
+            - "@moustache.service.flash_message_generator"
             - "@torrent.client.current"
-            - "@request_stack"
         tags:
-            - { name: kernel.event_listener, event: moustache.torrent.missing, method: onTorrentMissing, priority: 0}
+            - { name: kernel.event_listener, event: torrent.missing, method: onTorrentMissing, priority: 0}
     moustache.event_listener.locale_setter:
         class: "MoustacheBundle\\EventListener\\LocaleSetterListener"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 200}
-
-    # --- Helper
-    moustache.helper.flash_bag:
-        class: "MoustacheBundle\\Helper\\FlashBagHelper"
-        arguments:
-            - "@moustache.service.flash_messager"
-            - "@torrent.helper.authenticated_user"
-            - "@torrent.manager.user"
 
     # --- Forms
     moustache.form.torrent_menu:
@@ -134,6 +125,13 @@ services:
         arguments:
             - "@session"
             - "@translator"
+    moustache.service.flash_message_generator:
+        class: "MoustacheBundle\\Service\\FlashMessageGenerator"
+        arguments:
+            - "@moustache.service.flash_messager"
+            - "@torrent.helper.authenticated_user"
+            - "@torrent.manager.user"
+            - "@request_stack"
     moustache.service.torrent_link_generator:
         class: "MoustacheBundle\\Service\\TorrentLinkGenerator"
         arguments:

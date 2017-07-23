@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\EventListener;
 
-use MoustacheBundle\Helper\FlashBagHelper;
+use MoustacheBundle\Service\FlashMessageGenerator;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\TorrentMissingEvent;
 
@@ -21,9 +20,9 @@ final class MissingTorrentWarnerListener
     private $logger;
 
     /**
-     * @var FlashBagHelper
+     * @var FlashMessageGenerator
      */
-    private $flashBagHelper;
+    private $flashMessageGenerator;
 
     /**
      * @var ClientInterface
@@ -31,22 +30,15 @@ final class MissingTorrentWarnerListener
     private $client;
 
     /**
-     * @var RequestStack
+     * @param LoggerInterface       $logger
+     * @param FlashMessageGenerator $flashMessageGenerator
+     * @param ClientInterface       $client
      */
-    private $requestStack;
-
-    /**
-     * @param LoggerInterface $logger
-     * @param FlashBagHelper  $flashBagHelper
-     * @param ClientInterface $client
-     * @param RequestStack    $requestStack
-     */
-    public function __construct(LoggerInterface $logger, FlashBagHelper $flashBagHelper, ClientInterface $client, RequestStack $requestStack)
+    public function __construct(LoggerInterface $logger, FlashMessageGenerator $flashMessageGenerator, ClientInterface $client)
     {
         $this->logger = $logger;
-        $this->flashBagHelper = $flashBagHelper;
+        $this->flashMessageGenerator = $flashMessageGenerator;
         $this->client = $client;
-        $this->requestStack = $requestStack;
     }
 
     /**
@@ -56,11 +48,7 @@ final class MissingTorrentWarnerListener
      */
     public function onTorrentMissing(TorrentMissingEvent $event)
     {
-        if (!$this->shouldProcess()) {
-            return;
-        }
-
-        $this->flashBagHelper->warnTorrentIsMissing();
+        $this->flashMessageGenerator->warnTorrentIsMissing();
 
         $this->logger->error(sprintf(
             'A torrent with hash “%s” was requested but it was not found by “%s” client. It may have been removed manually in %s but still exists in moustache database or cache may has been temporarly out of date. Please fix the problem, as it can lead to performance issues.',
@@ -70,10 +58,5 @@ final class MissingTorrentWarnerListener
         ));
 
         return $event;
-    }
-
-    private function shouldProcess(): bool
-    {
-        return !$this->requestStack->getCurrentRequest()->isXmlHttpRequest();
     }
 }

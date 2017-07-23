@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace MoustacheBundle\Helper;
+namespace MoustacheBundle\Service;
 
-use MoustacheBundle\Service\FlashMessengerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
 /**
- * @HEYLISTEN It’s more a service than a helper, so change it.
  * Adds reusable messages to the flashbag.
  */
-class FlashBagHelper
+class FlashMessageGenerator
 {
     /**
      * @var FlashMessengerInterface
@@ -30,25 +30,29 @@ class FlashBagHelper
     private $userManager;
 
     /**
+     * @var Request
+     */
+    private $request;
+
+    /**
      * @param FlashMessengerInterface $flashMessenger
      * @param AuthenticatedUserHelper $authenticatedUserHelper
      * @param UserManager             $userManager
+     * @param RequestStack            $requestStack
      */
-    public function __construct(FlashMessengerInterface $flashMessenger, AuthenticatedUserHelper $authenticatedUserHelper, UserManager $userManager)
+    public function __construct(FlashMessengerInterface $flashMessenger, AuthenticatedUserHelper $authenticatedUserHelper, UserManager $userManager, RequestStack $requestStack)
     {
         $this->flashMessenger = $flashMessenger;
         $this->authenticatedUserHelper = $authenticatedUserHelper;
         $this->userManager = $userManager;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
-    /**
-     * Greets a User on their first connection.
-     */
     public function greetUser()
     {
         $user = $this->authenticatedUserHelper->getWhenAvailable();
 
-        if (null === $user || !$user->isNew()) {
+        if (!$this->shouldAddMessage() || !$user->isNew()) {
             return;
         }
 
@@ -59,11 +63,18 @@ class FlashBagHelper
 
     public function warnTorrentIsMissing()
     {
-        $user = $this->authenticatedUserHelper->getWhenAvailable();
-        if (null === $user) {
+        if (!$this->shouldAddMessage()) {
             return;
         }
 
         $this->flashMessenger->warn('It seems one of your torrent have been deleted unexpectedly from the system.');
+    }
+
+    private function shouldAddMessage(): bool
+    {
+        return
+            null !== $this->authenticatedUserHelper->getWhenAvailable() &&
+            !$this->request->isXmlHttpRequest()
+        ;
     }
 }

@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Spec\MoustacheBundle\EventListener;
 
 use MoustacheBundle\EventListener\MissingTorrentWarnerListener;
-use MoustacheBundle\Helper\FlashBagHelper;
+use MoustacheBundle\Service\FlashMessageGenerator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\TorrentMissingEvent;
 
@@ -18,21 +16,16 @@ class MissingTorrentWarnerListenerSpec extends ObjectBehavior
 {
     public function let(
         LoggerInterface $logger,
-        FlashBagHelper $flashBagHelper,
+        FlashMessageGenerator $flashMessageGenerator,
         ClientInterface $client,
-        RequestStack $requestStack,
 
-        TorrentMissingEvent $event,
-        Request $request
+        TorrentMissingEvent $event
     ) {
-        $request->isXmlHttpRequest()->willReturn(false);
-        $requestStack->getCurrentRequest()->willReturn($request);
-
         $event->getHash()->willReturn('hash');
 
         $client->getName()->willReturn('client name');
 
-        $this->beConstructedWith($logger, $flashBagHelper, $client, $requestStack);
+        $this->beConstructedWith($logger, $flashMessageGenerator, $client);
     }
 
     public function it_is_initializable()
@@ -40,19 +33,9 @@ class MissingTorrentWarnerListenerSpec extends ObjectBehavior
         $this->shouldHaveType(MissingTorrentWarnerListener::class);
     }
 
-    public function it_ignores_ajax_requests($request, $flashBagHelper, $logger, $event)
+    public function it_warns_user_that_a_torrent_is_missing($flashMessageGenerator, $event)
     {
-        $request->isXmlHttpRequest()->willReturn(true);
-
-        $flashBagHelper->warnTorrentIsMissing()->shouldNotBeCalled();
-        $logger->error(Argument::any())->shouldNotBeCalled();
-
-        $this->onTorrentMissing($event)->shouldReturn(null);
-    }
-
-    public function it_warns_user_that_a_torrent_is_missing($flashBagHelper, $event)
-    {
-        $flashBagHelper->warnTorrentIsMissing()->shouldBeCalledTimes(1);
+        $flashMessageGenerator->warnTorrentIsMissing()->shouldBeCalledTimes(1);
 
         $this->onTorrentMissing($event)->shouldReturn($event);
     }

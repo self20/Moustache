@@ -2,32 +2,52 @@
 
 namespace Spec\MoustacheBundle\Helper;
 
-use MoustacheBundle\Helper\FlashBagHelper;
+use MoustacheBundle\Service\FlashMessageGenerator;
 use MoustacheBundle\Service\FlashMessengerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Entity\User;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
-class FlashBagHelperSpec extends ObjectBehavior
+class FlashMessageGeneratorSpec extends ObjectBehavior
 {
     public function let(
         FlashMessengerInterface $flashMessenger,
         AuthenticatedUserHelper $authenticatedUserHelper,
         UserManager $userManager,
+        RequestStack $requestStack,
 
+        Request $request,
         User $user
     ) {
+        $request->isXmlHttpRequest()->willReturn(false);
+
         $user->isNew()->willReturn(true);
         $authenticatedUserHelper->getWhenAvailable()->willReturn($user);
 
-        $this->beConstructedWith($flashMessenger, $authenticatedUserHelper, $userManager);
+        $requestStack->getCurrentRequest()->willReturn($request);
+
+        $this->beConstructedWith($flashMessenger, $authenticatedUserHelper, $userManager, $requestStack);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(FlashBagHelper::class);
+        $this->shouldHaveType(FlashMessageGenerator::class);
+    }
+
+    public function it_ignores_ajax_requests($request, $flashMessenger)
+    {
+        $request->isXmlHttpRequest()->willReturn(true);
+
+        $flashMessenger->info(Argument::any())->shouldNotBeCalled();
+        $flashMessenger->warn(Argument::any())->shouldNotBeCalled();
+        $flashMessenger->error(Argument::any())->shouldNotBeCalled();
+
+        $this->warnTorrentIsMissing()->shouldReturn(null);
+        $this->greetUser()->shouldReturn(null);
     }
 
     public function it_does_not_greet_user_if_not_authenticated($authenticatedUserHelper, $flashMessenger, $userManager)
