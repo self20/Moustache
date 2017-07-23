@@ -52,7 +52,14 @@ class ExternalTorrentGetter
      */
     public function get(string $hash)
     {
-        $this->checkHashInCache($hash);
+        $this->checkCacheIsUpToDate($hash);
+
+        if (!$this->isHashInCache($hash)) {
+            // Torrent in BDD: present | Torrent in cache: absent | Torrent in external: absent
+            $this->eventDispatcher->dispatch(Events::TORRENT_MISSING, new TorrentMissingEvent($hash));
+
+            return;
+        }
 
         try {
             return $this->externalClient->get($this->cache->get(CacheInterface::KEY_TORRENT_HASHES)[$hash]);
@@ -64,16 +71,11 @@ class ExternalTorrentGetter
         }
     }
 
-    public function checkHashInCache(string $hash)
+    public function checkCacheIsUpToDate(string $hash)
     {
         if (!$this->isHashInCache($hash) && !$this->cache->isUpToDate()) {
             // Torrent in BDD: present | Torrent in cache: absent | Torrent in external: ?
             throw new CacheOutdatedException(sprintf('A torrent with id “%s” was requested from external client RPC but is absent from cache. Cache needs update.', $hash));
-        }
-
-        if (!$this->isHashInCache($hash)) {
-            // Torrent in BDD: present | Torrent in cache: absent | Torrent in external: absent
-            $this->eventDispatcher->dispatch(Events::TORRENT_MISSING, new TorrentMissingEvent($hash));
         }
     }
 

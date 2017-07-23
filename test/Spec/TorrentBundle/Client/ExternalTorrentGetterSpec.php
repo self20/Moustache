@@ -73,7 +73,7 @@ class ExternalTorrentGetterSpec extends ObjectBehavior
 
         $eventDispatcher->dispatch(Events::TORRENT_MISSING, Argument::type(TorrentMissingEvent::class))->shouldBeCalledTimes(1);
 
-        $this->shouldThrow(TorrentAdapterException::class)->during('get', ['hash']);
+        $this->get('hash')->shouldReturn(null);
     }
 
     public function it_returns_an_external_torrent($torrent)
