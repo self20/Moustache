@@ -68,9 +68,13 @@ If your PHP installation enables it, a symlink has been created in `/etc/moustac
 
 ### Server administration ###
 
-- You’ll need PHP **7.0 or more** with the following extensions: *iconv*, *mbstring*, *intl*, *dom* and *sqlite*.
+- PHP configuration: **7.0 or more** with the following extensions: *iconv*, *mbstring*, *intl*, *dom*, *zip* and *sqlite*.
 - PHP configuration: *opcache* is recommended and should be enabled by default. *8M* for *memory_limit* should be sufficient, if not *16M* will do.
+- PHP configuration: follow best security practices, for instance by disabling `expose_php`, `enable_dl`, `allow_url_fopen` or `allow_url_include`.
 - HTTP server: nginx, apache2 or lighthttpd are great solutions for a public server use.
+- HTTP server: should rewrite all URL without extensions or with `*.php` extension to `web/app.php`.
+- HTTP server: should not interpret (or pass to fastCGI) file with extension other than `*.php`.
+- HTTP server: should use compression to deliver CSS, JS, fonts and images.
 - If you use Moustache at home, in a local NAS for example, you can use PHP internal server:
 
         $ cd /path/to/moustache
@@ -98,8 +102,9 @@ Ask your friend’s preference before chosing a name.
 
 - TODO: Only handle transmission client for now. Ask for new client or make a PR.
 - TODO: There is no UI function to remove a torrent. `/remove/{id}` is the URL. It’ll come later.
-- TODO: Download buttons does not work.
 - TODO: It’s not possible to download a torrent with a magnet.
+- TODO: It’s possible that disk space availability checker ignores quota.
+- TODO: Failing states (tracker errors and missing files) are not properly handled.
 -
 - Torrent does not appear stopped or started after doing the action, the page has to be reloaded. It happens because Moustache is asynchronous and the torrent client is slower.
 
@@ -113,7 +118,7 @@ For now, authorized download files are whitelisted within Moustache code.
 #### Web server configuration ####
 
 Concerning previous point, it’s essential for the web server administrator of Moustache **NOT** to let the Apache, Nginx or whatever interpret fancy file extensions.
-Moustache needs web server software to handle `.php`, that is all.
+Moustache needs web server software to handle `.php`, that is all. Ideally, it should only be able to interpret `web/app.php`.
 Of course, if you run other web applications with the same server, it can also handle `.py`, `.asp` or whatever genuine script you want.
 
-Here is an exemple of a **BAD CONFIGURATION**: making your server interpret `.ogg` files. It’s very common sens. Ignoring this warning might make Moustache highly vulnerable as it can expose such files.
+Here is an exemple of a **BAD CONFIGURATION**: making your server interpret `.ogg` files. It’s very common sens. Ignoring this warning will make Moustache (and your server) highly vulnerable as it can expose such files.
