@@ -17,6 +17,13 @@
     <script>
         // @HEYLISTEN Organize this code following best practices
         $(function() {
+            // @HEYLISTEN Use memory to prevent searching for element everytime.
+            let torrentDownValue = [];
+            let torrentDown = [];
+            let torrentUpValue = [];
+            let torrentUp = [];
+            let torrentProgress = [];
+
             function ajaxCall() {
                 $.ajax({
                     url: '/status',
@@ -25,21 +32,37 @@
                     success: function(result) {
                         $.each(result, function(index, item) {
                             // @HEYLISTEN Check if any element exists before making any change.
-                            document.getElementById('torrent-down-value-'+item.id).innerHTML = item.downloadHumanRate;
+                            if (typeof torrentDownValue[item.id] == 'undefined') {
+                                torrentDownValue[item.id] = document.getElementById('torrent-down-value-'+item.id);
+                            }
+                            if (typeof torrentDown[item.id] == 'undefined') {
+                                torrentDown[item.id] = document.getElementById('torrent-down-'+item.id);
+                            }
+                            if (typeof torrentUpValue[item.id] == 'undefined') {
+                                torrentUpValue[item.id] = document.getElementById('torrent-up-value-'+item.id);
+                            }
+                            if (typeof torrentUp[item.id] == 'undefined') {
+                                torrentUp[item.id] = document.getElementById('torrent-up-'+item.id);
+                            }
+                            if (typeof torrentProgress[item.id] == 'undefined') {
+                                torrentProgress[item.id] = document.getElementById('torrent-progress-'+item.id);
+                            }
+
+                            torrentDownValue[item.id].innerHTML = item.downloadHumanRate;
                             if (item.downloadRate > 0) {
-                                document.getElementById('torrent-down-'+item.id).classList.remove('text-muted');
+                                torrentDown[item.id].classList.remove('text-muted');
                             } else {
-                                document.getElementById('torrent-down-'+item.id).classList.add('text-muted');
+                                torrentDown[item.id].classList.add('text-muted');
                             }
-                            document.getElementById('torrent-up-value-'+item.id).innerHTML = item.uploadHumanRate;
+                            torrentUpValue[item.id].innerHTML = item.uploadHumanRate;
                             if (item.uploadRate > 0) {
-                                document.getElementById('torrent-up-'+item.id).classList.remove('text-muted');
+                                torrentUp[item.id].classList.remove('text-muted');
                             } else {
-                                document.getElementById('torrent-up-'+item.id).classList.add('text-muted');
+                                torrentUp[item.id].classList.add('text-muted');
                             }
-                            document.getElementById('torrent-progress-'+item.id).innerHTML = item.percentDone.toLocaleString()+'%';
-                            document.getElementById('torrent-progress-'+item.id).title = item.percentDone.toLocaleString()+'%';
-                            document.getElementById('torrent-progress-'+item.id).value = item.percentDone > 1 ? item.percentDone : 1;
+                            torrentProgress[item.id].innerHTML = item.percentDone.toLocaleString()+'%';
+                            torrentProgress[item.id].title = item.percentDone.toLocaleString()+'%';
+                            torrentProgress[item.id].value = item.percentDone > 1 ? item.percentDone : 1;
                         });
                     }
                 });
