@@ -18,13 +18,21 @@ services:
             - "%torrent_rpc_client%"
 
     # --- Client
-    torrent.client.transmission_accessor:
-        class: "TorrentBundle\\Client\\AccessorClient"
+    torrent.client.transmission_add:
+        class: "TorrentBundle\\Client\\AddClient"
         arguments:
             - "@event_dispatcher"
             - "@torrent.adapter.transmission"
             - "@torrent.mapper.transmission_torrent"
             - "@torrent.helper.torrent_storage"
+            - "@torrent.filter.torrent"
+            - "@torrent.client.transmission.external_torrent_getter"
+    torrent.client.transmission_get:
+        class: "TorrentBundle\\Client\\GetClient"
+        arguments:
+            - "@event_dispatcher"
+            - "@torrent.adapter.transmission"
+            - "@torrent.mapper.transmission_torrent"
             - "@torrent.filter.torrent"
             - "@torrent.client.transmission.external_torrent_getter"
     torrent.client.transmission_life_cycle:
@@ -51,7 +59,8 @@ services:
     torrent.client.transmission:
         class: "TorrentBundle\\Client\\Client"
         arguments:
-            - "@torrent.client.transmission_accessor"
+            - "@torrent.client.transmission_get"
+            - "@torrent.client.transmission_add"
             - "@torrent.client.transmission_life_cycle"
             - "@torrent.client.transmission_misc"
             - "@torrent.client.transmission_remove"
@@ -66,13 +75,19 @@ services:
             - "@torrent.adapter.transmission"
             - "@torrent.cache.cache"
 
-    torrent.client.fake_accessor:
-        class: "TorrentBundle\\Client\\AccessorClient"
+    torrent.client.fake_add:
+        class: "TorrentBundle\\Client\\AddClient"
         arguments:
             - "@event_dispatcher"
             - "@torrent.adapter.fake"
             - "@torrent.mapper.fake_torrent"
             - "@torrent.helper.torrent_storage"
+    torrent.client.fake_get:
+        class: "TorrentBundle\\Client\\GetClient"
+        arguments:
+            - "@event_dispatcher"
+            - "@torrent.adapter.fake"
+            - "@torrent.mapper.fake_torrent"
             - "@torrent.filter.torrent"
             - "@torrent.client.fake.external_torrent_getter"
     torrent.client.fake_life_cycle:
@@ -99,7 +114,8 @@ services:
     torrent.client.fake:
         class: "TorrentBundle\\Client\\Client"
         arguments:
-            - "@torrent.client.fake_accessor"
+            - "@torrent.client.fake_get"
+            - "@torrent.client.fake_add"
             - "@torrent.client.fake_life_cycle"
             - "@torrent.client.fake_misc"
             - "@torrent.client.fake_remove"

@@ -9,9 +9,14 @@ use TorrentBundle\Entity\TorrentInterface;
 class Client implements ClientInterface
 {
     /**
-     * @var AccessorClientInterface
+     * @var GetClientInterface
      */
-    private $accessorClient;
+    private $getClient;
+
+    /**
+     * @var AddClientInterface
+     */
+    private $addClient;
 
     /**
      * @var LifeCycleClientInterface
@@ -39,16 +44,18 @@ class Client implements ClientInterface
     private $name;
 
     /**
-     * @param AccessorClientInterface  $accessorClient
+     * @param GetClientInterface       $getClient
+     * @param AddClientInterface       $addClient
      * @param LifeCycleClientInterface $lifeCycleClient
      * @param MiscClientInterface      $miscClient
      * @param RemoveClientInterface    $removeClient
      * @param CanBeAvailable           $availabilityClient
      * @param string                   $name
      */
-    public function __construct(AccessorClientInterface $accessorClient, LifeCycleClientInterface $lifeCycleClient, MiscClientInterface $miscClient, RemoveClientInterface $removeClient, CanBeAvailable $availabilityClient, string $name)
+    public function __construct(GetClientInterface $getClient, AddClientInterface $addClient, LifeCycleClientInterface $lifeCycleClient, MiscClientInterface $miscClient, RemoveClientInterface $removeClient, CanBeAvailable $availabilityClient, string $name)
     {
-        $this->accessorClient = $accessorClient;
+        $this->getClient = $getClient;
+        $this->addClient = $addClient;
         $this->lifeCycleClient = $lifeCycleClient;
         $this->miscClient = $miscClient;
         $this->removeClient = $removeClient;
@@ -61,7 +68,7 @@ class Client implements ClientInterface
      */
     public function add(TorrentInterface $torrent): TorrentInterface
     {
-        return $this->accessorClient->add($torrent);
+        return $this->addClient->add($torrent);
     }
 
     /**
@@ -85,7 +92,7 @@ class Client implements ClientInterface
      */
     public function get(int $id): TorrentInterface
     {
-        return $this->accessorClient->get($id);
+        return $this->getClient->get($id);
     }
 
     /**
@@ -93,7 +100,7 @@ class Client implements ClientInterface
      */
     public function getAll(): array
     {
-        return $this->accessorClient->getAll();
+        return $this->getClient->getAll();
     }
 
     /**

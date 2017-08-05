@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Spec\TorrentBundle\Client;
 
 use PhpSpec\ObjectBehavior;
-use TorrentBundle\Client\AccessorClientInterface;
+use TorrentBundle\Client\AddClientInterface;
 use TorrentBundle\Client\CanBeAvailable;
 use TorrentBundle\Client\Client;
 use TorrentBundle\Client\ClientInterface;
+use TorrentBundle\Client\GetClientInterface;
 use TorrentBundle\Client\LifeCycleClientInterface;
 use TorrentBundle\Client\MiscClientInterface;
 use TorrentBundle\Client\RemoveClientInterface;
@@ -17,7 +18,8 @@ use TorrentBundle\Entity\TorrentInterface;
 class ClientSpec extends ObjectBehavior
 {
     public function let(
-        AccessorClientInterface $accessorClient,
+        GetClientInterface $getClient,
+        AddClientInterface $addClient,
         LifeCycleClientInterface $lifeCycleClient,
         MiscClientInterface $miscClient,
         RemoveClientInterface $removeClient,
@@ -25,14 +27,14 @@ class ClientSpec extends ObjectBehavior
 
         TorrentInterface $torrent
     ) {
-        $accessorClient->get(1)->willReturn($torrent);
-        $accessorClient->getAll()->willReturn([$torrent]);
+        $getClient->get(1)->willReturn($torrent);
+        $getClient->getAll()->willReturn([$torrent]);
 
         $miscClient->getSessionToken()->willReturn('session token');
 
         $availabilityClient->isAvailable()->willReturn(true);
 
-        $this->beConstructedWith($accessorClient, $lifeCycleClient, $miscClient, $removeClient, $availabilityClient, 'client');
+        $this->beConstructedWith($getClient, $addClient, $lifeCycleClient, $miscClient, $removeClient, $availabilityClient, 'client');
     }
 
     public function it_is_initializable()
@@ -45,9 +47,9 @@ class ClientSpec extends ObjectBehavior
         $this->shouldImplement(ClientInterface::class);
     }
 
-    public function it_adds_a_torrent($torrent, $accessorClient)
+    public function it_adds_a_torrent($torrent, $addClient)
     {
-        $accessorClient->add($torrent)->shouldBeCalledTimes(1);
+        $addClient->add($torrent)->shouldBeCalledTimes(1);
 
         $this->add($torrent);
     }

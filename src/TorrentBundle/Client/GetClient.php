@@ -9,15 +9,15 @@ use TorrentBundle\Adapter\AdapterInterface;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
 use TorrentBundle\Event\TorrentAfterEvent;
-use TorrentBundle\Exception\Client\TorrentAdapterException;
 use TorrentBundle\Exception\Torrent\CannotFillTorrentException;
 use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 use TorrentBundle\Filter\TorrentFilterInterface;
-use TorrentBundle\Helper\TorrentStorageHelper;
 use TorrentBundle\Mapper\TorrentMapperInterface;
 
-class AccessorClient implements AccessorClientInterface
+class GetClient implements GetClientInterface
 {
+    use MapperTrait;
+
     /**
      * @var EventDispatcherInterface
      */
@@ -34,11 +34,6 @@ class AccessorClient implements AccessorClientInterface
     private $torrentMapper;
 
     /**
-     * @var TorrentStorageHelper
-     */
-    private $torrentStorageHelper;
-
-    /**
      * @var TorrentFilterInterface
      */
     private $torrentFilter;
@@ -52,35 +47,16 @@ class AccessorClient implements AccessorClientInterface
      * @param EventDispatcherInterface $eventDispatcher
      * @param AdapterInterface         $externalClient
      * @param TorrentMapperInterface   $torrentMapper
-     * @param TorrentStorageHelper     $torrentStorageHelper
      * @param TorrentFilterInterface   $torrentFilter
      * @param ExternalTorrentGetter    $externalTorrentGetter
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, AdapterInterface $externalClient, TorrentMapperInterface $torrentMapper, TorrentStorageHelper $torrentStorageHelper, TorrentFilterInterface $torrentFilter, ExternalTorrentGetter $externalTorrentGetter)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AdapterInterface $externalClient, TorrentMapperInterface $torrentMapper, TorrentFilterInterface $torrentFilter, ExternalTorrentGetter $externalTorrentGetter)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->externalClient = $externalClient;
         $this->torrentMapper = $torrentMapper;
-        $this->torrentStorageHelper = $torrentStorageHelper;
         $this->torrentFilter = $torrentFilter;
         $this->externalTorrentGetter = $externalTorrentGetter;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws TorrentAdapterException
-     * @throws CannotFillTorrentException
-     */
-    public function add(TorrentInterface $torrent): TorrentInterface
-    {
-        $externalTorrent = $this->doAddTorrent($torrent, $this->torrentStorageHelper->get());
-
-        $torrent = $this->doMapTorrent($torrent, $externalTorrent);
-
-        $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_ADDED, new TorrentAfterEvent($torrent));
-
-        return $torrent;
     }
 
     /**
@@ -131,25 +107,5 @@ class AccessorClient implements AccessorClientInterface
         }
 
         return $notMappedTorrent;
-    }
-
-    private function doAddTorrent(TorrentInterface $torrent, string $savePath = null)
-    {
-        try {
-            return $this->externalClient->add($torrent, $savePath);
-        } catch (\Exception $ex) {
-            throw new TorrentAdapterException($ex->getMessage());
-        }
-    }
-
-    private function doMapTorrent(TorrentInterface $torrent, $externalTorrent): TorrentInterface
-    {
-        try {
-            $partialTorrent = $this->torrentMapper->map($torrent, $externalTorrent);
-
-            return $this->torrentMapper->mapFiles($partialTorrent, $externalTorrent);
-        } catch (\Exception $ex) {
-            throw new CannotFillTorrentException(sprintf('The torrent with id “%s” cannot be filled with data.', $torrent->getHash()), 0, $ex);
-        }
     }
 }
