@@ -9,9 +9,9 @@ Feature: Ability to add a new torrent
         When I am on "/"
         And I should see 9 ".card" elements
 
-    Scenario: As Moustachor, I see an error when I did not fill any field before uploading
+    Scenario: As Moustachor, I cannot upload with an empty form
         When I press "Add torrent!"
-        Then I should see "The torrent manager returned an error" in the "#content .alert" element
+        Then I should see "Please upload a valid torrent file or type a torrent URL/magnet" in the "#content .alert" element
         And I should see 9 ".card" elements
 
     Scenario: As Moustachor, I cannot download a big torrent if there is not enough space
@@ -50,3 +50,12 @@ Feature: Ability to add a new torrent
         And I press "Add torrent!"
         Then I should see "Your file was not recognize as a .torrent file" in the "#content .alert" element
         And I should see 11 ".card" elements
+
+    Scenario: As Moustachor, I upload a magnet link
+        Then I fill in "torrent_menu[uploadedFileByUrl]" with "magnet:?xt=urn:btih:14eac61a533282b4ac3d8fcd62086e78608ec235&dn=file"
+        And I press "Add torrent!"
+        Then I should not see a "#content .alert" element
+
+    Scenario: As Moustachor, I see my newly uploaded torrent in the list
+        And I should see 12 ".card" elements
+        And I should see "torrent-15"

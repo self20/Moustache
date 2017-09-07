@@ -48,7 +48,7 @@ class FakeAdapter implements AdapterInterface
      */
     public function add(TorrentInterface $torrent, string $savePath = null)
     {
-        if (null === $torrent->getUploadedFile()) {
+        if ('' === $torrent->getUploadedFilePathOrMagnet()) {
             throw new NoUploadedFileException('Tried to add a torrent with fake but no .torrent file was provided.');
         }
 
@@ -175,7 +175,7 @@ class FakeAdapter implements AdapterInterface
 
     private function getTorrentTotalByteSize(TorrentInterface $torrent)
     {
-        if ('big.torrent' === $torrent->getUploadedFile()->getClientOriginalName()) {
+        if (null !== $torrent->getUploadedFile() && 'big.torrent' === $torrent->getUploadedFile()->getClientOriginalName()) {
             return 80000000000000;
         }
 
