@@ -7,6 +7,13 @@ namespace StandardBundle;
 interface CanBeUploaded
 {
     /**
+     * @return string
+     */
+    public function getUploadedFilePathOrMagnet(): string;
+
+    // ---
+
+    /**
      * @return \SplFileInfo|null
      */
     public function getUploadedFileByUrl();
@@ -14,7 +21,7 @@ interface CanBeUploaded
     /**
      * @param \SplFileInfo $uploadedFileByUrl
      */
-    public function setUploadedFileByUrl(\SplFileInfo $uploadedFileByUrl = null);
+    public function setUploadedFileByUrl($uploadedFileByUrl = null);
 
     /**
      * @return \SplFileInfo|null
@@ -25,4 +32,14 @@ interface CanBeUploaded
      * @param \SplFileInfo $uploadedFile
      */
     public function setUploadedFile(\SplFileInfo $uploadedFile = null);
+
+    /**
+     * @return string
+     */
+    public function getMagnetLink(): string;
+
+    /**
+     * @param string $magnetLink
+     */
+    public function setMagnetLink(string $magnetLink);
 }

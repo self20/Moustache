@@ -3,6 +3,7 @@
 'Your .torrent file was rejected because it is too large.': 'Votre fichier .torrent a été rejeté parce qu’il est trop volumineux.'
 'The uploaded torrent file seems completely empty.': 'The fichier torrent uploadé semble complètement vide.'
 'Your torrent file was rejected because it is too big (limited by server). {{ limit }}{{ suffix }} max allowed.': 'Votre fichier .torrent a été rejeté parce qu’il est trop volumineux. Le serveur limite le maximum à {{ limit }}{{ suffix }}.'
+'Please upload a valid torrent file or type a torrent URL/magnet.': 'Merci d’envoyer un fichier torrent valide ou entrez un lien HTTP/magnet du fichier torrent voulu.'
 
 # Signup
 'The password does not match! Few! It was close.': 'Les mots de passe ne concordent pas! Ouf… c’était juste.'

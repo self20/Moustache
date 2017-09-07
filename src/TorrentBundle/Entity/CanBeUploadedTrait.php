@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace TorrentBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use TorrentBundle\Validator\Constraints as TorrentAssert;
 
 trait CanBeUploadedTrait
 {
     // @HEYLISTEN De duplicates the assertions
+
     /**
      * @var \SplFileInfo
      *
@@ -40,6 +42,36 @@ trait CanBeUploadedTrait
     protected $uploadedFile = null;
 
     /**
+     * @var string
+     *
+     * @TorrentAssert\MagnetLink()
+     */
+    protected $magnetLink = '';
+
+    /**
+     * @Assert\NotBlank(
+     *     message="Please upload a valid torrent file or type a torrent URL/magnet.",
+     *     groups={"default", "torrent_menu"}
+     * )
+     *
+     * {@inheritdoc}
+     */
+    public function getUploadedFilePathOrMagnet(): string
+    {
+        if (null !== $this->uploadedFile) {
+            return $this->uploadedFile->getRealPath();
+        }
+
+        if (null !== $this->uploadedFileByUrl) {
+            return $this->uploadedFileByUrl->getRealPath();
+        }
+
+        return $this->magnetLink;
+    }
+
+    // ---
+
+    /**
      * {@inheritdoc}
      */
     public function getUploadedFileByUrl()
@@ -50,7 +82,7 @@ trait CanBeUploadedTrait
     /**
      * {@inheritdoc}
      */
-    public function setUploadedFileByUrl(\SplFileInfo $uploadedFileByUrl = null)
+    public function setUploadedFileByUrl($uploadedFileByUrl = null)
     {
         $this->uploadedFileByUrl = $uploadedFileByUrl;
     }
@@ -69,5 +101,21 @@ trait CanBeUploadedTrait
     public function setUploadedFile(\SplFileInfo $uploadedFile = null)
     {
         $this->uploadedFile = $uploadedFile;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMagnetLink(): string
+    {
+        return $this->magnetLink;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMagnetLink(string $magnetLink)
+    {
+        $this->magnetLink = $magnetLink;
     }
 }
