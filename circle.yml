@@ -11,7 +11,7 @@ dependencies:
         - ln -s $CIRCLE_ARTIFACTS artifacts
         - sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
         - sudo apt-get update
-        - sudo apt-get install -y php7.0 php7.0-common php7.0-iconv php7.0-mbstring php7.0-dom php7.0-sqlite php7.0-intl
+        - sudo apt-get install -y php7.0 php7.0-common php7.0-iconv php7.0-mbstring php7.0-dom php7.0-sqlite php7.0-intl php7.0-zip
         - sudo phpenmod mbstring iconv dom
 
 test:
