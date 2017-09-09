@@ -61,8 +61,7 @@
         "friendsofphp/php-cs-fixer": "^1.0",
         "guzzlehttp/guzzle": "^6.0",
         "hautelook/alice-bundle": "^1.0",
-        "henrikbjorn/phpspec-code-coverage": "dev-master",
-        "phpspec/phpspec": "^3.0"
+        "henrikbjorn/phpspec-code-coverage": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
