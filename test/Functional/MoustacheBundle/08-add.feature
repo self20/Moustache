@@ -18,7 +18,7 @@ Feature: Ability to add a new torrent
         When I attach the file "big.torrent" to "torrent_menu[uploadedFile]"
         And I press "Add torrent!"
         Then I should see "The torrent has been added but it cannot be started" in the "#content .alert" element
-        Then I should see "needed: 80TB" in the "#content .alert" element
+        Then I should see "needed: 800TB" in the "#content .alert" element
 
     Scenario: As Moustachor, I see that my the big torrent has been stopped
         Then I should not see a "#torrent-13 .card-header div a[title=Start].disabled" element
@@ -27,7 +27,7 @@ Feature: Ability to add a new torrent
     Scenario: As Moustachor, I cannot start such a big torrent without freeing some space
         When I go to "/start/13"
         Then I should see "The torrent cannot be started" in the "#content .alert" element
-        Then I should see "needed: 80TB" in the "#content .alert" element
+        Then I should see "needed: 800TB" in the "#content .alert" element
         Then I should not see a "#torrent-13 .card-header div a[title=Start].disabled" element
         Then I should see a "#torrent-13 .card-header div a[title=Pause].disabled" element
 
