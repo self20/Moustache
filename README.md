@@ -81,8 +81,8 @@ If your PHP installation enables it, a symlink has been created in `/etc/moustac
         $ php -S your_ip:a_random_port -t web web/app.php
 
 - Security: **HTTPS** is mandatory to secure Moustache. If not, consider your and other users passwords public.
-- Security: Moustache does not provide built-in security against brute force attacks on login form.
-- Security: please, refer to best security practices (web, PHP, IDS…) if you decide to put Moustache online.
+- Security: Moustache does not provide built-in security against brute force attacks on login form. Use fail2ban or SSHguards.
+- Security: please, refer to best security practices (HTTP server, PHP, IDS…) if you decide to put Moustache online.
 
 
 ### User creation ###
@@ -106,7 +106,6 @@ Logs are stored in `/path/to/moustache/var/logs`. Also, when errors related to M
 
 - TODO: Only handle transmission client for now. Ask for new client or make a PR.
 - TODO: There is no UI function to remove a torrent. `/remove/{id}` is the URL. It’ll come later.
-- TODO: It’s not possible to download a torrent with a magnet.
 - TODO: It’s possible that disk space availability checker ignores quota.
 - TODO: Failing states (tracker errors and missing files) are not properly handled.
 -
