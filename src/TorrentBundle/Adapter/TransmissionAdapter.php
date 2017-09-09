@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TorrentBundle\Adapter;
 
 use TorrentBundle\Entity\TorrentInterface;
-use TorrentBundle\Exception\Torrent\NoUploadedFileException;
 use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 use Transmission\Transmission;
 
@@ -31,10 +30,7 @@ class TransmissionAdapter implements AdapterInterface
      */
     public function add(TorrentInterface $torrent, string $savePath = null)
     {
-        if (null === $torrent->getUploadedFile()) {
-            throw new NoUploadedFileException('Tried to add a torrent with transmission but no .torrent file was provided.');
-        }
-        $torrent = $this->transmissionClient->add($torrent->getUploadedFile()->getRealPath(), false, $savePath);
+        $torrent = $this->transmissionClient->add($torrent->getUploadedFilePathOrMagnet(), false, $savePath);
 
         return $this->get($torrent->getId());
     }
