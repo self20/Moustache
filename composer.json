@@ -17,6 +17,13 @@
     },
     "require": {
         "php": ">=7.0",
+        "ext-mbstring": "*",
+        "ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-zip": "*",
+        "ext-sqlite3": "*",
+
         "symfony/symfony": "^3.1",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
@@ -55,8 +62,7 @@
         "guzzlehttp/guzzle": "^6.0",
         "hautelook/alice-bundle": "^1.0",
         "henrikbjorn/phpspec-code-coverage": "dev-master",
-        "phpspec/phpspec": "^3.0",
-        "phpunit/phpunit": "5.7"
+        "phpspec/phpspec": "^3.0"
     },
     "scripts": {
         "post-install-cmd": [
