@@ -98,6 +98,10 @@ The command generates a unique signup link you can share with your friend so the
 Note: for now, it is not possible for the new user to change their username, because it might be dynamically used for torrent pathes.
 Ask your friend’s preference before chosing a name.
 
+### Troubleshooting ###
+
+Logs are stored in `/path/to/moustache/var/logs`. Also, when errors related to Moustache are caught, they are sent to syslog.
+
 ### KNOWN ISSUES ###
 
 - TODO: Only handle transmission client for now. Ask for new client or make a PR.

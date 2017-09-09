@@ -157,7 +157,7 @@ services:
         arguments:
             - "@torrent.helper.torrent_client"
             - "@torrent.cache.cache"
-            - "@logger"
+            - "@monolog.logger.moustache"
         tags:
             - { name: kernel.event_listener, event: torrent.torrent.after.added, method: afterTorrentAdded, priority: 0 }
             - { name: kernel.event_listener, event: torrent.torrent.after.removed, method: afterTorrentRemoved, priority: 0 }
@@ -166,7 +166,7 @@ services:
         class: "TorrentBundle\\EventListener\\CacheInitializerListener"
         arguments:
             - "@torrent.cache.cache"
-            - "@logger"
+            - "@monolog.logger.moustache"
         tags:
             - { name: kernel.event_listener, event: torrent.client.after.retrieved, method: afterClientRetrieved, priority: 0 }
     torrent.event.disk_space_checker_listener:
@@ -176,7 +176,7 @@ services:
             - "@torrent.disk_space.reader"
             - "@torrent.client.current"
             - "@torrent.helper.torrent_storage"
-            - "@logger"
+            - "@monolog.logger.moustache"
             - "@external.utils.string"
         tags:
             - { name: kernel.event_listener, event: torrent.torrent.after.started, method: afterTorrentStarted, priority: -50 }
@@ -242,7 +242,7 @@ services:
         arguments:
             - "@torrent.helper.authenticated_user"
             - "@filesystem"
-            - "@logger"
+            - "@monolog.logger.moustache"
             - "%torrent_storage%"
 
     # --- Managers

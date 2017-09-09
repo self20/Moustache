@@ -35,7 +35,7 @@ services:
             - "@torrent.manager.torrent"
             - "@moustache.service.redirector"
             - "@request_stack"
-            - "@logger"
+            - "@monolog.logger.moustache"
             - "%torrent_rpc_client%"
     moustache.controller.default:
         class: "MoustacheBundle\\Controller\\DefaultController"
