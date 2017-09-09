@@ -51,6 +51,12 @@ Feature: Ability to add a new torrent
         Then I should see "Your file was not recognize as a .torrent file" in the "#content .alert" element
         And I should see 11 ".card" elements
 
+    Scenario: As Moustachor, I cannot upload a torrent with a fancy URL
+        When I fill in "torrent_menu[uploadedFileByUrl]" with "this:isnot/an/url"
+        And I press "Add torrent!"
+        Then I should see "Please upload a valid torrent file or type a torrent URL/magnet" in the "#content .alert" element
+        And I should see 11 ".card" elements
+
     Scenario: As Moustachor, I upload a magnet link
         Then I fill in "torrent_menu[uploadedFileByUrl]" with "magnet:?xt=urn:btih:14eac61a533282b4ac3d8fcd62086e78608ec235&dn=file"
         And I press "Add torrent!"
