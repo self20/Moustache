@@ -1,4 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags:
@@ -37,28 +42,33 @@ services:
             - "@request_stack"
             - "@monolog.logger.moustache"
             - "%torrent_rpc_client%"
+        public: true
     moustache.controller.default:
         class: "MoustacheBundle\\Controller\\DefaultController"
         arguments:
             - "@torrent.client.current"
             - "@templating"
             - "@moustache.form.torrent_menu"
+        public: true
     moustache.controller.download:
         class: "MoustacheBundle\\Controller\\DownloadController"
         arguments:
             - "@torrent.client.current"
             - "@moustache.service.torrent_publisher"
             - "@moustache.service.redirector"
+        public: true
     moustache.controller.life_cycle:
         class: "MoustacheBundle\\Controller\\LifeCycleController"
         arguments:
             - "@torrent.client.current"
             - "@moustache.service.redirector"
+        public: true
     moustache.controller.remove:
         class: "MoustacheBundle\\Controller\\RemoveController"
         arguments:
             - "@torrent.client.current"
             - "@moustache.service.redirector"
+        public: true
     moustache.controller.signup:
         class: "MoustacheBundle\\Controller\\SignupController"
         arguments:
@@ -69,10 +79,13 @@ services:
             - "@fos_user.security.login_manager"
             - "@moustache.service.redirector"
             - "@request_stack"
+        public: true
     moustache.controller.status:
         class: "MoustacheBundle\\Controller\\StatusController"
         arguments:
             - "@torrent.client.current"
+        public: true
+
 
     # --- Event Listeners
     moustache.event_listener.cache_outdated_redirector:
@@ -96,7 +109,7 @@ services:
     moustache.event_listener.missing_torrent_warner:
         class: "MoustacheBundle\\EventListener\\MissingTorrentWarnerListener"
         arguments:
-            - "@logger"
+            - "@monolog.logger.moustache"
             - "@moustache.service.flash_message_generator"
             - "@torrent.client.current"
         tags:
@@ -107,14 +120,17 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 200}
 
     # --- Forms
+    MoustacheBundle\Form\:
+        resource: '../../../MoustacheBundle/Form/*'
+
     moustache.form.torrent_menu:
-        class: "MoustacheBundle\\Form\\TorrentMenu"
+        class: Symfony\Component\Form\FormInterface
         factory: 'form.factory:create'
         arguments:
             - "MoustacheBundle\\Form\\TorrentMenu"
             - "@torrent.entity.torrent"
     moustache.form.signup:
-        class: "MoustacheBundle\\Form\\Signup"
+        class: Symfony\Component\Form\FormInterface
         factory: 'form.factory:create'
         arguments:
             - "MoustacheBundle\\Form\\Signup"
