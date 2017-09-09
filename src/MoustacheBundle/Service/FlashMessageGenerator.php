@@ -6,7 +6,7 @@ namespace MoustacheBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use TorrentBundle\Entity\User;
+use TorrentBundle\Entity\UserInterface;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
@@ -71,7 +71,7 @@ class FlashMessageGenerator
         $this->flashMessenger->warn('It seems one of your torrent have been deleted unexpectedly from the system.');
     }
 
-    private function shouldAddMessage(User $user = null): bool
+    private function shouldAddMessage(UserInterface $user = null): bool
     {
         return
             null !== $user &&
