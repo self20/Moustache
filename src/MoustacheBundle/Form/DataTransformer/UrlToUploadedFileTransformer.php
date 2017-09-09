@@ -4,22 +4,37 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Form\DataTransformer;
 
-use Rico\Slib\ValidationUtils;
+use Rico\Lib\ValidationUtils;
+use SplFileObject;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 class UrlToUploadedFileTransformer implements DataTransformerInterface
 {
     /**
+     * @var ValidationUtils
+     */
+    private $validationUtils;
+
+    /**
+     * @param ValidationUtils $validationUtils
+     */
+    public function __construct(ValidationUtils $validationUtils)
+    {
+        $this->validationUtils = $validationUtils;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function reverseTransform($url)
     {
-        if (empty($url) || !ValidationUtils::isURL($url)) {
+        if (!$this->validationUtils->isURL($url)) {
             return;
         }
 
-        $temporaryFile = new \SplFileObject(tempnam(sys_get_temp_dir(), 'moustache_torrent'), 'a', true);
+        // @HEYLISTEN Delegate the file creation and the download to classes that handles exception properly
+        $temporaryFile = new SplFileObject(tempnam(sys_get_temp_dir(), 'moustache_torrent'), 'a', true);
         $temporaryFile->fwrite(file_get_contents($url, false, null, 0, 100000));
 
         return new File($temporaryFile->getRealPath(), true);
@@ -28,8 +43,7 @@ class UrlToUploadedFileTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function transform($value)
+    public function transform($file)
     {
-        return null;
     }
 }
