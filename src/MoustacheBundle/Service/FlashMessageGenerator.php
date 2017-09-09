@@ -71,7 +71,7 @@ class FlashMessageGenerator
         $this->flashMessenger->warn('It seems one of your torrent have been deleted unexpectedly from the system.');
     }
 
-    private function shouldAddMessage(User $user): bool
+    private function shouldAddMessage(User $user = null): bool
     {
         return
             null !== $user &&
