@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Adapter;
 
+use DateTime;
 use StandardBundle\CanDownload;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
 use TorrentBundle\DataFixtures\Data\TorrentData;
 use TorrentBundle\Entity\TorrentInterface;
@@ -60,7 +62,7 @@ class FakeAdapter implements AdapterInterface
             'id' => $count, 'hash' => sha1((string) $count),
             'user' => $this->authenticatedUserHelper->get(), 'status' => CanDownload::STATUS_DONE, 'downloadDir' => $this->torrentStorageHelper->get(),
             'name' => 'torrent-'.$count, 'friendlyName' => 'torrent-'.$count, 'mime' => 'directory',
-            'startDate' => new \DateTime(),
+            'startDate' => new DateTime(),
             'nbPeers' => 0, 'uploadRate' => 0, 'downloadRate' => 0, 'totalByteSize' => $this->getTorrentTotalByteSize($torrent), 'currentByteSize' => 0,
         ], $torrent);
 
@@ -175,7 +177,7 @@ class FakeAdapter implements AdapterInterface
 
     private function getTorrentTotalByteSize(TorrentInterface $torrent)
     {
-        if (null !== $torrent->getUploadedFile() && 'big.torrent' === $torrent->getUploadedFile()->getClientOriginalName()) {
+        if (null !== $torrent->getUploadedFile() && $torrent->getUploadedFile() instanceof UploadedFile && 'big.torrent' === $torrent->getUploadedFile()->getClientOriginalName()) {
             return 80000000000000;
         }
 
