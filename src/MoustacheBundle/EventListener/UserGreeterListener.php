@@ -11,7 +11,6 @@ use TorrentBundle\Entity\UserInterface;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
-//@HEYLISTEN Rename this class to somehting like UserGreeterListener
 class UserGreeterListener
 {
     const HOME_ROUTE = 'moustache_torrent';

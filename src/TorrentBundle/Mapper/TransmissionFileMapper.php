@@ -12,6 +12,8 @@ use TorrentBundle\Service\MimeGuesser;
 
 class TransmissionFileMapper implements FileMapperInterface
 {
+    use FriendlyNameTrait;
+
     /**
      * @var StringUtils
      */
@@ -47,14 +49,5 @@ class TransmissionFileMapper implements FileMapperInterface
         $file->setTorrent($torrent);
 
         return $file;
-    }
-
-    private function getFriendlyName(string $uglyName): string
-    {
-        // @HEYLISTEN This is duplicated with TransmissionTorrentMapper, change it.
-        $tempName = $this->stringUtils->removeBracketContent($uglyName);
-        $friendlyName = $this->stringUtils->underscoreToSpace($tempName);
-
-        return $friendlyName;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Mapper;
 
+use DateTime;
 use Rico\Lib\StringUtils;
 use TorrentBundle\Entity\File;
 use TorrentBundle\Entity\TorrentInterface;
@@ -11,6 +12,8 @@ use TorrentBundle\Service\MimeGuesser;
 
 class TransmissionTorrentMapper implements TorrentMapperInterface
 {
+    use FriendlyNameTrait;
+
     /**
      * @var StringUtils
      */
@@ -26,6 +29,11 @@ class TransmissionTorrentMapper implements TorrentMapperInterface
      */
     private $fileMapper;
 
+    /**
+     * @param StringUtils         $stringUtils
+     * @param MimeGuesser         $mimeGuesser
+     * @param FileMapperInterface $fileMapper
+     */
     public function __construct(StringUtils $stringUtils, MimeGuesser $mimeGuesser, FileMapperInterface $fileMapper)
     {
         $this->stringUtils = $stringUtils;
@@ -42,7 +50,7 @@ class TransmissionTorrentMapper implements TorrentMapperInterface
         $torrent->setUploadRate($externalTorrent->getUploadRate());
         $torrent->setDownloadRate($externalTorrent->getDownloadRate());
         $torrent->setStatus($externalTorrent->getStatus());
-        $torrent->setStartDate($externalTorrent->getStartDate() ? new \Datetime('@'.$externalTorrent->getStartDate()) : new \DateTime());
+        $torrent->setStartDate($externalTorrent->getStartDate() ? new \Datetime('@'.$externalTorrent->getStartDate()) : new DateTime());
         $torrent->setCurrentByteSize((int) ($externalTorrent->getSize() * $externalTorrent->getPercentDone() / 100));
         $torrent->setTotalByteSize($externalTorrent->getSize());
         $torrent->setFriendlyName($this->getFriendlyName($externalTorrent->getName()));
@@ -71,13 +79,5 @@ class TransmissionTorrentMapper implements TorrentMapperInterface
         $torrent->setFiles($files);
 
         return $torrent;
-    }
-
-    private function getFriendlyName(string $uglyName): string
-    {
-        $tempName = $this->stringUtils->removeBracketContent($uglyName);
-        $friendlyName = $this->stringUtils->underscoreToSpace($tempName);
-
-        return $friendlyName;
     }
 }
