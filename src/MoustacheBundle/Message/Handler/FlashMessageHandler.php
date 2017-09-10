@@ -63,12 +63,12 @@ class FlashMessageHandler implements MessageHandlerInterface
         $this->doAddMessage(self::TYPE_WARN, $message, ...$parameters);
     }
 
-    /**
-     * @param string $type
-     * @param string $message
-     */
     private function doAddMessage(string $type, string $message, string ...$parameters)
     {
+        if (empty($message)) {
+            return;
+        }
+
         $this->session->getFlashBag()->add($type, $this->buildTranslatedMessage($message, ...$parameters));
     }
 }

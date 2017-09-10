@@ -59,11 +59,12 @@
 'Pick a .torrent file': 'Fichier .torrent'
 'or paste magnet/torrent link': 'ou coller un lien web/magnet'
 'Add torrent!': 'Ajouter le torrent'
-'Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.': 'Désolé, Moustache n’a pas pu ajouter votre fichier. Le gestionnaire de torrent a rencontré une erreur.'
+'Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.': 'Désolé, Moustache n’a pas pu ajouter votre torrent. Le gestionnaire de torrent a rencontré une erreur.'
+'Sorry, Moustache couldn’t add your torrent. Please check that your HTTP link or magnet is valid.': 'Désolé, Moustache n’a pas pu ajouter votre torrent. Vérifiez que le lien HTTP ou magnet est bien correct.'
 'The torrent has been added but it cannot be started because there is not enough disk space (needed: %s, available: %s).': 'Le torrent a été ajouté mais il n’a pas pu être démarré par manque d’espace disque (besoin: %s, disponible: %s).'
 'The torrent cannot be started because there is not enough disk space (needed: %s, available: %s).': 'Le torrent n’a pas pu être démarré par manque d’espace disque (besoin: %s, disponible: %s).'
-'“%s” has been suspended.': '« %s » a été suspendu.'
-'“%s” has been started.': '« %s » a été démarré.'
+'“%s” sharing is suspended.': 'Le partage de « %s » est suspendu.'
+'“%s” sharing is started.': 'Le partage de « %s » est démarré.'
 
 # Signup/login form
 Signup: 'S’inscrire'

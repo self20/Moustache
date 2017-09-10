@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Form\DataTransformer;
 
+use Exception;
 use Rico\Lib\ValidationUtils;
 use SplFileObject;
 use Symfony\Component\Form\DataTransformerInterface;

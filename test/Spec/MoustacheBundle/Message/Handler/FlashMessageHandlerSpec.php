@@ -39,6 +39,16 @@ class FlashMessageHandlerSpec extends ObjectBehavior
         $this->shouldHaveType(MessageHandlerInterface::class);
     }
 
+    public function it_does_not_add_empty_messages($flashBag)
+    {
+        $flashBag->add(Argument::cetera())->shouldNotBeCalled();
+
+        $this->error('');
+        $this->warn('');
+        $this->success('');
+        $this->info('');
+    }
+
     public function it_adds_an_error_message_to_the_flash_bag($flashBag)
     {
         $flashBag->add(MessageHandlerInterface::TYPE_ERROR, 'trans message')->shouldBeCalledTimes(1);

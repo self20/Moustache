@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Controller;
 
+use ErrorException;
 use Exception;
 use MoustacheBundle\Service\RedirectorInterface;
 use Psr\Log\LoggerInterface;
@@ -77,14 +78,14 @@ class AddController
      */
     public function addAction(): Response
     {
-        // @HEYLISTEN Handle magnet links
-        $this->torrentMenuForm->handleRequest($this->request);
+        $this->handleFormRequest();
+
         if ($this->torrentMenuForm->isSubmitted() && $this->torrentMenuForm->isValid()) {
             $this->addTorrent($this->torrentMenuForm->getData());
         }
 
         if (!$this->torrentMenuForm->isValid()) {
-            $this->redirector->addErrorMessage('%s', (string) $this->torrentMenuForm->getErrors(true));
+            $this->redirector->addErrorMessage((string) $this->torrentMenuForm->getErrors(true));
         }
 
         return $this->redirector->redirect('moustache_torrent');
@@ -104,6 +105,15 @@ class AddController
             // @HEYLISTEN Logs only loggable exception.
             $this->logger->error('A user failed to add a new torrent.', ['exception' => $ex]);
             $this->redirector->addErrorMessage('Sorry, Moustache couldn’t add your torrent. The torrent manager returned an error.');
+        }
+    }
+
+    private function handleFormRequest()
+    {
+        try {
+            $this->torrentMenuForm->handleRequest($this->request);
+        } catch (ErrorException $ex) {
+            $this->redirector->addErrorMessage('Sorry, Moustache couldn’t add your torrent. Please check that your HTTP link or magnet is valid.');
         }
     }
 }
