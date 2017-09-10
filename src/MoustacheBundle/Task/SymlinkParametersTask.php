@@ -40,24 +40,6 @@ class SymlinkParametersTask implements TaskInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws SystemPermissionException
-     */
-    public function run(): int
-    {
-        if (file_exists($this->getSystemConfFile())) {
-            return 0;
-        }
-
-        $this->checkSystemConfDirIsWritable('“%s” directory is not writable. Do “ln -s %s %s” manually.', $this->systemConfDir, $this->rootDirectory.'/config/parameters.yml', $this->getSystemConfFile());
-
-        $this->filesystem->symlink($this->rootDirectory.'/config/parameters.yml', $this->getSystemConfFile());
-
-        return 0;
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function setup()
     {
@@ -73,6 +55,24 @@ class SymlinkParametersTask implements TaskInterface
         $this->checkSystemConfDirIsWritable('Permission error when deleting a file. Do “rm %s” manually.', $this->systemConfDir, $this->getSystemConfFile());
 
         $this->filesystem->remove($this->getSystemConfFile());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws SystemPermissionException
+     */
+    public function run(): int
+    {
+        if (file_exists($this->getSystemConfFile())) {
+            return 0;
+        }
+
+        $this->checkSystemConfDirIsWritable('“%s” directory is not writable. Do “ln -s %s %s” manually.', $this->systemConfDir, $this->rootDirectory.'/config/parameters.yml', $this->getSystemConfFile());
+
+        $this->filesystem->symlink($this->rootDirectory.'/config/parameters.yml', $this->getSystemConfFile());
+
+        return 0;
     }
 
     private function checkSystemConfDirIsWritable(string $message, ...$parameters)

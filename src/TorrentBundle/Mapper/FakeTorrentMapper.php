@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TorrentBundle\Mapper;
 
 use TorrentBundle\Entity\TorrentInterface;

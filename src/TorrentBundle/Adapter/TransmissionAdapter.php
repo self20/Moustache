@@ -134,6 +134,14 @@ class TransmissionAdapter implements AdapterInterface
         return $this->transmissionClient->stop($torrent);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($torrent)
+    {
+        return $this->transmissionClient->verify($torrent);
+    }
+
     private function doGetTorrent(int $id)
     {
         try {
@@ -141,13 +149,5 @@ class TransmissionAdapter implements AdapterInterface
         } catch (\RuntimeException $ex) {
             throw new TorrentNotFoundException($id, 0, $ex);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function verify($torrent)
-    {
-        return $this->transmissionClient->verify($torrent);
     }
 }

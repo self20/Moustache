@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 use Behat\Behat\Hook\Scope\AfterFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
@@ -9,6 +10,18 @@ use TorrentBundle\DataFixtures\Data\TorrentData;
 
 trait DatabaseContextTrait
 {
+    /**
+     * @BeforeFeature
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setup(BeforeFeatureScope $scope)
+    {
+        self::dropDatabase();
+        self::initDatabase();
+        self::initData();
+    }
+
     /**
      * Resets database after each tag @resetDb.
      *
@@ -25,18 +38,6 @@ trait DatabaseContextTrait
     }
 
     /**
-     * @BeforeFeature
-     *
-     * @param BeforeFeatureScope $scope
-     */
-    public static function setup(BeforeFeatureScope $scope)
-    {
-        self::dropDatabase();
-        self::initDatabase();
-        self::initData();
-    }
-
-    /**
      * @AfterFeature
      *
      * @param AfterFeatureScope $scope
@@ -45,6 +46,25 @@ trait DatabaseContextTrait
     {
         self::dropDatabase();
         self::dropData();
+    }
+
+    /**
+     * Run console command.
+     *
+     * @param Application $app
+     * @param array       $command
+     * @param array       $options
+     *
+     * @return int 0 if everything went fine, or an error code
+     */
+    protected static function runCommand($app, $command, $options = [])
+    {
+        $options['--env'] = 'test';
+        $options['--quiet'] = null;
+        $options['--no-interaction'] = true;
+        $options = array_merge($options, ['command' => $command]);
+
+        return $app->run(new ArrayInput($options));
     }
 
     /**
@@ -85,24 +105,5 @@ trait DatabaseContextTrait
     private static function dropData()
     {
         TorrentData::freeAll();
-    }
-
-    /**
-     * Run console command.
-     *
-     * @param Application $app
-     * @param array       $command
-     * @param array       $options
-     *
-     * @return int 0 if everything went fine, or an error code
-     */
-    protected static function runCommand($app, $command, $options = [])
-    {
-        $options['--env'] = 'test';
-        $options['--quiet'] = null;
-        $options['--no-interaction'] = true;
-        $options = array_merge($options, ['command' => $command]);
-
-        return $app->run(new ArrayInput($options));
     }
 }

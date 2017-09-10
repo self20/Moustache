@@ -47,6 +47,21 @@ class CleanDownloadsTask implements TaskInterface
     /**
      * {@inheritdoc}
      */
+    public function setup()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function teardown()
+    {
+        return $this->removedFiles;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function run(): int
     {
         $finder = new Finder();
@@ -61,21 +76,6 @@ class CleanDownloadsTask implements TaskInterface
         }
 
         return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setup()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function teardown()
-    {
-        return $this->removedFiles;
     }
 
     private function getSecondsSinceLastAccess(\SplFileInfo $file): int

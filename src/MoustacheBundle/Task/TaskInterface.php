@@ -6,12 +6,12 @@ namespace MoustacheBundle\Task;
 
 interface TaskInterface
 {
+    public function setup();
+
+    public function teardown();
+
     /**
      * @return int 0 when everything is ok
      */
     public function run(): int;
-
-    public function setup();
-
-    public function teardown();
 }

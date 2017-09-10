@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spec\MoustacheBundle\Form\DataTransformer;
 
 use MoustacheBundle\Form\DataTransformer\UrlToUploadedFileTransformer;
@@ -34,7 +36,7 @@ class UrlToUploadedFileTransformerSpec extends ObjectBehavior
         $this->reverseTransform('https://url.com')->shouldReturn(null);
     }
 
-// @HEYLISTEN Not possible for now, because it does actual stuff - Fix the class so it’s possible to test
+    // @HEYLISTEN Not possible for now, because it does actual stuff - Fix the class so it’s possible to test
 //    public function it_reverses_transform_to_value_itself_if_value_is_a_magnet()
 //    {
 //        $this->reverseTransform('https://url.com')->shouldReturnType(File::clas);

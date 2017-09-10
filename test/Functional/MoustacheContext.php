@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkContext;

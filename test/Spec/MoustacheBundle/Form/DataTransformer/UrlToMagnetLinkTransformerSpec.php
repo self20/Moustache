@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spec\MoustacheBundle\Form\DataTransformer;
 
 use MoustacheBundle\Form\DataTransformer\UrlToMagnetLinkTransformer;
