@@ -24,5 +24,8 @@ suites:
 extensions:
     PhpSpecCodeCoverage\CodeCoverageExtension:
         format:
-          - clover
-        output: web/coverage.xml
+            - html
+            - clover
+        output:
+            html: coverage
+            clover: coverage.xml
