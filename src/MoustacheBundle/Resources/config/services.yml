@@ -94,7 +94,7 @@ services:
             - "@moustache.service.redirector"
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: -50 }
-    MoustacheBundle\EventListener\GlobalMessengerListener:
+    MoustacheBundle\EventListener\UserGreeterListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
     moustache.event_listener.maintenance:

@@ -12,7 +12,7 @@ use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
 //@HEYLISTEN Rename this class to somehting like UserGreeterListener
-class GlobalMessengerListener
+class UserGreeterListener
 {
     const HOME_ROUTE = 'moustache_torrent';
 

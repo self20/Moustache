@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Spec\MoustacheBundle\EventListener;
 
-use MoustacheBundle\EventListener\GlobalMessengerListener;
+use MoustacheBundle\EventListener\UserGreeterListener;
 use MoustacheBundle\Message\CanDispatchMessage;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -15,7 +15,7 @@ use TorrentBundle\Entity\UserInterface;
 use TorrentBundle\Helper\AuthenticatedUserHelper;
 use TorrentBundle\Manager\UserManager;
 
-class GlobalMessengerListenerSpec extends ObjectBehavior
+class UserGreeterListenerSpec extends ObjectBehavior
 {
     public function let(
         CanDispatchMessage $messageDispatcher,
@@ -27,7 +27,7 @@ class GlobalMessengerListenerSpec extends ObjectBehavior
         AttributeBagInterface $attributeBag,
         UserInterface $authenticatedUser
     ) {
-        $attributeBag->get('_route')->willReturn(GlobalMessengerListener::HOME_ROUTE);
+        $attributeBag->get('_route')->willReturn(UserGreeterListener::HOME_ROUTE);
         $request->attributes = $attributeBag;
         $request->isXmlHttpRequest()->willReturn(false);
         $event->getRequest()->willReturn($request);
@@ -42,7 +42,7 @@ class GlobalMessengerListenerSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(GlobalMessengerListener::class);
+        $this->shouldHaveType(UserGreeterListener::class);
     }
 
     public function it_does_nothing_if_there_is_no_authenticated_user($authenticatedUserHelper, $messageDispatcher, $event)
