@@ -21,7 +21,7 @@ trait EntityTrait
      */
     public function setId(int $id)
     {
-        if ($this->id !== null) {
+        if (null !== $this->id) {
             return;
         }
 

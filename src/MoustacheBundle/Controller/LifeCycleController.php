@@ -61,8 +61,6 @@ class LifeCycleController
 
         $this->doStartAction($torrent);
 
-        $this->redirector->addSuccessMessage('“%s” has been started.', $torrent->getFriendlyName());
-
         return $this->redirector->redirect('moustache_torrent');
     }
 
@@ -70,7 +68,9 @@ class LifeCycleController
     private function doStartAction(TorrentInterface $torrent)
     {
         try {
-            return $this->torrentClient->start($torrent);
+            $this->torrentClient->start($torrent);
+
+            $this->redirector->addSuccessMessage('“%s” has been started.', $torrent->getFriendlyName());
         } catch (NotEnoughDiskSpaceException $ex) {
             $this->redirector->addWarnMessage(
                 'The torrent cannot be started because there is not enough disk space (needed: %s, available: %s).',

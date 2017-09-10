@@ -68,9 +68,6 @@ class FakeAdapter implements AdapterInterface
 
         $this->session->set(self::SESSION_KEY, TorrentData::$torrents);
 
-        $torrent->setUploadedFile(null);
-        $torrent->setUploadedFileByUrl(null);
-
         return $torrent;
     }
 

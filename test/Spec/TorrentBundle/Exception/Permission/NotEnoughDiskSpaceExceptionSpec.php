@@ -19,4 +19,18 @@ class NotEnoughDiskSpaceExceptionSpec extends ObjectBehavior
     {
         $this->shouldHaveType(PermissionException::class);
     }
+
+    public function it_sets_and_return_needed_space()
+    {
+        $this->setNeededSpace('2M');
+
+        $this->getNeededSpace()->shouldReturn('2M');
+    }
+
+    public function it_sets_and_return_available_space()
+    {
+        $this->setAvailableSpace('3.4G');
+
+        $this->getAvailableSpace()->shouldReturn('3.4G');
+    }
 }

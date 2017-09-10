@@ -84,7 +84,7 @@ class AddController
         }
 
         if (!$this->torrentMenuForm->isValid()) {
-            $this->redirector->addErrorMessage('%s', $this->torrentMenuForm->getErrors(true));
+            $this->redirector->addErrorMessage('%s', (string) $this->torrentMenuForm->getErrors(true));
         }
 
         return $this->redirector->redirect('moustache_torrent');

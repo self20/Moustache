@@ -35,7 +35,8 @@ class DiskSpaceCheckerListenerSpec extends ObjectBehavior
         $event->getTorrent()->willReturn($torrent);
 
         $diskSpaceChecker->checkEnoughDiskSpace()->willReturn(false);
-        $diskSpaceChecker->getLastComputedVirtualFreeSpace()->willReturn(634303422);
+
+        $diskSpaceReader->getVirtualFreeSpace()->willReturn(634303422);
 
         $stopClient->stop($torrent)->willReturn();
 

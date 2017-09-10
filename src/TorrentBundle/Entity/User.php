@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace TorrentBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use FOS\UserBundle\Model\User as FOSUser;
+use StandardBundle\TorrentInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -94,7 +96,7 @@ class User extends FOSUser implements UserInterface
     protected $plainPassword;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $lastLogin;
 
@@ -111,7 +113,7 @@ class User extends FOSUser implements UserInterface
     protected $confirmationToken;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $passwordRequestedAt;
 
@@ -131,7 +133,7 @@ class User extends FOSUser implements UserInterface
     protected $expired;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $expiresAt;
 
@@ -146,7 +148,7 @@ class User extends FOSUser implements UserInterface
     protected $credentialsExpired;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $credentialsExpireAt;
 
@@ -155,6 +157,11 @@ class User extends FOSUser implements UserInterface
      * @ORM\OneToMany(targetEntity="Torrent", mappedBy="user", cascade={"remove"}, fetch="EAGER")
      */
     protected $torrents;
+
+    /**
+     * @var bool
+     */
+    protected $torrentCached = false;
 
     /**
      * {@inheritdoc}
@@ -167,10 +174,20 @@ class User extends FOSUser implements UserInterface
     /**
      * {@inheritdoc}
      */
+    public function areTorrentsCached(): bool
+    {
+        return $this->torrentCached;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isNew(): bool
     {
         return 0 === $this->currentMessage;
     }
+
+    // ---
 
     /**
      * {@inheritdoc}
@@ -202,5 +219,18 @@ class User extends FOSUser implements UserInterface
     public function setTorrents(array $torrents)
     {
         $this->torrents = $torrents;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateTorrent(TorrentInterface $newTorrent)
+    {
+        foreach ($this->torrents as $key => $userTorrent) {
+            if ($userTorrent->getHash() === $newTorrent->getHash()) {
+                $this->torrents[$key] = $newTorrent;
+                break;
+            }
+        }
     }
 }

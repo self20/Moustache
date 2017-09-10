@@ -113,7 +113,7 @@ class SignupController
             return $this->redirector->redirect('moustache_torrent');
         }
 
-        $this->redirector->addErrorMessage('%s', $this->signupForm->getErrors(true));
+        $this->redirector->addErrorMessage('%s', (string) $this->signupForm->getErrors(true));
 
         return $this->redirector->redirect('moustache_signup_form', ['confirmationToken' => $confirmationToken]);
     }

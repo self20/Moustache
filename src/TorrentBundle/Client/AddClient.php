@@ -8,7 +8,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
-use TorrentBundle\Event\TorrentAfterEvent;
 use TorrentBundle\Exception\Client\TorrentAdapterException;
 use TorrentBundle\Exception\Torrent\CannotFillTorrentException;
 use TorrentBundle\Helper\TorrentStorageHelper;
@@ -62,11 +61,7 @@ class AddClient implements AddClientInterface
     {
         $externalTorrent = $this->doAddTorrent($torrent, $this->torrentStorageHelper->get());
 
-        $mappedTorrent = $this->doMapTorrent($torrent, $externalTorrent);
-
-        $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_ADDED, new TorrentAfterEvent($mappedTorrent));
-
-        return $mappedTorrent;
+        return $this->mapAndDispatchEvent($torrent, $externalTorrent, Events::AFTER_TORRENT_ADDED);
     }
 
     private function doAddTorrent(TorrentInterface $torrent, string $savePath = null)

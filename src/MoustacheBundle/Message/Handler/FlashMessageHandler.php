@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace MoustacheBundle\Service;
+namespace MoustacheBundle\Message\Handler;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * Adds messages to the session flashbag.
- */
-class FlashMessenger implements FlashMessengerInterface
+class FlashMessageHandler implements MessageHandlerInterface
 {
+    use MessageBuilderTrait;
+
     /**
      * @var Session
      */
@@ -35,7 +34,7 @@ class FlashMessenger implements FlashMessengerInterface
     /**
      * {@inheritdoc}
      */
-    public function error(string $message, ...$parameters)
+    public function error(string $message, string ...$parameters)
     {
         $this->doAddMessage(self::TYPE_ERROR, $message, ...$parameters);
     }
@@ -43,7 +42,7 @@ class FlashMessenger implements FlashMessengerInterface
     /**
      * {@inheritdoc}
      */
-    public function info(string $message, ...$parameters)
+    public function info(string $message, string ...$parameters)
     {
         $this->doAddMessage(self::TYPE_INFO, $message, ...$parameters);
     }
@@ -51,7 +50,7 @@ class FlashMessenger implements FlashMessengerInterface
     /**
      * {@inheritdoc}
      */
-    public function success(string $message, ...$parameters)
+    public function success(string $message, string ...$parameters)
     {
         $this->doAddMessage(self::TYPE_SUCCESS, $message, ...$parameters);
     }
@@ -59,7 +58,7 @@ class FlashMessenger implements FlashMessengerInterface
     /**
      * {@inheritdoc}
      */
-    public function warn(string $message, ...$parameters)
+    public function warn(string $message, string ...$parameters)
     {
         $this->doAddMessage(self::TYPE_WARN, $message, ...$parameters);
     }
@@ -68,9 +67,8 @@ class FlashMessenger implements FlashMessengerInterface
      * @param string $type
      * @param string $message
      */
-    private function doAddMessage(string $type, string $message, ...$parameters)
+    private function doAddMessage(string $type, string $message, string ...$parameters)
     {
-        $translatedMessage = $this->translator->trans($message);
-        $this->session->getFlashBag()->add($type, sprintf($translatedMessage, ...$parameters));
+        $this->session->getFlashBag()->add($type, $this->buildTranslatedMessage($message, ...$parameters));
     }
 }

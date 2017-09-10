@@ -23,13 +23,13 @@ class MagnetLinkValidator extends ConstraintValidator
         $this->validationUtils = $validationUtils;
     }
 
-   /**
-    * {@inheritdoc}
-    */
-   public function validate($value, Constraint $constraint)
-   {
-       if (!$this->validationUtils->isURLMagnet($value)) {
-           $this->context->buildViolation($constraint->message)->addViolation();
-       }
-   }
+    /**
+     * {@inheritdoc}
+     */
+    public function validate($value, Constraint $constraint)
+    {
+        if (!$this->validationUtils->isURLMagnet($value)) {
+            $this->context->buildViolation($constraint->message)->addViolation();
+        }
+    }
 }

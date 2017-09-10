@@ -7,6 +7,7 @@ namespace TorrentBundle\Entity;
 use Doctrine\ORM\PersistentCollection;
 use FOS\UserBundle\Model\UserInterface as FOSUserInterface;
 use StandardBundle\EntityInterface;
+use StandardBundle\TorrentInterface;
 
 interface UserInterface extends EntityInterface, FOSUserInterface
 {
@@ -24,6 +25,11 @@ interface UserInterface extends EntityInterface, FOSUserInterface
      * @return TorrentInterface[]
      */
     public function getTorrents(): PersistentCollection;
+
+    /**
+     * @param TorrentInterface $newTorrent
+     */
+    public function updateTorrent(TorrentInterface $newTorrent);
 
     /**
      * @param int $currentMessage

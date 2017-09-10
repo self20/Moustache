@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Spec\MoustacheBundle\Service;
 
-use MoustacheBundle\Service\FlashMessengerInterface;
+use MoustacheBundle\Message\Handler\MessageHandlerInterface;
 use MoustacheBundle\Service\Redirector;
 use MoustacheBundle\Service\RedirectorInterface;
 use PhpSpec\ObjectBehavior;
@@ -16,12 +16,12 @@ class RedirectorSpec extends ObjectBehavior
 {
     public function let(
         RouterInterface $router,
-        FlashMessengerInterface $flashMessenger
+        MessageHandlerInterface $messageHandler
     ) {
         $router->generate('route', ['parameters'])->willReturn('correct uri');
         $router->match(Argument::type('string'))->willReturn(true);
 
-        $this->beConstructedWith($router, $flashMessenger);
+        $this->beConstructedWith($router, $messageHandler);
     }
 
     public function it_is_initializable()
@@ -51,30 +51,30 @@ class RedirectorSpec extends ObjectBehavior
         $redirectResponse->getTargetUrl()->shouldReturn('correct uri');
     }
 
-    public function it_adds_error_message_to_flashbag($flashMessenger)
+    public function it_adds_error_message_to_flashbag($messageHandler)
     {
-        $flashMessenger->error('message', 'more', 'param')->shouldBeCalledTimes(1);
+        $messageHandler->error('message', 'more', 'param')->shouldBeCalledTimes(1);
 
         $this->addErrorMessage('message', 'more', 'param');
     }
 
-    public function it_adds_info_message_to_flashbag($flashMessenger)
+    public function it_adds_info_message_to_flashbag($messageHandler)
     {
-        $flashMessenger->info('message', 'more', 'param')->shouldBeCalledTimes(1);
+        $messageHandler->info('message', 'more', 'param')->shouldBeCalledTimes(1);
 
         $this->addInfoMessage('message', 'more', 'param');
     }
 
-    public function it_adds_success_message_to_flashbag($flashMessenger)
+    public function it_adds_success_message_to_flashbag($messageHandler)
     {
-        $flashMessenger->success('message', 'more', 'param')->shouldBeCalledTimes(1);
+        $messageHandler->success('message', 'more', 'param')->shouldBeCalledTimes(1);
 
         $this->addSuccessMessage('message', 'more', 'param');
     }
 
-    public function it_adds_warn_message_to_flashbag($flashMessenger)
+    public function it_adds_warn_message_to_flashbag($messageHandler)
     {
-        $flashMessenger->warn('message', 'more', 'param')->shouldBeCalledTimes(1);
+        $messageHandler->warn('message', 'more', 'param')->shouldBeCalledTimes(1);
 
         $this->addWarnMessage('message', 'more', 'param');
     }

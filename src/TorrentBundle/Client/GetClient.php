@@ -8,7 +8,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TorrentBundle\Adapter\AdapterInterface;
 use TorrentBundle\Entity\TorrentInterface;
 use TorrentBundle\Event\Events;
-use TorrentBundle\Event\TorrentAfterEvent;
 use TorrentBundle\Exception\Torrent\CannotFillTorrentException;
 use TorrentBundle\Exception\Torrent\TorrentNotFoundException;
 use TorrentBundle\Filter\TorrentFilterInterface;
@@ -67,7 +66,9 @@ class GetClient implements GetClientInterface
      **/
     public function get(int $id): TorrentInterface
     {
-        return $this->getAndMapAndDispatchEvent($this->getAuthenticatedUserTorrent($id));
+        $notMappedTorrent = $this->getAuthenticatedUserTorrent($id);
+
+        return $this->mapAndDispatchEvent($notMappedTorrent, $this->externalTorrentGetter->get($notMappedTorrent->getHash()), Events::AFTER_TORRENT_GET);
     }
 
     /**
@@ -81,21 +82,9 @@ class GetClient implements GetClientInterface
             $externalTorrent = $this->externalTorrentGetter->get($notMappedTorrent->getHash());
 
             if (null !== $externalTorrent) {
-                $torrent = $this->doMapTorrent($notMappedTorrent, $externalTorrent);
-                $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_GET, new TorrentAfterEvent($torrent));
-
-                return $torrent;
+                return $this->mapAndDispatchEvent($notMappedTorrent, $externalTorrent, Events::AFTER_TORRENT_GET);
             }
         }, $this->torrentFilter->getAllAuthenticatedUserTorrents()));
-    }
-
-    private function getAndMapAndDispatchEvent(TorrentInterface $notMappedTorrent): TorrentInterface
-    {
-        $torrent = $this->doMapTorrent($notMappedTorrent, $this->externalTorrentGetter->get($notMappedTorrent->getHash()));
-
-        $this->eventDispatcher->dispatch(Events::AFTER_TORRENT_GET, new TorrentAfterEvent($torrent));
-
-        return $torrent;
     }
 
     private function getAuthenticatedUserTorrent(int $id): TorrentInterface

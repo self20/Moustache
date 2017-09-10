@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MoustacheBundle\Service;
+namespace MoustacheBundle\Message\Handler;
 
-interface FlashMessengerInterface
+interface MessageHandlerInterface
 {
     const TYPE_ERROR = 'danger';
     const TYPE_INFO = 'info';
@@ -15,23 +15,23 @@ interface FlashMessengerInterface
      * @param string $message
      * @param mixed  $parameters
      */
-    public function error(string $message, ...$parameters);
+    public function error(string $message, string ...$parameters);
 
     /**
      * @param string $message
      * @param mixed  $parameters
      */
-    public function info(string $message, ...$parameters);
+    public function info(string $message, string ...$parameters);
 
     /**
      * @param string $message
      * @param mixed  $parameters
      */
-    public function success(string $message, ...$parameters);
+    public function success(string $message, string ...$parameters);
 
     /**
      * @param string $message
      * @param mixed  $parameters
      */
-    public function warn(string $message, ...$parameters);
+    public function warn(string $message, string ...$parameters);
 }

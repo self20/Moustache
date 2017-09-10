@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\Service;
 
+use MoustacheBundle\Message\Handler\MessageHandlerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,18 +17,18 @@ class Redirector implements RedirectorInterface
     private $router;
 
     /**
-     * @var FlashMessengerInterface
+     * @var MessageHandlerInterface
      */
-    private $flashMessenger;
+    private $messageHandler;
 
     /**
      * @param RouterInterface         $router
-     * @param FlashMessengerInterface $flashMessenger
+     * @param MessageHandlerInterface $messageHandler
      */
-    public function __construct(RouterInterface $router, FlashMessengerInterface $flashMessenger)
+    public function __construct(RouterInterface $router, MessageHandlerInterface $messageHandler)
     {
         $this->router = $router;
-        $this->flashMessenger = $flashMessenger;
+        $this->messageHandler = $messageHandler;
     }
 
     /**
@@ -35,7 +36,7 @@ class Redirector implements RedirectorInterface
      */
     public function addErrorMessage(string $message, ...$parameters)
     {
-        $this->flashMessenger->error($message, ...$parameters);
+        $this->messageHandler->error($message, ...$parameters);
     }
 
     /**
@@ -43,7 +44,7 @@ class Redirector implements RedirectorInterface
      */
     public function addInfoMessage(string $message, ...$parameters)
     {
-        $this->flashMessenger->info($message, ...$parameters);
+        $this->messageHandler->info($message, ...$parameters);
     }
 
     /**
@@ -51,7 +52,7 @@ class Redirector implements RedirectorInterface
      */
     public function addSuccessMessage(string $message, ...$parameters)
     {
-        $this->flashMessenger->success($message, ...$parameters);
+        $this->messageHandler->success($message, ...$parameters);
     }
 
     /**
@@ -59,7 +60,7 @@ class Redirector implements RedirectorInterface
      */
     public function addWarnMessage(string $message, ...$parameters)
     {
-        $this->flashMessenger->warn($message, ...$parameters);
+        $this->messageHandler->warn($message, ...$parameters);
     }
 
     /**

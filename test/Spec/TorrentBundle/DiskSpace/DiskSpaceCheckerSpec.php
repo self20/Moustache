@@ -33,13 +33,4 @@ class DiskSpaceCheckerSpec extends ObjectBehavior
 
         $this->checkEnoughDiskSpace()->shouldReturn(false);
     }
-
-    public function it_returns_last_computed_virtual_free_space()
-    {
-        $this->getLastComputedVirtualFreeSpace()->shouldReturn(0);
-
-        $this->checkEnoughDiskSpace();
-
-        $this->getLastComputedVirtualFreeSpace()->shouldReturn(524000000);
-    }
 }

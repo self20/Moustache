@@ -31,7 +31,7 @@ trait CanBeIncompleteTrait
      */
     public function getPercentDone(): float
     {
-        if ($this->totalByteSize === 0) {
+        if (0 === $this->totalByteSize) {
             return 0;
         }
 

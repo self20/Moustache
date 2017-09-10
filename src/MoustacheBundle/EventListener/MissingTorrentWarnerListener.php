@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\EventListener;
 
-use MoustacheBundle\Service\FlashMessageGenerator;
-use Psr\Log\LoggerInterface;
+use MoustacheBundle\Message\CanDispatchMessage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use TorrentBundle\Client\ClientInterface;
 use TorrentBundle\Event\TorrentMissingEvent;
 
@@ -15,30 +15,30 @@ use TorrentBundle\Event\TorrentMissingEvent;
 final class MissingTorrentWarnerListener
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var FlashMessageGenerator
-     */
-    private $flashMessageGenerator;
-
-    /**
      * @var ClientInterface
      */
     private $client;
 
     /**
-     * @param LoggerInterface       $logger
-     * @param FlashMessageGenerator $flashMessageGenerator
-     * @param ClientInterface       $client
+     * @var CanDispatchMessage
      */
-    public function __construct(LoggerInterface $logger, FlashMessageGenerator $flashMessageGenerator, ClientInterface $client)
+    private $messageDispatcher;
+
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @param ClientInterface    $client
+     * @param CanDispatchMessage $messageDispatcher
+     * @param RequestStack       $requestStack
+     */
+    public function __construct(ClientInterface $client, CanDispatchMessage $messageDispatcher, RequestStack $requestStack)
     {
-        $this->logger = $logger;
-        $this->flashMessageGenerator = $flashMessageGenerator;
         $this->client = $client;
+        $this->messageDispatcher = $messageDispatcher;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -48,15 +48,19 @@ final class MissingTorrentWarnerListener
      */
     public function onTorrentMissing(TorrentMissingEvent $event)
     {
-        $this->flashMessageGenerator->warnTorrentIsMissing();
+        if (!$this->shouldDispatchMessage()) {
+            return;
+        }
 
-        $this->logger->error(sprintf(
-            'A torrent with hash “%s” was requested but it was not found by “%s” client. It may have been removed manually in %s but still exists in moustache database or cache may has been temporarly out of date. Please fix the problem, as it can lead to performance issues.',
-            $event->getHash(),
-            $this->client->getName(),
-            $this->client->getName()
-        ));
+        $this->messageDispatcher->error(CanDispatchMessage::TORRENT_IS_MISSING, $event->getHash(), $this->client->getName(), $this->client->getName());
 
         return $event;
+    }
+
+    private function shouldDispatchMessage(): bool
+    {
+        return
+            !$this->requestStack->getCurrentRequest()->isXmlHttpRequest()
+        ;
     }
 }

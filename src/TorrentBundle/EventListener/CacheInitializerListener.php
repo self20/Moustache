@@ -53,6 +53,11 @@ final class CacheInitializerListener
         return $event;
     }
 
+    public function saveClientToken(string $clientToken)
+    {
+        $this->cache->set(CacheInterface::KEY_CLIENT_TOKEN, $clientToken);
+    }
+
     private function isCacheOutdated(ClientInterface $client): bool
     {
         $clientToken = $this->cache->get(CacheInterface::KEY_CLIENT_TOKEN);
@@ -61,10 +66,5 @@ final class CacheInitializerListener
             empty($clientToken) ||
             $client->getSessionToken() !== $clientToken
         ;
-    }
-
-    public function saveClientToken(string $clientToken)
-    {
-        $this->cache->set(CacheInterface::KEY_CLIENT_TOKEN, $clientToken);
     }
 }

@@ -4,24 +4,43 @@ declare(strict_types=1);
 
 namespace MoustacheBundle\EventListener;
 
-use MoustacheBundle\Service\FlashMessageGenerator;
+use MoustacheBundle\Message\CanDispatchMessage;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use TorrentBundle\Entity\UserInterface;
+use TorrentBundle\Helper\AuthenticatedUserHelper;
+use TorrentBundle\Manager\UserManager;
 
+//@HEYLISTEN Rename this class to somehting like UserGreeterListener
 class GlobalMessengerListener
 {
     const HOME_ROUTE = 'moustache_torrent';
 
     /**
-     * @var FlashMessageGenerator
+     * @var CanDispatchMessage
      */
-    private $flashMessageGenerator;
+    private $messageDispatcher;
 
     /**
-     * @param FlashMessageGenerator $flashMessageGenerator
+     * @var AuthenticatedUserHelper
      */
-    public function __construct(FlashMessageGenerator $flashMessageGenerator)
+    private $authenticatedUserHelper;
+
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+
+    /**
+     * @param CanDispatchMessage      $messageDispatcher
+     * @param AuthenticatedUserHelper $authenticatedUserHelper
+     * @param UserManager             $userManager
+     */
+    public function __construct(CanDispatchMessage $messageDispatcher, AuthenticatedUserHelper $authenticatedUserHelper, UserManager $userManager)
     {
-        $this->flashMessageGenerator = $flashMessageGenerator;
+        $this->messageDispatcher = $messageDispatcher;
+        $this->authenticatedUserHelper = $authenticatedUserHelper;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -31,10 +50,24 @@ class GlobalMessengerListener
      */
     public function onKernelRequest(GetResponseEvent $event): GetResponseEvent
     {
-        if (self::HOME_ROUTE === $event->getRequest()->attributes->get('_route')) {
-            $this->flashMessageGenerator->greetUser();
+        $user = $this->authenticatedUserHelper->getWhenAvailable();
+        if (!$this->shouldGreetUser($event->getRequest(), $user)) {
+            return $event;
         }
 
+        $this->messageDispatcher->info(CanDispatchMessage::GREET_USER);
+        $this->userManager->incrementCurrentMessage($user);
+
         return $event;
+    }
+
+    private function shouldGreetUser(Request $request, UserInterface $user = null): bool
+    {
+        return
+            null !== $user &&
+            $user->isNew() &&
+            self::HOME_ROUTE === $request->attributes->get('_route') &&
+            !$request->isXmlHttpRequest()
+        ;
     }
 }

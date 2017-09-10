@@ -14,11 +14,6 @@ class DiskSpaceChecker
     private $diskSpaceReader;
 
     /**
-     * @var int
-     */
-    private $lastComputedVirtualFreeSpace = 0;
-
-    /**
      * @param DiskSpaceReader $diskSpaceReader
      */
     public function __construct(DiskSpaceReader $diskSpaceReader)
@@ -31,16 +26,6 @@ class DiskSpaceChecker
      */
     public function checkEnoughDiskSpace(): bool
     {
-        $this->lastComputedVirtualFreeSpace = $this->diskSpaceReader->getVirtualFreeSpace();
-
-        return $this->lastComputedVirtualFreeSpace > self::MINIMUM_FREE_SPACE_ALLOWED;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLastComputedVirtualFreeSpace(): int
-    {
-        return $this->lastComputedVirtualFreeSpace;
+        return $this->diskSpaceReader->getVirtualFreeSpace() > self::MINIMUM_FREE_SPACE_ALLOWED;
     }
 }

@@ -80,7 +80,7 @@ final class DiskSpaceCheckerListener
         $this->stopClient->stop($event->getTorrent());
 
         $humanVirtualNeededSpace = $this->stringUtils->humanFilesize($event->getTorrent()->getVirtualUsedByteSize());
-        $humanVirtualAvailableSpace = $this->stringUtils->humanFilesize($this->diskSpaceChecker->getLastComputedVirtualFreeSpace());
+        $humanVirtualAvailableSpace = $this->stringUtils->humanFilesize($this->diskSpaceReader->getVirtualFreeSpace());
 
         $exception = new NotEnoughDiskSpaceException(sprintf('Torrent %s cannot be started because disk space is lacking.', $event->getTorrent()->getFriendlyName()));
         $exception->setNeededSpace($humanVirtualNeededSpace);

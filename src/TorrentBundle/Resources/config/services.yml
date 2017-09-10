@@ -1,4 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
     # --- Adapters
     torrent.adapter.transmission:
         class: "TorrentBundle\\Adapter\\TransmissionAdapter"
@@ -134,16 +139,15 @@ services:
         class: "TorrentBundle\\Client\\Client"
         factory: "torrent.helper.torrent_client:get"
 
+    TorrentBundle\Client\ClientInterface: '@torrent.client.current'
+    TorrentBundle\Client\CanStopTorrent: '@torrent.client.current'
+    TorrentBundle\Client\CanGetTorrent: '@torrent.client.current'
+
     # --- DiskSpace
-    torrent.disk_space.checker:
-        class: "TorrentBundle\\DiskSpace\\DiskSpaceChecker"
+    TorrentBundle\DiskSpace\DiskSpaceChecker: ~
+    TorrentBundle\DiskSpace\DiskSpaceReader:
         arguments:
-            - "@torrent.disk_space.reader"
-    torrent.disk_space.reader:
-        class: "TorrentBundle\\DiskSpace\\DiskSpaceReader"
-        arguments:
-            - "@torrent.helper.torrent_storage"
-            - "@torrent.client.current"
+            $torrentStorageHelper: '@torrent.helper.torrent_storage'
 
     # --- Entity
     torrent.entity.torrent:
@@ -169,15 +173,9 @@ services:
             - "@monolog.logger.moustache"
         tags:
             - { name: kernel.event_listener, event: torrent.client.after.retrieved, method: afterClientRetrieved, priority: 0 }
-    torrent.event.disk_space_checker_listener:
-        class: "TorrentBundle\\EventListener\\DiskSpaceCheckerListener"
+    TorrentBundle\EventListener\DiskSpaceCheckerListener:
         arguments:
-            - "@torrent.disk_space.checker"
-            - "@torrent.disk_space.reader"
-            - "@torrent.client.current"
-            - "@torrent.helper.torrent_storage"
-            - "@monolog.logger.moustache"
-            - "@external.utils.string"
+            $torrentStorageHelper: '@torrent.helper.torrent_storage'
         tags:
             - { name: kernel.event_listener, event: torrent.torrent.after.started, method: afterTorrentStarted, priority: -50 }
     torrent.event.doctrine_flusher_listener:

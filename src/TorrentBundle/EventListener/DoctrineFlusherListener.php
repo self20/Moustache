@@ -30,7 +30,7 @@ final class DoctrineFlusherListener
      *
      * @return FilterResponseEvent
      */
-    public function onKernelResponse(FilterResponseEvent $event) : FilterResponseEvent
+    public function onKernelResponse(FilterResponseEvent $event): FilterResponseEvent
     {
         $this->entityManager->flush();
 
