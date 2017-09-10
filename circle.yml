@@ -25,7 +25,7 @@ test:
         - php bin/console lint:twig app
         - php bin/console lint:yaml src
         - php bin/console lint:yaml app
-        - php vendor/bin/php-cs-fixer fix --dry-run
+        - php vendor/bin/php-cs-fixer fix --allow-risky yes --dry-run
         - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/Learning/
         - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/MoustacheBundle/
         - php vendor/bin/phpspec run --config=app/config/test/phpspec.yml test/Spec/TorrentBundle/
